@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OmniCapture Support</title>
+  <style>
+    :root {
+      --bg: #f6f8fc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --muted: #64748b;
+      --brand: #2563eb;
+      --brand-2: #1d4ed8;
+      --border: #e2e8f0;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: linear-gradient(180deg, #f8fbff 0%, var(--bg) 100%);
+      color: var(--text);
+    }
+    .wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 28px 16px 40px;
+    }
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .brand {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+    .lang-switch {
+      display: inline-flex;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      background: #fff;
+    }
+    .lang-switch button {
+      border: 0;
+      background: transparent;
+      padding: 8px 12px;
+      cursor: pointer;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .lang-switch button.active {
+      background: #eef4ff;
+      color: var(--brand-2);
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+    }
+    h1, h2 {
+      margin: 0 0 12px;
+    }
+    h1 {
+      font-size: 28px;
+      line-height: 1.2;
+    }
+    h2 {
+      font-size: 18px;
+      margin-top: 22px;
+    }
+    p, li {
+      color: var(--text);
+      line-height: 1.65;
+      margin: 0 0 10px;
+    }
+    .muted { color: var(--muted); }
+    ul { margin: 0; padding-left: 20px; }
+    .footer {
+      margin-top: 16px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .links {
+      margin-top: 14px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      text-decoration: none;
+      color: var(--text);
+      background: #fff;
+      font-weight: 600;
+    }
+    .btn.primary {
+      background: var(--brand);
+      border-color: var(--brand);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div class="brand">OmniCapture</div>
+      <div class="lang-switch" aria-label="Language Switch">
+        <button id="btn-zh">中文</button>
+        <button id="btn-en">English</button>
+      </div>
+    </div>
+
+    <main class="card">
+      <h1 data-i18n="support_title">技术支持</h1>
+      <p class="muted" data-i18n="support_intro">感谢使用 OmniCapture。</p>
+
+      <h2 data-i18n="faq_title">常见问题</h2>
+      <ul>
+        <li data-i18n="faq_1">无法截图/无权限：请在“系统设置 > 隐私与安全性 > 屏幕录制”中允许 OmniCapture。</li>
+        <li data-i18n="faq_2">无法拖拽保存：请确认目标应用或文件夹可接收拖拽内容后重试。</li>
+        <li data-i18n="faq_3">标注显示异常：请更新到最新版本并重启应用后再试。</li>
+      </ul>
+
+      <h2 data-i18n="contact_title">反馈与联系</h2>
+      <p data-i18n="contact_desc">如遇到问题，请反馈以下信息，便于我们快速定位：</p>
+      <ul>
+        <li data-i18n="contact_1">macOS 版本</li>
+        <li data-i18n="contact_2">OmniCapture 版本</li>
+        <li data-i18n="contact_3">问题复现步骤</li>
+        <li data-i18n="contact_4">相关截图（可选）</li>
+      </ul>
+
+      <div class="links">
+        <a class="btn primary" id="email-link" href="mailto:xiangying320@126.com" data-i18n="email_btn">发送邮件</a>
+        <a class="btn" id="privacy-link" href="./privacy.html" data-i18n="privacy_btn">查看隐私政策</a>
+      </div>
+
+      <p class="footer" data-i18n="footer_note">支持邮箱：xiangying320@126.com</p>
+    </main>
+  </div>
+
+  <script>
+    const I18N = {
+      zh: {
+        support_title: "技术支持",
+        support_intro: "感谢使用 OmniCapture。",
+        faq_title: "常见问题",
+        faq_1: "无法截图/无权限：请在“系统设置 > 隐私与安全性 > 屏幕录制”中允许 OmniCapture。",
+        faq_2: "无法拖拽保存：请确认目标应用或文件夹可接收拖拽内容后重试。",
+        faq_3: "标注显示异常：请更新到最新版本并重启应用后再试。",
+        contact_title: "反馈与联系",
+        contact_desc: "如遇到问题，请反馈以下信息，便于我们快速定位：",
+        contact_1: "macOS 版本",
+        contact_2: "OmniCapture 版本",
+        contact_3: "问题复现步骤",
+        contact_4: "相关截图（可选）",
+        email_btn: "发送邮件",
+        privacy_btn: "查看隐私政策",
+        footer_note: "支持邮箱：xiangying320@126.com"
+      },
+      en: {
+        support_title: "Support",
+        support_intro: "Thanks for using OmniCapture.",
+        faq_title: "FAQ",
+        faq_1: "Can't capture screen / no permission: allow OmniCapture in System Settings > Privacy & Security > Screen Recording.",
+        faq_2: "Drag-to-save fails: make sure the target app or folder accepts drag-and-drop, then try again.",
+        faq_3: "Annotation rendering issue: update to the latest version and restart the app.",
+        contact_title: "Feedback & Contact",
+        contact_desc: "To help us troubleshoot quickly, please include:",
+        contact_1: "macOS version",
+        contact_2: "OmniCapture version",
+        contact_3: "Steps to reproduce",
+        contact_4: "Related screenshots (optional)",
+        email_btn: "Send Email",
+        privacy_btn: "Privacy Policy",
+        footer_note: "Support email: xiangying320@126.com"
+      }
+    };
+
+    function detectLang() {
+      const q = new URLSearchParams(window.location.search).get("lang");
+      if (q === "zh" || q === "en") return q;
+      const stored = localStorage.getItem("omni_lang");
+      if (stored === "zh" || stored === "en") return stored;
+      return (navigator.language || "").toLowerCase().startsWith("zh") ? "zh" : "en";
+    }
+
+    function applyLang(lang) {
+      const map = I18N[lang] || I18N.en;
+      document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (map[key]) el.textContent = map[key];
+      });
+      document.getElementById("btn-zh").classList.toggle("active", lang === "zh");
+      document.getElementById("btn-en").classList.toggle("active", lang === "en");
+      localStorage.setItem("omni_lang", lang);
+      const url = new URL(window.location.href);
+      url.searchParams.set("lang", lang);
+      window.history.replaceState({}, "", url.toString());
+      document.getElementById("privacy-link").href = `./privacy.html?lang=${lang}`;
+    }
+
+    document.getElementById("btn-zh").addEventListener("click", () => applyLang("zh"));
+    document.getElementById("btn-en").addEventListener("click", () => applyLang("en"));
+    applyLang(detectLang());
+  </script>
+</body>
+</html>
