@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Redirecting to OmniCapture Changelog</title>
+  <meta name="description" content="Redirecting to the OmniCapture changelog tab." />
+  <script>
+    (function redirect() {
+      const current = new URL(window.location.href);
+      const target = new URL("./index.html", current);
+      const lang = current.searchParams.get("lang");
+      if (lang) target.searchParams.set("lang", lang);
+      target.searchParams.set("tab", "changelog");
+      window.location.replace(target.toString());
+    })();
+  </script>
+</head>
+<body>
+  <p>Redirecting to OmniCapture changelog...</p>
+</body>
+</html>

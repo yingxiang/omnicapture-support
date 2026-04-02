@@ -1,211 +1,22 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>OmniCapture Privacy Policy</title>
-  <style>
-    :root {
-      --bg: #f6f8fc;
-      --card: #ffffff;
-      --text: #1e293b;
-      --muted: #64748b;
-      --brand: #2563eb;
-      --border: #e2e8f0;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-      background: linear-gradient(180deg, #f8fbff 0%, var(--bg) 100%);
-      color: var(--text);
-    }
-    .wrap {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 28px 16px 40px;
-    }
-    .top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-    .brand {
-      font-size: 22px;
-      font-weight: 700;
-    }
-    .lang-switch {
-      display: inline-flex;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      overflow: hidden;
-      background: #fff;
-    }
-    .lang-switch button {
-      border: 0;
-      background: transparent;
-      padding: 8px 12px;
-      cursor: pointer;
-      color: var(--muted);
-      font-weight: 600;
-    }
-    .lang-switch button.active {
-      background: #eef4ff;
-      color: #1d4ed8;
-    }
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 22px;
-      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
-    }
-    h1, h2 { margin: 0 0 12px; }
-    h1 { font-size: 28px; }
-    h2 { margin-top: 22px; font-size: 18px; }
-    p, li { line-height: 1.68; margin: 0 0 10px; }
-    ul { margin: 0; padding-left: 20px; }
-    .muted { color: var(--muted); }
-    .links { margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap; }
-    .btn {
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 10px 12px;
-      text-decoration: none;
-      color: var(--text);
-      background: #fff;
-      font-weight: 600;
-    }
-    .btn.primary {
-      background: var(--brand);
-      border-color: var(--brand);
-      color: #fff;
-    }
-  </style>
+  <title>Redirecting to OmniCapture Privacy</title>
+  <meta name="description" content="Redirecting to the OmniCapture privacy tab." />
+  <script>
+    (function redirect() {
+      const current = new URL(window.location.href);
+      const target = new URL("./index.html", current);
+      const lang = current.searchParams.get("lang");
+      if (lang) target.searchParams.set("lang", lang);
+      target.searchParams.set("tab", "privacy");
+      window.location.replace(target.toString());
+    })();
+  </script>
 </head>
 <body>
-  <div class="wrap">
-    <div class="top">
-      <div class="brand">OmniCapture</div>
-      <div class="lang-switch" aria-label="Language Switch">
-        <button id="btn-zh">中文</button>
-        <button id="btn-en">English</button>
-      </div>
-    </div>
-
-    <main class="card">
-      <h1 data-i18n="title">隐私政策</h1>
-      <p class="muted" data-i18n="updated">最后更新：2026-03-22</p>
-      <p data-i18n="intro">OmniCapture（以下简称“本应用”）重视你的隐私。本政策说明我们如何处理信息。</p>
-
-      <h2 data-i18n="s1">1. 我们收集的数据</h2>
-      <p data-i18n="s1p1">本应用默认不收集、不上传你的个人数据到我们的服务器。</p>
-      <p data-i18n="s1p2">截图内容、标注内容等均在你的设备本地处理。</p>
-
-      <h2 data-i18n="s2">2. 屏幕录制权限</h2>
-      <p data-i18n="s2p1">本应用会请求 macOS 的“屏幕录制”权限，仅用于你主动发起的截图功能。</p>
-      <p data-i18n="s2p2">我们不会将屏幕内容上传到我们的服务器。</p>
-
-      <h2 data-i18n="s3">3. 文件与剪贴板</h2>
-      <p data-i18n="s3p1">当你执行保存、拖拽或复制操作时，数据仅用于完成你当前操作。</p>
-      <p data-i18n="s3p2">相关内容由你控制并保存在你的设备或你选择的目标应用中。</p>
-
-      <h2 data-i18n="s4">4. 第三方服务</h2>
-      <p data-i18n="s4p1">本应用当前不包含用于用户追踪的第三方广告 SDK。</p>
-      <p data-i18n="s4p2">如未来接入第三方服务，我们会更新本政策并在版本说明中说明。</p>
-
-      <h2 data-i18n="s5">5. 数据安全</h2>
-      <p data-i18n="s5p1">我们采取合理措施保护本地处理过程中的数据安全。</p>
-      <p data-i18n="s5p2">但请你同样注意设备安全与系统权限管理。</p>
-
-      <h2 data-i18n="s6">6. 联系我们</h2>
-      <p data-i18n="s6p1">如有隐私相关问题，请通过技术支持页面提供的联系方式与我们联系。</p>
-
-      <div class="links">
-        <a class="btn primary" id="support-link" href="./index.html" data-i18n="support_btn">技术支持</a>
-      </div>
-    </main>
-  </div>
-
-  <script>
-    const I18N = {
-      zh: {
-        title: "隐私政策",
-        updated: "最后更新：2026-03-22",
-        intro: "OmniCapture（以下简称“本应用”）重视你的隐私。本政策说明我们如何处理信息。",
-        s1: "1. 我们收集的数据",
-        s1p1: "本应用默认不收集、不上传你的个人数据到我们的服务器。",
-        s1p2: "截图内容、标注内容等均在你的设备本地处理。",
-        s2: "2. 屏幕录制权限",
-        s2p1: "本应用会请求 macOS 的“屏幕录制”权限，仅用于你主动发起的截图功能。",
-        s2p2: "我们不会将屏幕内容上传到我们的服务器。",
-        s3: "3. 文件与剪贴板",
-        s3p1: "当你执行保存、拖拽或复制操作时，数据仅用于完成你当前操作。",
-        s3p2: "相关内容由你控制并保存在你的设备或你选择的目标应用中。",
-        s4: "4. 第三方服务",
-        s4p1: "本应用当前不包含用于用户追踪的第三方广告 SDK。",
-        s4p2: "如未来接入第三方服务，我们会更新本政策并在版本说明中说明。",
-        s5: "5. 数据安全",
-        s5p1: "我们采取合理措施保护本地处理过程中的数据安全。",
-        s5p2: "但请你同样注意设备安全与系统权限管理。",
-        s6: "6. 联系我们",
-        s6p1: "如有隐私相关问题，请通过技术支持页面提供的联系方式与我们联系。",
-        support_btn: "技术支持"
-      },
-      en: {
-        title: "Privacy Policy",
-        updated: "Last updated: 2026-03-22",
-        intro: "OmniCapture (\"the App\") values your privacy. This policy explains how information is handled.",
-        s1: "1. Data We Collect",
-        s1p1: "By default, the App does not collect or upload your personal data to our servers.",
-        s1p2: "Screenshots and annotation content are processed locally on your device.",
-        s2: "2. Screen Recording Permission",
-        s2p1: "The App requests macOS Screen Recording permission only for screenshot features you actively trigger.",
-        s2p2: "We do not upload your screen content to our servers.",
-        s3: "3. Files and Clipboard",
-        s3p1: "When you save, drag, or copy, data is used only to complete your current action.",
-        s3p2: "Content remains under your control and is stored on your device or destination app.",
-        s4: "4. Third-Party Services",
-        s4p1: "The App currently does not include third-party ad SDKs for user tracking.",
-        s4p2: "If we add third-party services in the future, this policy will be updated.",
-        s5: "5. Data Security",
-        s5p1: "We use reasonable measures to protect locally processed data.",
-        s5p2: "Please also maintain device security and permission settings.",
-        s6: "6. Contact Us",
-        s6p1: "For privacy-related questions, contact us through the Support page.",
-        support_btn: "Support"
-      }
-    };
-
-    function detectLang() {
-      const q = new URLSearchParams(window.location.search).get("lang");
-      if (q === "zh" || q === "en") return q;
-      const stored = localStorage.getItem("omni_lang");
-      if (stored === "zh" || stored === "en") return stored;
-      return (navigator.language || "").toLowerCase().startsWith("zh") ? "zh" : "en";
-    }
-
-    function applyLang(lang) {
-      const map = I18N[lang] || I18N.en;
-      document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
-      document.querySelectorAll("[data-i18n]").forEach(el => {
-        const key = el.getAttribute("data-i18n");
-        if (map[key]) el.textContent = map[key];
-      });
-      document.getElementById("btn-zh").classList.toggle("active", lang === "zh");
-      document.getElementById("btn-en").classList.toggle("active", lang === "en");
-      localStorage.setItem("omni_lang", lang);
-      const url = new URL(window.location.href);
-      url.searchParams.set("lang", lang);
-      window.history.replaceState({}, "", url.toString());
-      document.getElementById("support-link").href = `./index.html?lang=${lang}`;
-    }
-
-    document.getElementById("btn-zh").addEventListener("click", () => applyLang("zh"));
-    document.getElementById("btn-en").addEventListener("click", () => applyLang("en"));
-    applyLang(detectLang());
-  </script>
+  <p>Redirecting to OmniCapture privacy...</p>
 </body>
 </html>

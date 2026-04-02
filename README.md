@@ -1,49 +1,44 @@
 # OmniCapture App Store Pages
 
-This folder contains static pages for App Store Connect metadata:
+This folder contains the static website used for App Store Connect metadata and product presentation.
 
-- `index.html` → Support URL
-- `privacy.html` → Privacy Policy URL
+- `index.html` → main support page, product overview, privacy, and changelog
+- `privacy.html` → compatibility redirect to `index.html?tab=privacy`
+- `changelog.html` → compatibility redirect to `index.html?tab=changelog`
+- `assets/` → screenshots and demo images used by the page
 
-Both pages support language switching:
-- Chinese (`zh`)
-- English (`en`)
+## Language and tabs
 
-They also:
-- auto-detect language from browser
-- persist user language with `localStorage`
-- keep language in URL query (`?lang=zh` / `?lang=en`)
+The main page supports:
 
-## 1) Before publish
+- `lang=en|zh-Hans|zh-Hant|fr|de|it|ja|ko`
+- `tab=overview|privacy|changelog`
 
-Edit support email in `index.html`:
+Examples:
 
-- Search `support@example.com`
-- Replace with your real support email
+- `index.html`
+- `index.html?lang=zh-Hans`
+- `index.html?lang=ja&tab=privacy`
+- `index.html?lang=en&tab=changelog`
 
-## 2) Publish with GitHub Pages
+Behavior:
 
-1. Create a public GitHub repo (for example: `omnicapture-support`).
-2. Upload all files in this folder (`index.html`, `privacy.html`, `README.md`).
-3. In GitHub repo:
+- `tab` defaults to `overview`
+- language is auto-detected from browser settings when possible
+- selected language is persisted with `localStorage`
+- `privacy.html` and `changelog.html` preserve the `lang` query if present
+
+## Publish with GitHub Pages
+
+1. Create a public GitHub repo.
+2. Upload this folder's contents.
+3. In GitHub:
    - `Settings` → `Pages`
    - Source: `Deploy from a branch`
    - Branch: `main` and `/root`
 4. Wait for deployment.
 
-Your URLs will be:
+## App Store Connect mapping
 
-- Support: `https://<username>.github.io/omnicapture-support/index.html`
-- Privacy: `https://<username>.github.io/omnicapture-support/privacy.html`
-
-Optional localized URLs:
-
-- Chinese support: `.../index.html?lang=zh`
-- English support: `.../index.html?lang=en`
-- Chinese privacy: `.../privacy.html?lang=zh`
-- English privacy: `.../privacy.html?lang=en`
-
-## 3) App Store Connect mapping
-
-- App Privacy → Privacy Policy URL: `privacy.html`
 - App Information / each localization → Support URL: `index.html`
+- App Privacy → Privacy Policy URL: `privacy.html`

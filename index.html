@@ -1,218 +1,2223 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>OmniCapture Support</title>
+  <title>OmniCapture</title>
+  <meta
+    name="description"
+    content="OmniCapture is a productivity-focused macOS screenshot and annotation tool with clear markup, OCR, redaction, and drag-and-drop workflows."
+  />
   <style>
     :root {
-      --bg: #f6f8fc;
-      --card: #ffffff;
-      --text: #1e293b;
-      --muted: #64748b;
-      --brand: #2563eb;
-      --brand-2: #1d4ed8;
-      --border: #e2e8f0;
+      --bg: #ffffff;
+      --bg-soft: #f6f8fb;
+      --panel: #ffffff;
+      --panel-soft: #f8fafc;
+      --line: #e6ebf2;
+      --line-strong: #d8dfeb;
+      --text: #142033;
+      --muted: #607086;
+      --brand: #1570ef;
+      --brand-soft: #eff6ff;
+      --accent: #00a3a3;
+      --shadow: 0 16px 40px rgba(19, 35, 61, 0.08);
+      --shadow-soft: 0 10px 24px rgba(19, 35, 61, 0.06);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
+      --max-width: 1180px;
     }
-    * { box-sizing: border-box; }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-      background: linear-gradient(180deg, #f8fbff 0%, var(--bg) 100%);
+      min-height: 100vh;
       color: var(--text);
+      font-family: "SF Pro Display", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background:
+        linear-gradient(180deg, #ffffff 0%, #fbfcfe 52%, #f5f7fa 100%);
     }
-    .wrap {
-      max-width: 860px;
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+      color: inherit;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .shell {
+      width: min(var(--max-width), calc(100% - 32px));
       margin: 0 auto;
-      padding: 28px 16px 40px;
     }
-    .top {
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(230, 235, 242, 0.9);
+    }
+
+    .header-bar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 16px;
+      gap: 20px;
+      min-height: 74px;
     }
+
     .brand {
-      font-size: 22px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      display: block;
+      border-radius: 12px;
+      object-fit: cover;
+      box-shadow: 0 8px 18px rgba(21, 112, 239, 0.12);
+      flex: none;
+    }
+
+    .brand-title {
+      margin: 0;
+      font-size: 1rem;
       font-weight: 700;
-      letter-spacing: 0.2px;
+      line-height: 1.1;
     }
-    .lang-switch {
-      display: inline-flex;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      overflow: hidden;
-      background: #fff;
-    }
-    .lang-switch button {
-      border: 0;
-      background: transparent;
-      padding: 8px 12px;
-      cursor: pointer;
+
+    .brand-tagline {
+      margin: 3px 0 0;
       color: var(--muted);
+      font-size: 0.86rem;
+      white-space: nowrap;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 40px;
+      padding: 0 14px;
+      border-radius: 999px;
+      color: var(--muted);
+      border: 1px solid transparent;
+      background: transparent;
+      cursor: pointer;
+      transition: background 180ms ease, border-color 180ms ease, color 180ms ease;
+    }
+
+    .nav-link:hover,
+    .nav-link:focus-visible {
+      color: var(--text);
+      background: var(--bg-soft);
+      border-color: var(--line);
+      outline: none;
+    }
+
+    .lang-select {
+      min-width: 136px;
+      min-height: 40px;
+      padding: 0 38px 0 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #ffffff;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23607086' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      background-size: 12px 8px;
+      color: var(--text);
+      cursor: pointer;
+      box-shadow: none;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+    }
+
+    main {
+      padding: 42px 0 64px;
+    }
+
+    .page-tab-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+      padding: 6px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #ffffff;
+      box-shadow: var(--shadow-soft);
+      width: fit-content;
+    }
+
+    .page-tab-button {
+      min-height: 42px;
+      padding: 0 18px;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: background 180ms ease, color 180ms ease;
+    }
+
+    .page-tab-button.active {
+      color: var(--brand);
+      background: var(--brand-soft);
+    }
+
+    .page-view {
+      display: none;
+    }
+
+    .page-view.active {
+      display: block;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, 520px);
+      gap: 30px;
+      align-items: center;
+    }
+
+    .hero-copy {
+      min-width: 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 36px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--bg-soft);
+      color: var(--brand);
+      font-size: 0.9rem;
       font-weight: 600;
     }
-    .lang-switch button.active {
-      background: #eef4ff;
-      color: var(--brand-2);
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--brand), var(--accent));
     }
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 22px;
-      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+
+    .hero h1 {
+      margin: 18px 0 14px;
+      font-size: clamp(2.5rem, 5vw, 4.3rem);
+      line-height: 0.97;
+      letter-spacing: -0.05em;
     }
-    h1, h2 {
+
+    .hero-subtitle {
       margin: 0 0 12px;
-    }
-    h1 {
-      font-size: 28px;
-      line-height: 1.2;
-    }
-    h2 {
-      font-size: 18px;
-      margin-top: 22px;
-    }
-    p, li {
-      color: var(--text);
-      line-height: 1.65;
-      margin: 0 0 10px;
-    }
-    .muted { color: var(--muted); }
-    ul { margin: 0; padding-left: 20px; }
-    .footer {
-      margin-top: 16px;
-      font-size: 13px;
       color: var(--muted);
+      font-size: 1.05rem;
+      font-weight: 600;
     }
-    .links {
+
+    .hero-desc {
+      margin: 0;
+      max-width: 680px;
+      color: var(--muted);
+      font-size: 1.02rem;
+      line-height: 1.8;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #ffffff;
+      color: var(--text);
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+    }
+
+    .btn:hover,
+    .btn:focus-visible {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-soft);
+      outline: none;
+    }
+
+    .btn.primary {
+      color: #ffffff;
+      border-color: transparent;
+      background: linear-gradient(135deg, #1570ef, #0b8cd8);
+    }
+
+    .floating-download {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      z-index: 40;
+      box-shadow: 0 16px 32px rgba(21, 112, 239, 0.22);
+    }
+
+    .hero-note {
       margin-top: 14px;
+      color: var(--muted);
+      font-size: 0.94rem;
+      line-height: 1.7;
+    }
+
+    .hero-panel {
+      position: relative;
+      padding: 24px;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, #ffffff, #f7faff);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero-panel::before {
+      content: "";
+      position: absolute;
+      top: -80px;
+      right: -40px;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: rgba(21, 112, 239, 0.08);
+    }
+
+    .hero-panel::after {
+      content: "";
+      position: absolute;
+      left: -30px;
+      bottom: -40px;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: rgba(0, 163, 163, 0.08);
+    }
+
+    .hero-illustration {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 16px;
+    }
+
+    .illustration-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .mini-badges {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
     }
-    .btn {
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 10px 12px;
-      text-decoration: none;
-      color: var(--text);
-      background: #fff;
+
+    .mini-badge {
+      min-height: 34px;
+      padding: 0 12px;
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      color: var(--muted);
+      background: #ffffff;
+      border: 1px solid var(--line);
+      font-size: 0.88rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .hero-screen {
+      overflow: hidden;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      background: #ffffff;
+      box-shadow: 0 18px 30px rgba(19, 35, 61, 0.08);
+    }
+
+    .hero-screen-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      min-height: 44px;
+      padding: 0 16px;
+      color: var(--muted);
+      font-size: 0.88rem;
+      border-bottom: 1px solid var(--line);
+      background: #fbfcfe;
+    }
+
+    .traffic {
+      display: flex;
+      gap: 8px;
+    }
+
+    .traffic span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #d6dde8;
+    }
+
+    .hero-screen img {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      background: #eff3f8;
+    }
+
+    .illustration-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .stat-card {
+      padding: 14px;
+      border-radius: var(--radius-md);
+      background: #ffffff;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .stat-card strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 1rem;
+    }
+
+    .stat-card span {
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+
+    section {
+      margin-top: 64px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+
+    .section-head h2 {
+      margin: 0 0 10px;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      letter-spacing: -0.04em;
+    }
+
+    .section-head p {
+      margin: 0;
+      max-width: 640px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .feature-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 210px;
+      gap: 18px;
+      padding: 20px;
+      border-radius: var(--radius-lg);
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+      min-width: 0;
+    }
+
+    .feature-card h3 {
+      margin: 0 0 8px;
+      font-size: 1.18rem;
+      letter-spacing: -0.02em;
+    }
+
+    .feature-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .feature-points {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .feature-points span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 0 10px;
+      border-radius: 999px;
+      color: var(--muted);
+      background: var(--bg-soft);
+      border: 1px solid var(--line);
+      font-size: 0.83rem;
+    }
+
+    .feature-visual {
+      overflow: hidden;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
+      background: var(--bg-soft);
+      align-self: stretch;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .feature-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      aspect-ratio: 4 / 3;
+      cursor: zoom-in;
+    }
+
+    .feature-illustration {
+      width: 100%;
+      height: 100%;
+      min-height: 180px;
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 20% 24%, rgba(21, 112, 239, 0.18), transparent 30%),
+        radial-gradient(circle at 82% 20%, rgba(0, 163, 163, 0.16), transparent 32%),
+        linear-gradient(180deg, #f9fbff, #f1f6fb);
+    }
+
+    .feature-illustration::before,
+    .feature-illustration::after {
+      content: "";
+      position: absolute;
+      border-radius: 18px;
+      border: 1px solid rgba(21, 112, 239, 0.12);
+      background: rgba(255, 255, 255, 0.84);
+    }
+
+    .feature-illustration::before {
+      inset: 22px 24px 70px 24px;
+      box-shadow: 0 16px 30px rgba(19, 35, 61, 0.06);
+    }
+
+    .feature-illustration::after {
+      left: 38px;
+      right: 54px;
+      bottom: 22px;
+      height: 34px;
+    }
+
+    .feature-illustration svg {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+    }
+
+    .shot-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .shot-card {
+      padding: 16px;
+      border-radius: var(--radius-lg);
+      background: #ffffff;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .shot-card img {
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      background: var(--bg-soft);
+    }
+
+    .shot-card h3 {
+      margin: 14px 0 6px;
+      font-size: 1.06rem;
+    }
+
+    .shot-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .overview-card,
+    .privacy-card,
+    .log-card,
+    .quick-card {
+      padding: 20px;
+      border-radius: var(--radius-lg);
+      background: var(--panel-soft);
+      border: 1px solid var(--line);
+    }
+
+    .overview-card h3,
+    .privacy-card h3,
+    .log-card h3,
+    .quick-card h3 {
+      margin: 0 0 8px;
+      font-size: 1.08rem;
+    }
+
+    .overview-card p,
+    .privacy-card p,
+    .log-card p,
+    .quick-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .overview-card p + p,
+    .privacy-card p + p,
+    .log-card p + p,
+    .quick-card p + p {
+      margin-top: 8px;
+    }
+
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .quick-list,
+    .log-list {
+      margin: 14px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .log-list li + li,
+    .quick-list li + li {
+      margin-top: 6px;
+    }
+
+    .privacy-grid,
+    .log-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .log-kicker {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 0 10px;
+      border-radius: 999px;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      color: var(--brand);
+      font-size: 0.82rem;
       font-weight: 600;
     }
-    .btn.primary {
-      background: var(--brand);
-      border-color: var(--brand);
-      color: #fff;
+
+    .footer-cta {
+      margin-top: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 24px;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--line);
+      background: #ffffff;
+      box-shadow: var(--shadow-soft);
+      flex-wrap: wrap;
+    }
+
+    .footer-cta h2 {
+      margin: 0 0 8px;
+      font-size: 1.5rem;
+      letter-spacing: -0.03em;
+    }
+
+    .footer-cta p,
+    .footer-links {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .footer-links a {
+      color: var(--brand);
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 28px;
+      background: rgba(18, 24, 38, 0.72);
+      backdrop-filter: blur(10px);
+    }
+
+    .lightbox.open {
+      display: flex;
+    }
+
+    .lightbox-backdrop {
+      position: absolute;
+      inset: 0;
+      border: 0;
+      background: transparent;
+      cursor: zoom-out;
+    }
+
+    .lightbox-dialog {
+      position: relative;
+      z-index: 1;
+      width: min(1100px, calc(100vw - 48px));
+      max-height: calc(100vh - 48px);
+      padding: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.94);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .lightbox-image {
+      width: 100%;
+      max-height: calc(100vh - 96px);
+      object-fit: contain;
+      border-radius: 18px;
+      background: transparent;
+    }
+
+    @media (max-width: 1080px) {
+      .hero,
+      .feature-grid,
+      .overview-grid,
+      .quick-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 820px) {
+      .header-bar,
+      .section-head,
+      .footer-cta {
+        align-items: flex-start;
+      }
+
+      .feature-card {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .shell {
+        width: min(var(--max-width), calc(100% - 20px));
+      }
+
+      .site-header {
+        position: static;
+      }
+
+      main {
+        padding-top: 24px;
+      }
+
+      .header-actions,
+      .nav-links {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .illustration-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-panel,
+      .footer-cta {
+        padding: 18px;
+      }
+
+      .floating-download {
+        right: 14px;
+        bottom: 14px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="top">
-      <div class="brand">OmniCapture</div>
-      <div class="lang-switch" aria-label="Language Switch">
-        <button id="btn-zh">中文</button>
-        <button id="btn-en">English</button>
+  <header class="site-header">
+    <div class="shell">
+      <div class="header-bar">
+        <div class="brand">
+          <img class="brand-mark" src="../OmniMAC/Resources/Assets.xcassets/AppIcon.appiconset/512.png" alt="OmniCapture app icon" />
+          <div>
+            <p class="brand-title">OmniCapture</p>
+            <p class="brand-tagline" id="brand-tagline">Capture faster. Explain clearly.</p>
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <nav class="nav-links" aria-label="Pages">
+            <button class="page-tab-button" type="button" data-tab="overview" id="nav-overview">Home</button>
+            <button class="page-tab-button" type="button" data-tab="privacy" id="nav-privacy">Privacy</button>
+            <button class="page-tab-button" type="button" data-tab="changelog" id="nav-changelog">Updates</button>
+          </nav>
+
+          <select class="lang-select" id="lang-select" aria-label="Language switch"></select>
+        </div>
       </div>
     </div>
+  </header>
 
-    <main class="card">
-      <h1 data-i18n="support_title">技术支持</h1>
-      <p class="muted" data-i18n="support_intro">感谢使用 OmniCapture。</p>
+  <main>
+    <div class="shell">
+      <div class="page-view" data-view="overview">
+        <section class="hero">
+          <div class="hero-copy">
+            <div class="eyebrow" id="hero-eyebrow">macOS Screenshot Tool</div>
+            <h1 id="hero-title">Capture fast, annotate clearly</h1>
+            <p class="hero-subtitle" id="hero-subtitle">Requires macOS 15.0 or later.</p>
+            <p class="hero-desc" id="hero-desc"></p>
 
-      <h2 data-i18n="faq_title">常见问题</h2>
-      <ul>
-        <li data-i18n="faq_1">无法截图/无权限：请在“系统设置 > 隐私与安全性 > 屏幕录制”中允许 OmniCapture。</li>
-        <li data-i18n="faq_2">无法拖拽保存：请确认目标应用或文件夹可接收拖拽内容后重试。</li>
-        <li data-i18n="faq_3">标注显示异常：请更新到最新版本并重启应用后再试。</li>
-      </ul>
+            <div class="hero-actions">
+            </div>
 
-      <h2 data-i18n="contact_title">反馈与联系</h2>
-      <p data-i18n="contact_desc">如遇到问题，请反馈以下信息，便于我们快速定位：</p>
-      <ul>
-        <li data-i18n="contact_1">macOS 版本</li>
-        <li data-i18n="contact_2">OmniCapture 版本</li>
-        <li data-i18n="contact_3">问题复现步骤</li>
-        <li data-i18n="contact_4">相关截图（可选）</li>
-      </ul>
+            <p class="hero-note" id="hero-note"></p>
+          </div>
 
-      <div class="links">
-        <a class="btn primary" id="email-link" href="mailto:xiangying320@126.com" data-i18n="email_btn">发送邮件</a>
-        <a class="btn" id="privacy-link" href="./privacy.html" data-i18n="privacy_btn">查看隐私政策</a>
+          <div class="hero-panel" aria-hidden="true">
+            <div class="hero-illustration">
+              <div class="illustration-top">
+                <div class="mini-badges">
+                  <span class="mini-badge" id="badge-1">OCR</span>
+                  <span class="mini-badge" id="badge-2">Redaction</span>
+                  <span class="mini-badge" id="badge-3">SVG Brush</span>
+                </div>
+              </div>
+
+              <div class="hero-screen">
+                <div class="hero-screen-head">
+                  <div class="traffic" aria-hidden="true">
+                    <span></span><span></span><span></span>
+                  </div>
+                  <span id="hero-window-label">Workflow Preview</span>
+                </div>
+                <img src="./assets/screenshots/drag-workflow.png" alt="OmniCapture workflow preview" />
+              </div>
+
+              <div class="illustration-stats">
+                <div class="stat-card">
+                  <strong id="stat-1-title">Annotate</strong>
+                  <span id="stat-1-desc"></span>
+                </div>
+                <div class="stat-card">
+                  <strong id="stat-2-title">Protect</strong>
+                  <span id="stat-2-desc"></span>
+                </div>
+                <div class="stat-card">
+                  <strong id="stat-3-title">Reuse</strong>
+                  <span id="stat-3-desc"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="features">
+          <div class="section-head">
+            <div>
+              <h2 id="features-title">Core features</h2>
+              <p id="features-desc"></p>
+            </div>
+          </div>
+          <div class="feature-grid" id="feature-grid"></div>
+        </section>
+
+        <section id="overview-details">
+          <div class="section-head">
+            <div>
+              <h2 id="details-title">Details</h2>
+              <p id="details-desc"></p>
+            </div>
+          </div>
+          <div class="overview-grid" id="overview-grid"></div>
+          <div class="quick-grid" id="quick-grid"></div>
+        </section>
+
+        <section class="footer-cta">
+          <div>
+            <h2 id="footer-title">Make screenshots easier to share and easier to trust.</h2>
+            <p id="footer-desc"></p>
+            <div class="footer-links">
+              <span id="footer-email-label">Support:</span>
+              <a href="mailto:xiangying320@126.com">xiangying320@126.com</a>
+            </div>
+          </div>
+
+        </section>
       </div>
 
-      <p class="footer" data-i18n="footer_note">支持邮箱：xiangying320@126.com</p>
-    </main>
+      <div class="page-view" data-view="privacy">
+        <section>
+          <div class="section-head">
+            <div>
+              <h2 id="privacy-title">Privacy</h2>
+              <p id="privacy-desc"></p>
+            </div>
+          </div>
+          <div class="privacy-grid" id="privacy-grid"></div>
+        </section>
+      </div>
+
+      <div class="page-view" data-view="changelog">
+        <section>
+          <div class="section-head">
+            <div>
+              <h2 id="changelog-title">Changelog</h2>
+              <p id="changelog-desc"></p>
+            </div>
+          </div>
+          <div class="log-grid" id="log-grid"></div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <div class="lightbox" id="image-lightbox" aria-hidden="true">
+    <button class="lightbox-backdrop" type="button" id="lightbox-backdrop" aria-label="Close preview"></button>
+    <div class="lightbox-dialog" role="dialog" aria-modal="true" aria-label="Image preview">
+      <button class="lightbox-close" type="button" id="lightbox-close" aria-label="Close preview">×</button>
+      <img class="lightbox-image" id="lightbox-image" alt="" />
+    </div>
   </div>
 
+  <a
+    class="btn primary floating-download"
+    href="https://apps.apple.com/us/app/omni-capture/id6760931624"
+    target="_blank"
+    rel="noopener noreferrer"
+    id="floating-download"
+  >Download on the App Store</a>
+
   <script>
+    const LANGS = [
+      { key: "en", label: "English" },
+      { key: "zh-Hans", label: "简体" },
+      { key: "zh-Hant", label: "繁體" },
+      { key: "fr", label: "FR" },
+      { key: "de", label: "DE" },
+      { key: "it", label: "IT" },
+      { key: "ja", label: "日本語" },
+      { key: "ko", label: "한국어" }
+    ];
+
+    const FEATURE_ASSETS = {
+      capture: "./assets/screenshots/rich-brushes.png",
+      shapes: "./assets/screenshots/svg-brushes.png",
+      redaction: "./assets/screenshots/masic.png",
+      ocr: "./assets/screenshots/ocr.png",
+      workflow: "./assets/screenshots/drag-workflow.png"
+    };
+
+    const SVG_ILLUSTRATION = `
+      <svg viewBox="0 0 220 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="22" y="22" width="176" height="106" rx="16" fill="#ffffff" stroke="#D9E2EE"/>
+        <rect x="38" y="42" width="78" height="10" rx="5" fill="#CFE0FF"/>
+        <rect x="38" y="62" width="116" height="8" rx="4" fill="#E7EEF7"/>
+        <rect x="38" y="78" width="88" height="8" rx="4" fill="#E7EEF7"/>
+        <path d="M148 101L168 81" stroke="#1570EF" stroke-width="5" stroke-linecap="round"/>
+        <path d="M162 81H168V87" stroke="#1570EF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="34" y="136" width="60" height="14" rx="7" fill="#EAF2FF"/>
+        <rect x="102" y="136" width="84" height="14" rx="7" fill="#E8FAFA"/>
+      </svg>
+    `;
+
     const I18N = {
-      zh: {
-        support_title: "技术支持",
-        support_intro: "感谢使用 OmniCapture。",
-        faq_title: "常见问题",
-        faq_1: "无法截图/无权限：请在“系统设置 > 隐私与安全性 > 屏幕录制”中允许 OmniCapture。",
-        faq_2: "无法拖拽保存：请确认目标应用或文件夹可接收拖拽内容后重试。",
-        faq_3: "标注显示异常：请更新到最新版本并重启应用后再试。",
-        contact_title: "反馈与联系",
-        contact_desc: "如遇到问题，请反馈以下信息，便于我们快速定位：",
-        contact_1: "macOS 版本",
-        contact_2: "OmniCapture 版本",
-        contact_3: "问题复现步骤",
-        contact_4: "相关截图（可选）",
-        email_btn: "发送邮件",
-        privacy_btn: "查看隐私政策",
-        footer_note: "支持邮箱：xiangying320@126.com"
+      "zh-Hans": {
+        meta: {
+          title: "OmniCapture | 快速截图，专业标注，即拖即用",
+          description: "OmniCapture 是一款面向效率场景的 macOS 截图与标注工具，支持清晰标注、打码、OCR、自定义 SVG 画笔与拖拽工作流。"
+        },
+        header: {
+          tagline: "快速截图，清晰表达。",
+          navFeatures: "功能",
+          navShots: "截图",
+          navPrivacy: "隐私",
+          navChangelog: "更新"
+        },
+        hero: {
+          eyebrow: "macOS 截图与标注工具",
+          title: "快速截图，专业标注，即拖即用",
+          subtitle: "macOS 15.0 或更高版本",
+          desc: "OmniCapture 是一款面向效率场景的 macOS 截图与标注工具。你可以快速截取任意区域，并用画笔、图形、马赛克、文字、OCR 与自定义 SVG 画笔把重点说明清楚。",
+          note: "截图后可直接拖拽保存或拖拽到目标应用，减少中间步骤，让沟通、评审和整理更顺手。",
+          download: "App Store 下载",
+          secondary: "查看核心功能",
+          windowLabel: "工作流预览",
+          badges: ["OCR", "一键打码", "SVG 画笔"],
+          stats: [
+            { title: "标注清楚", desc: "画笔、文字、图形和形状快速到位。" },
+            { title: "内容可控", desc: "支持马赛克、文字打码和全屏打码。" },
+            { title: "结果即用", desc: "支持拖拽保存、拖拽到目标应用。" }
+          ]
+        },
+        features: {
+          title: "核心功能",
+          desc: "每个模块只处理一类职责，方便你在最短时间内完成截图、说明、保护与流转。",
+          items: [
+            {
+              key: "capture",
+              title: "Capture & Annotate",
+              desc: "快速启动截图后，立刻进入清晰的标注流程。基础截图、文字标注和重点强调放在同一节奏里完成。",
+              points: ["Command + Shift + S", "双击创建文本", "方向键微调"]
+            },
+            {
+              key: "shapes",
+              title: "Shapes & Brushes",
+              desc: "支持箭头、直线、虚线、波浪线、方形、圆形、三角形、椭圆形、爱心和五角星，也支持导入 SVG 作为自定义画笔。",
+              points: ["多种线条", "形状库", "SVG 导入"]
+            },
+            {
+              key: "redaction",
+              title: "Redaction",
+              desc: "需要保护敏感内容时，可以直接使用涂抹马赛克、文字一键打码和全屏打码，减少二次处理。",
+              points: ["马赛克", "文字打码", "全屏打码"]
+            },
+            {
+              key: "ocr",
+              title: "OCR",
+              desc: "支持识别并提取截图中的文字，适合快速整理、粘贴和复用内容，不必手动重新输入。",
+              points: ["文字识别", "文字提取", "整理复用"]
+            },
+            {
+              key: "workflow",
+              title: "Drag Workflow",
+              desc: "确认截图后可以直接拖拽保存，也可以拖拽到聊天、文档或其他目标应用，让工作流不断线。",
+              points: ["拖拽保存", "拖到应用", "减少中间步骤"]
+            }
+          ]
+        },
+        screenshots: null,
+        details: {
+          title: "补充说明",
+          desc: "继续了解产品定位、常用操作和工作方式。",
+          tabs: {
+            overview: "主页",
+            privacy: "隐私",
+            changelog: "更新日志"
+          }
+        },
+        overview: {
+          cards: [
+            {
+              title: "截图与说明更连贯",
+              p1: "OmniCapture 聚焦的是截图之后的表达效率，而不是复杂的后期处理。",
+              p2: "你可以在一次操作里完成选区、标注、调整和输出。"
+            },
+            {
+              title: "标注工具更完整",
+              p1: "支持颜色、粗细、透明度、字体和形状等常见调整项。",
+              p2: "当简单箭头不够时，还可以用形状和 SVG 画笔补充更具体的语义。"
+            },
+            {
+              title: "敏感信息处理更直接",
+              p1: "马赛克和文字打码能力适合客服、协作与评审场景。",
+              p2: "需要保护的信息可以在截图阶段直接处理，不必跳到其他工具。"
+            },
+            {
+              title: "输出方式更省步骤",
+              p1: "支持复制、拖拽保存和拖拽到目标应用。",
+              p2: "对于聊天沟通、文档编写和任务反馈，这样的流转更轻便。"
+            }
+          ],
+          quick: [
+            {
+              title: "常用快捷键",
+              list: ["Command + Shift + S：启动截图", "回车：确认选区 / 确认截图", "Esc：退出 OCR 模式 / 退出截屏"]
+            },
+            {
+              title: "常用操作",
+              list: ["左键：确认选区、拖拽绘制、双击创建文本；拖拽边角缩放；拖拽旋转按钮旋转", "右键：选中标注、移动", "键盘：方向键微调，Tab 切换，Delete 删除"]
+            }
+          ]
+        },
+        privacy: {
+          items: [
+            {
+              title: "1. 我们收集的数据",
+              p1: "默认情况下，OmniCapture 不会将你的截图内容或标注内容上传到我们的服务器。",
+              p2: "截图、文字标注、图形标注、马赛克和相关编辑操作主要在你的设备本地完成，OCR 识别与文字提取也仅在本地处理。"
+            },
+            {
+              title: "2. 屏幕录制权限",
+              p1: "应用会请求 macOS 的屏幕录制权限，仅用于你主动发起的截图与相关工作流。",
+              p2: "我们不会因为获取该权限而将你的屏幕内容上传到服务器。"
+            },
+            {
+              title: "3. 文件、复制与拖拽",
+              p1: "当你执行保存、复制或拖拽操作时，数据仅用于完成你明确发起的当前动作。",
+              p2: "相关内容由你控制，并保存在你的设备或你指定的目标应用中。"
+            },
+            {
+              title: "4. 第三方服务",
+              p1: "当前版本不包含用于广告追踪的第三方广告 SDK，OCR 识别不会将数据上报。",
+              p2: "如果未来引入在线 OCR 或第三方服务，并影响数据处理方式，我们会更新说明。"
+            },
+            {
+              title: "5. 数据安全",
+              p1: "我们会尽量减少不必要的数据流转，并采取合理措施保护本地处理流程中的数据安全。",
+              p2: "也建议你关注设备安全、系统权限设置和目标应用本身的隐私策略。"
+            },
+            {
+              title: "6. 联系我们",
+              p1: "如果你对隐私、权限或数据处理方式有疑问，可以通过支持邮箱联系我们。",
+              p2: "支持邮箱：xiangying320@126.com"
+            }
+          ]
+        },
+        changelog: {
+          items: [
+            {
+              kicker: "Planned",
+              title: "26.4.0（计划中）",
+              desc: "计划版本重点扩展马赛克、自定义 SVG 样式，以及 OCR 识别与文字提取能力。",
+              list: ["工具栏新增马赛克入口", "支持不同程度的高斯模糊", "支持 OCR 识别与文字提取", "支持导入、持久化和删除自定义 SVG 样式"]
+            },
+            {
+              kicker: "Current Release",
+              title: "26.3.0",
+              desc: "当前版本围绕标注能力和编辑控制展开，让截图后的表达动作更完整。",
+              list: ["支持画笔、文字、形状", "支持标注删除、旋转、缩放", "支持颜色、粗细和透明度调整"]
+            }
+          ]
+        },
+        footer: {
+          title: "把截图这件小事，做得更轻、更快，也更顺手。",
+          desc: "适合评审、反馈、说明文档、客服沟通和日常办公场景。",
+          emailLabel: "支持邮箱：",
+          download: "App Store 下载"
+        }
+      },
+      "zh-Hant": {
+        meta: {
+          title: "OmniCapture | 快速截圖，專業標註，即拖即用",
+          description: "OmniCapture 是一款為效率工作打造的 macOS 截圖與標註工具，支援清晰標記、打碼、OCR、自訂 SVG 畫筆與拖拽工作流。"
+        },
+        header: {
+          tagline: "快速截圖，清楚表達。",
+          navFeatures: "功能",
+          navShots: "截圖",
+          navPrivacy: "隱私",
+          navChangelog: "更新"
+        },
+        hero: {
+          eyebrow: "macOS 截圖與標註工具",
+          title: "快速截圖，專業標註，即拖即用",
+          subtitle: "macOS 15.0 或以上版本",
+          desc: "OmniCapture 是一款為效率工作打造的 macOS 截圖工具。你可以快速擷取任意區域，並用畫筆、圖形、馬賽克、文字、OCR 與自訂 SVG 畫筆把重點說清楚。",
+          note: "截圖後可直接拖拽儲存或拖拽到目標 App，減少中間步驟，讓溝通、審閱與整理更順暢。",
+          download: "App Store 下載",
+          secondary: "查看核心功能",
+          windowLabel: "工作流預覽",
+          badges: ["OCR", "一鍵打碼", "SVG 畫筆"],
+          stats: [
+            { title: "標註清楚", desc: "畫筆、文字、圖形與形狀快速到位。" },
+            { title: "內容可控", desc: "支援馬賽克、文字打碼與全螢幕打碼。" },
+            { title: "結果即用", desc: "支援拖拽儲存與拖拽到目標 App。" }
+          ]
+        },
+        features: {
+          title: "核心功能",
+          desc: "每個模組只負責一類能力，讓你能在最短時間內完成截圖、說明、保護與流轉。",
+          items: [
+            {
+              key: "capture",
+              title: "Capture & Annotate",
+              desc: "快速啟動截圖後，立刻進入清晰的標註流程。基礎截圖、文字註解與重點強調可以在同一節奏裡完成。",
+              points: ["Command + Shift + S", "雙擊建立文字", "方向鍵微調"]
+            },
+            {
+              key: "shapes",
+              title: "Shapes & Brushes",
+              desc: "支援箭頭、直線、虛線、波浪線、方形、圓形、三角形、橢圓形、愛心與五角星，也支援匯入 SVG 作為自訂畫筆。",
+              points: ["多種線條", "形狀庫", "SVG 匯入"]
+            },
+            {
+              key: "redaction",
+              title: "Redaction",
+              desc: "需要保護敏感資訊時，可以直接使用塗抹馬賽克、文字一鍵打碼與全螢幕打碼，減少二次處理。",
+              points: ["馬賽克", "文字打碼", "全螢幕打碼"]
+            },
+            {
+              key: "ocr",
+              title: "OCR",
+              desc: "支援辨識並擷取截圖中的文字，適合快速整理、貼上與重用內容，不必重新輸入。",
+              points: ["文字辨識", "文字擷取", "整理重用"]
+            },
+            {
+              key: "workflow",
+              title: "Drag Workflow",
+              desc: "確認截圖後可直接拖拽儲存，也能拖拽到聊天、文件或其他目標 App，讓工作流不中斷。",
+              points: ["拖拽儲存", "拖到 App", "減少中間步驟"]
+            }
+          ]
+        },
+        screenshots: null,
+        details: {
+          title: "補充說明",
+          desc: "繼續了解產品定位、常用操作與工作方式。",
+          tabs: {
+            overview: "主頁",
+            privacy: "隱私",
+            changelog: "更新日誌"
+          }
+        },
+        overview: {
+          cards: [
+            {
+              title: "截圖與說明更連貫",
+              p1: "OmniCapture 聚焦的是截圖之後的表達效率，而不是複雜的後期處理。",
+              p2: "你可以在一次操作裡完成選區、標註、調整與輸出。"
+            },
+            {
+              title: "標註工具更完整",
+              p1: "支援顏色、粗細、透明度、字體和形狀等常見調整項。",
+              p2: "當簡單箭頭不夠時，還可以用形狀與 SVG 畫筆補充更具體的語義。"
+            },
+            {
+              title: "敏感資訊處理更直接",
+              p1: "馬賽克與文字打碼能力適合客服、協作與審閱場景。",
+              p2: "需要保護的資訊可在截圖階段直接處理，不必切換到其他工具。"
+            },
+            {
+              title: "輸出方式更省步驟",
+              p1: "支援複製、拖拽儲存與拖拽到目標 App。",
+              p2: "對聊天溝通、文件撰寫與任務回饋來說，這樣的流轉更輕便。"
+            }
+          ],
+          quick: [
+            {
+              title: "常用快捷鍵",
+              list: ["Command + Shift + S：啟動截圖", "Enter：確認選區 / 確認截圖", "Esc：離開 OCR 模式 / 離開截圖"]
+            },
+            {
+              title: "常用操作",
+              list: ["左鍵：確認選區、拖拽繪製、雙擊建立文字；拖拽邊角縮放；拖拽旋轉按鈕旋轉", "右鍵：選取標註、移動", "鍵盤：方向鍵微調，Tab 切換，Delete 刪除"]
+            }
+          ]
+        },
+        privacy: {
+          items: [
+            {
+              title: "1. 我們收集的資料",
+              p1: "預設情況下，OmniCapture 不會將你的截圖內容或標註內容上傳到我們的伺服器。",
+              p2: "截圖、文字標註、圖形標註、馬賽克與相關編輯操作主要在你的裝置本地完成，OCR 辨識與文字擷取也僅在本地處理。"
+            },
+            {
+              title: "2. 螢幕錄製權限",
+              p1: "App 會要求 macOS 的螢幕錄製權限，僅用於你主動發起的截圖與相關工作流。",
+              p2: "我們不會因取得此權限而將你的畫面內容上傳到伺服器。"
+            },
+            {
+              title: "3. 檔案、複製與拖拽",
+              p1: "當你執行儲存、複製或拖拽操作時，資料僅用於完成你明確發起的當前動作。",
+              p2: "相關內容由你控制，並保存在你的裝置或你指定的目標 App 中。"
+            },
+            {
+              title: "4. 第三方服務",
+              p1: "目前版本不包含用於廣告追蹤的第三方廣告 SDK，OCR 辨識也不會將資料上傳。",
+              p2: "若未來引入線上 OCR 或第三方服務，並影響資料處理方式，我們會更新說明。"
+            },
+            {
+              title: "5. 資料安全",
+              p1: "我們會盡量減少不必要的資料流轉，並採取合理措施保護本地處理流程中的資料安全。",
+              p2: "也建議你關注裝置安全、系統權限設定與目標 App 自身的隱私策略。"
+            },
+            {
+              title: "6. 聯絡我們",
+              p1: "如果你對隱私、權限或資料處理方式有疑問，可以透過支援信箱聯絡我們。",
+              p2: "支援信箱：xiangying320@126.com"
+            }
+          ]
+        },
+        changelog: {
+          items: [
+            {
+              kicker: "Planned",
+              title: "26.4.0（規劃中）",
+              desc: "規劃版本重點擴充馬賽克、自訂 SVG 樣式，以及 OCR 辨識與文字擷取能力。",
+              list: ["工具列新增馬賽克入口", "支援不同程度的高斯模糊", "支援 OCR 辨識與文字擷取", "支援匯入、持久化與刪除自訂 SVG 樣式"]
+            },
+            {
+              kicker: "Current Release",
+              title: "26.3.0",
+              desc: "目前版本圍繞標註能力與編輯控制展開，讓截圖後的表達動作更完整。",
+              list: ["支援畫筆、文字、形狀", "支援標註刪除、旋轉、縮放", "支援顏色、粗細與透明度調整"]
+            }
+          ]
+        },
+        footer: {
+          title: "把截圖這件小事，做得更輕、更快，也更順手。",
+          desc: "適合審閱、回饋、說明文件、客服溝通與日常辦公場景。",
+          emailLabel: "支援信箱：",
+          download: "App Store 下載"
+        }
       },
       en: {
-        support_title: "Support",
-        support_intro: "Thanks for using OmniCapture.",
-        faq_title: "FAQ",
-        faq_1: "Can't capture screen / no permission: allow OmniCapture in System Settings > Privacy & Security > Screen Recording.",
-        faq_2: "Drag-to-save fails: make sure the target app or folder accepts drag-and-drop, then try again.",
-        faq_3: "Annotation rendering issue: update to the latest version and restart the app.",
-        contact_title: "Feedback & Contact",
-        contact_desc: "To help us troubleshoot quickly, please include:",
-        contact_1: "macOS version",
-        contact_2: "OmniCapture version",
-        contact_3: "Steps to reproduce",
-        contact_4: "Related screenshots (optional)",
-        email_btn: "Send Email",
-        privacy_btn: "Privacy Policy",
-        footer_note: "Support email: xiangying320@126.com"
+        meta: {
+          title: "OmniCapture | Capture fast, annotate clearly",
+          description: "OmniCapture is a productivity-focused macOS screenshot and annotation tool with clear markup, OCR, redaction, custom SVG brushes, and drag-and-drop workflows."
+        },
+        header: {
+          tagline: "Capture faster. Explain clearly.",
+          navFeatures: "Features",
+          navShots: "Screenshots",
+          navPrivacy: "Privacy",
+          navChangelog: "Updates"
+        },
+        hero: {
+          eyebrow: "macOS Screenshot Tool",
+          title: "Capture fast, annotate clearly",
+          subtitle: "Requires macOS 15.0 or later.",
+          desc: "OmniCapture is a productivity-focused screenshot tool for macOS. Capture any area quickly, then explain what matters with text, shapes, mosaic blur, OCR, and custom SVG brush styles.",
+          note: "Drag to save or drag directly into other apps to reduce extra steps in reviews, communication, and everyday workflows.",
+          download: "Download on the App Store",
+          secondary: "Explore features",
+          windowLabel: "Workflow Preview",
+          badges: ["OCR", "Redaction", "SVG Brush"],
+          stats: [
+            { title: "Annotate", desc: "Text, shapes, lines, and highlights stay easy to reach." },
+            { title: "Protect", desc: "Redact sensitive details with mosaic and text masking." },
+            { title: "Reuse", desc: "Extract text and move the result straight into other apps." }
+          ]
+        },
+        features: {
+          title: "Core features",
+          desc: "Each module has a clear job so the page stays easy to scan and the product stays easy to understand.",
+          items: [
+            {
+              key: "capture",
+              title: "Capture & Annotate",
+              desc: "Start a screenshot quickly, then move straight into annotation. Basic capture, text notes, and visual emphasis happen in one continuous flow.",
+              points: ["Command + Shift + S", "Double-click for text", "Arrow-key nudge"]
+            },
+            {
+              key: "shapes",
+              title: "Shapes & Brushes",
+              desc: "Use arrows, straight lines, dashed lines, waves, rectangles, circles, triangles, ellipses, hearts, and stars. You can also import SVG files as custom brushes.",
+              points: ["Line styles", "Shape library", "SVG import"]
+            },
+            {
+              key: "redaction",
+              title: "Redaction",
+              desc: "When content needs protection, use mosaic blur, one-tap text masking, and full-screen redaction without leaving the screenshot workflow.",
+              points: ["Mosaic blur", "Text masking", "Full-screen redaction"]
+            },
+            {
+              key: "ocr",
+              title: "OCR",
+              desc: "Recognize and extract text from screenshots so notes, tickets, and snippets can be reused immediately instead of retyped manually.",
+              points: ["Text recognition", "Text extraction", "Quick reuse"]
+            },
+            {
+              key: "workflow",
+              title: "Drag Workflow",
+              desc: "After capture, drag to save or drag directly into chat, documents, or other apps so the handoff stays quick and uninterrupted.",
+              points: ["Drag to save", "Drag into apps", "Fewer extra steps"]
+            }
+          ]
+        },
+        screenshots: null,
+        details: {
+          title: "More context",
+          desc: "A quick summary of the product position, common actions, and workflow habits.",
+          tabs: {
+            overview: "Home",
+            privacy: "Privacy",
+            changelog: "Changelog"
+          }
+        },
+        overview: {
+          cards: [
+            {
+              title: "A clearer post-capture flow",
+              p1: "OmniCapture focuses on what happens after the screenshot is taken, not on heavyweight editing.",
+              p2: "Selection, annotation, adjustment, and output can stay in one compact flow."
+            },
+            {
+              title: "Annotation tools that feel complete",
+              p1: "Common controls like color, line width, opacity, font choice, and shape options stay easy to reach.",
+              p2: "When simple arrows are not enough, shapes and SVG brushes add more expressive structure."
+            },
+            {
+              title: "Direct handling for sensitive details",
+              p1: "Mosaic blur and text masking help in support, collaboration, and review workflows.",
+              p2: "Sensitive content can be handled during capture instead of in a second tool."
+            },
+            {
+              title: "Output with less friction",
+              p1: "Copy, drag to save, or drag directly into the next app.",
+              p2: "That lighter handoff works well for chat, documentation, and task feedback."
+            }
+          ],
+          quick: [
+            {
+              title: "Common shortcuts",
+              list: ["Command + Shift + S: start capture", "Enter: confirm selection / confirm screenshot", "Esc: exit OCR mode / exit capture"]
+            },
+            {
+              title: "Common actions",
+              list: ["Left click: confirm area, draw, double-click to create text, resize from corners, and rotate from the rotate handle", "Right click: select and move annotations", "Keyboard: nudge with arrows, cycle with Tab, remove with Delete"]
+            }
+          ]
+        },
+        privacy: {
+          items: [
+            {
+              title: "1. Data We Collect",
+              p1: "By default, OmniCapture does not upload your screenshot content or annotation content to our servers.",
+              p2: "Screenshots, text notes, shapes, mosaic edits, and related editing actions are primarily processed on your device, and OCR recognition and text extraction stay local as well."
+            },
+            {
+              title: "2. Screen Recording Permission",
+              p1: "The app requests macOS Screen Recording permission only for screenshot features and workflows that you actively trigger.",
+              p2: "That permission is not used to upload your screen content to our servers."
+            },
+            {
+              title: "3. Files, Copy, and Drag",
+              p1: "When you save, copy, or drag content, the data is used only to complete the action you intentionally requested.",
+              p2: "The result stays under your control and is stored on your device or in the destination app you choose."
+            },
+            {
+              title: "4. Third-Party Services",
+              p1: "The current version does not include third-party advertising SDKs for tracking, and OCR recognition does not upload data.",
+              p2: "If future online OCR or third-party services change how data is handled, we will update this description."
+            },
+            {
+              title: "5. Data Security",
+              p1: "We aim to reduce unnecessary data movement and take reasonable steps to protect data involved in local processing.",
+              p2: "You should also review device security, system permissions, and the privacy practices of destination apps."
+            },
+            {
+              title: "6. Contact Us",
+              p1: "If you have questions about privacy, permissions, or data handling, please contact us by email.",
+              p2: "Support email: xiangying320@126.com"
+            }
+          ]
+        },
+        changelog: {
+          items: [
+            {
+              kicker: "Planned",
+              title: "26.4.0 (Planned)",
+              desc: "The planned release expands mosaic styles, custom SVG styles, and OCR recognition plus text extraction.",
+              list: ["Add a mosaic entry to the toolbar", "Support multiple levels of Gaussian blur", "Add OCR recognition and text extraction", "Support importing, persisting, and deleting custom SVG styles"]
+            },
+            {
+              kicker: "Current Release",
+              title: "26.3.0",
+              desc: "The current release focuses on annotation coverage and editing controls so post-capture communication feels more complete.",
+              list: ["Added brush, text, and shape tools", "Added deletion, rotation, and scaling for annotations", "Added controls for color, line width, and opacity"]
+            }
+          ]
+        },
+        footer: {
+          title: "Make screenshots easier to share and easier to trust.",
+          desc: "Well suited for reviews, feedback, documentation, support, and everyday office workflows.",
+          emailLabel: "Support:",
+          download: "Download on the App Store"
+        }
+      },
+      fr: {
+        meta: {
+          title: "OmniCapture | Capture rapide, annotation pro",
+          description: "OmniCapture est un outil de capture d'ecran macOS concu pour la productivite, avec annotation claire, OCR, masquage, pinceaux SVG et glisser-deposer."
+        },
+        header: {
+          tagline: "Capture rapide, explication claire.",
+          navFeatures: "Fonctions",
+          navShots: "Captures",
+          navPrivacy: "Confidentialite",
+          navChangelog: "Mises a jour"
+        },
+        hero: {
+          eyebrow: "Outil de capture d'ecran macOS",
+          title: "Capture rapide, annotation pro",
+          subtitle: "Necessite macOS 15.0 ou version ulterieure.",
+          desc: "OmniCapture est un outil de capture d'ecran macOS concu pour la productivite. Capturez une zone rapidement, puis expliquez clairement avec du texte, des formes, du flou mosaique, l'OCR et des pinceaux SVG personnalises.",
+          note: "Glissez pour enregistrer ou glissez directement dans d'autres apps afin de reduire les etapes pendant les revues, les echanges et le travail quotidien.",
+          download: "Telecharger sur l'App Store",
+          secondary: "Voir les fonctions",
+          windowLabel: "Apercu du flux",
+          badges: ["OCR", "Masquage", "Pinceau SVG"],
+          stats: [
+            { title: "Annoter", desc: "Texte, formes, lignes et mises en evidence restent simples d'acces." },
+            { title: "Proteger", desc: "Masquez les details sensibles avec mosaique et masquage texte." },
+            { title: "Reutiliser", desc: "Extrayez le texte puis envoyez-le directement dans d'autres apps." }
+          ]
+        },
+        features: {
+          title: "Fonctions principales",
+          desc: "Chaque module a un role clair, ce qui rend la page plus lisible et le produit plus facile a comprendre.",
+          items: [
+            {
+              key: "capture",
+              title: "Capture & Annotate",
+              desc: "Lancez une capture rapidement puis passez directement a l'annotation. Capture, notes texte et mise en valeur visuelle restent dans un seul flux.",
+              points: ["Command + Shift + S", "Double-clic pour texte", "Ajustement au clavier"]
+            },
+            {
+              key: "shapes",
+              title: "Shapes & Brushes",
+              desc: "Utilisez fleches, lignes, pointilles, vagues, rectangles, cercles, triangles, ellipses, coeurs et etoiles. Les fichiers SVG peuvent aussi servir de pinceaux personnalises.",
+              points: ["Styles de ligne", "Bibliotheque de formes", "Import SVG"]
+            },
+            {
+              key: "redaction",
+              title: "Redaction",
+              desc: "Quand il faut proteger du contenu, utilisez le flou mosaique, le masquage texte en un clic et le masquage plein ecran sans quitter le flux de capture.",
+              points: ["Mosaique", "Masquage texte", "Masquage plein ecran"]
+            },
+            {
+              key: "ocr",
+              title: "OCR",
+              desc: "Reconnaissez et extrayez le texte des captures afin de reutiliser rapidement notes, tickets et extraits sans ressaisie manuelle.",
+              points: ["Reconnaissance", "Extraction", "Reutilisation rapide"]
+            },
+            {
+              key: "workflow",
+              title: "Drag Workflow",
+              desc: "Apres la capture, glissez pour enregistrer ou glissez directement dans le chat, les documents ou d'autres apps pour garder un transfert rapide.",
+              points: ["Glisser pour enregistrer", "Glisser dans les apps", "Moins d'etapes"]
+            }
+          ]
+        },
+        screenshots: null,
+        details: {
+          title: "Contexte produit",
+          desc: "Un resume rapide du positionnement produit, des actions courantes et du flux de travail.",
+          tabs: {
+            overview: "Accueil",
+            privacy: "Confidentialite",
+            changelog: "Journal"
+          }
+        },
+        overview: {
+          cards: [
+            {
+              title: "Un flux apres capture plus clair",
+              p1: "OmniCapture se concentre sur l'efficacite apres la capture, pas sur un montage complexe.",
+              p2: "Selection, annotation, ajustement et sortie peuvent rester dans un flux compact."
+            },
+            {
+              title: "Des outils d'annotation complets",
+              p1: "Couleur, epaisseur, opacite, police et formes restent faciles d'acces.",
+              p2: "Quand une simple fleche ne suffit pas, les formes et pinceaux SVG ajoutent plus de structure."
+            },
+            {
+              title: "Traitement direct des details sensibles",
+              p1: "Le flou mosaique et le masquage texte aident dans le support, la collaboration et la revue.",
+              p2: "Le contenu sensible peut etre traite pendant la capture plutot que dans un second outil."
+            },
+            {
+              title: "Sortie avec moins de friction",
+              p1: "Copiez, glissez pour enregistrer ou glissez directement dans l'app suivante.",
+              p2: "Ce transfert plus leger convient bien au chat, a la documentation et au feedback."
+            }
+          ],
+          quick: [
+            {
+              title: "Raccourcis courants",
+              list: ["Command + Shift + S : lancer la capture", "Entree : confirmer la selection / confirmer la capture", "Esc : quitter l'OCR / quitter la capture"]
+            },
+            {
+              title: "Actions courantes",
+              list: ["Clic gauche : confirmer, dessiner ou double-cliquer pour le texte", "Clic droit : selectionner, deplacer, redimensionner et faire pivoter", "Clavier : fleches pour ajuster, Tab pour parcourir, Suppr pour supprimer"]
+            }
+          ]
+        },
+        privacy: {
+          items: [
+            { title: "1. Donnees collectees", p1: "Par defaut, OmniCapture n'envoie pas vos captures ni vos annotations vers nos serveurs.", p2: "Captures, texte, formes, mosaique et actions d'edition sont principalement traites sur votre appareil, et l'OCR ainsi que l'extraction de texte restent egalement en local." },
+            { title: "2. Autorisation d'enregistrement d'ecran", p1: "L'app demande l'autorisation d'enregistrement d'ecran de macOS uniquement pour les fonctions de capture que vous lancez.", p2: "Cette autorisation n'est pas utilisee pour televerser votre contenu d'ecran." },
+            { title: "3. Fichiers, copie et glisser-deposer", p1: "Quand vous enregistrez, copiez ou glissez du contenu, les donnees servent seulement a realiser l'action demandee.", p2: "Le resultat reste sous votre controle sur votre appareil ou dans l'app de destination choisie." },
+            { title: "4. Services tiers", p1: "La version actuelle n'inclut pas de SDK publicitaires tiers pour le suivi, et l'OCR n'envoie pas vos donnees.", p2: "Si un futur service OCR en ligne ou tiers modifie la facon dont les donnees sont traitees, cette description sera mise a jour." },
+            { title: "5. Securite des donnees", p1: "Nous cherchons a reduire les mouvements de donnees inutiles et a proteger les traitements locaux.", p2: "Nous vous recommandons aussi de verifier la securite de l'appareil et les autorisations systeme." },
+            { title: "6. Nous contacter", p1: "Pour toute question sur la confidentialite, les autorisations ou les donnees, contactez-nous par email.", p2: "Email de support : xiangying320@126.com" }
+          ]
+        },
+        changelog: {
+          items: [
+            { kicker: "Planned", title: "26.4.0 (Prevu)", desc: "La version prevue etend les styles de mosaique, les styles SVG personnalises, ainsi que l'OCR et l'extraction de texte.", list: ["Ajouter une entree mosaique a la barre d'outils", "Prendre en charge plusieurs niveaux de flou gaussien", "Ajouter l'OCR et l'extraction de texte", "Permettre l'import, la conservation et la suppression de styles SVG personnalises"] },
+            { kicker: "Current Release", title: "26.3.0", desc: "La version actuelle se concentre sur les annotations et les controles d'edition pour rendre la communication apres capture plus complete.", list: ["Ajout des outils pinceau, texte et forme", "Ajout de la suppression, rotation et mise a l'echelle des annotations", "Ajout des reglages de couleur, epaisseur et opacite"] }
+          ]
+        },
+        footer: {
+          title: "Rendre la capture plus simple a partager et plus simple a comprendre.",
+          desc: "Bien adapte aux revues, retours, documents, support et flux de travail quotidiens.",
+          emailLabel: "Support :",
+          download: "Telecharger sur l'App Store"
+        }
+      },
+      de: {
+        meta: {
+          title: "OmniCapture | Schnell erfassen, klar markieren",
+          description: "OmniCapture ist ein produktives Screenshot-Tool fuer macOS mit klarer Annotation, OCR, Maskierung, benutzerdefinierten SVG-Pinseln und Drag-and-drop."
+        },
+        header: {
+          tagline: "Schneller erfassen. Klarer erklaeren.",
+          navFeatures: "Funktionen",
+          navShots: "Screenshots",
+          navPrivacy: "Datenschutz",
+          navChangelog: "Updates"
+        },
+        hero: {
+          eyebrow: "macOS Screenshot-Tool",
+          title: "Schnell erfassen, klar markieren",
+          subtitle: "Erfordert macOS 15.0 oder neuer.",
+          desc: "OmniCapture ist ein Screenshot-Tool fuer macOS mit Fokus auf Produktivitaet. Erfassen Sie schnell einen Bereich und erklaeren Sie ihn mit Text, Formen, Mosaik, OCR und eigenen SVG-Pinseln.",
+          note: "Per Drag-and-drop speichern oder direkt in andere Apps uebernehmen, damit Reviews, Abstimmung und Tagesarbeit weniger Zwischenschritte brauchen.",
+          download: "Im App Store laden",
+          secondary: "Funktionen ansehen",
+          windowLabel: "Workflow-Vorschau",
+          badges: ["OCR", "Maskierung", "SVG-Pinsel"],
+          stats: [
+            { title: "Annotieren", desc: "Text, Formen, Linien und Hervorhebungen bleiben schnell erreichbar." },
+            { title: "Schuetzen", desc: "Verdecken Sie sensible Details mit Mosaik und Textmaskierung." },
+            { title: "Weitergeben", desc: "Text extrahieren und das Ergebnis direkt in andere Apps uebernehmen." }
+          ]
+        },
+        features: {
+          title: "Kernfunktionen",
+          desc: "Jedes Modul hat eine klare Aufgabe, damit die Seite leicht lesbar bleibt und das Produkt sofort verstaendlich ist.",
+          items: [
+            { key: "capture", title: "Capture & Annotate", desc: "Starten Sie eine Aufnahme schnell und wechseln Sie direkt in die Annotation. Aufnahme, Textnotizen und Hervorhebungen bleiben in einem zusammenhaengenden Ablauf.", points: ["Command + Shift + S", "Doppelklick fuer Text", "Feinjustierung per Pfeiltaste"] },
+            { key: "shapes", title: "Shapes & Brushes", desc: "Nutzen Sie Pfeile, Linien, gestrichelte Linien, Wellen, Rechtecke, Kreise, Dreiecke, Ellipsen, Herzen und Sterne. SVG-Dateien lassen sich als eigene Pinsel importieren.", points: ["Linienstile", "Formbibliothek", "SVG-Import"] },
+            { key: "redaction", title: "Redaction", desc: "Wenn Inhalte geschuetzt werden muessen, nutzen Sie Mosaik, Ein-Klick-Textmaskierung und Vollbild-Maskierung direkt im Screenshot-Ablauf.", points: ["Mosaik", "Textmaskierung", "Vollbild-Maskierung"] },
+            { key: "ocr", title: "OCR", desc: "Text aus Screenshots erkennen und extrahieren, damit Notizen, Tickets und Ausschnitte sofort weiterverwendet werden koennen.", points: ["Texterkennung", "Extraktion", "Schnelle Weiterverwendung"] },
+            { key: "workflow", title: "Drag Workflow", desc: "Nach der Aufnahme per Drag-and-drop speichern oder direkt in Chat, Dokumente und andere Apps ziehen, damit der Ablauf nicht unterbrochen wird.", points: ["Per Ziehen speichern", "In Apps ziehen", "Weniger Zwischenschritte"] }
+          ]
+        },
+        screenshots: null,
+        details: {
+          title: "Mehr Kontext",
+          desc: "Eine kurze Zusammenfassung von Produktfokus, haeufigen Aktionen und Arbeitsweise.",
+          tabs: { overview: "Start", privacy: "Datenschutz", changelog: "Changelog" }
+        },
+        overview: {
+          cards: [
+            { title: "Klarerer Ablauf nach der Aufnahme", p1: "OmniCapture konzentriert sich auf die Effizienz nach dem Screenshot, nicht auf schwere Nachbearbeitung.", p2: "Auswahl, Annotation, Anpassung und Ausgabe koennen in einem kompakten Ablauf bleiben." },
+            { title: "Vollstaendige Annotationswerkzeuge", p1: "Farbe, Strichstaerke, Deckkraft, Schriftwahl und Formen sind schnell erreichbar.", p2: "Wenn einfache Pfeile nicht reichen, ergaenzen Formen und SVG-Pinsel die Ausdrucksmoeglichkeiten." },
+            { title: "Direkter Umgang mit sensiblen Details", p1: "Mosaik und Textmaskierung helfen bei Support, Zusammenarbeit und Reviews.", p2: "Sensible Inhalte lassen sich waehrend der Aufnahme behandeln statt in einem zweiten Tool." },
+            { title: "Ausgabe mit weniger Reibung", p1: "Kopieren, per Drag-and-drop speichern oder direkt in die naechste App ziehen.", p2: "Das passt gut fuer Chat, Dokumentation und Aufgabenfeedback." }
+          ],
+          quick: [
+            { title: "Hauefige Kurzbefehle", list: ["Command + Shift + S: Aufnahme starten", "Enter: Auswahl bestaetigen / Screenshot bestaetigen", "Esc: OCR-Modus verlassen / Aufnahme verlassen"] },
+            { title: "Hauefige Aktionen", list: ["Linksklick: Bereich bestaetigen, zeichnen oder per Doppelklick Text anlegen", "Rechtsklick: Annotationen auswaehlen, verschieben, skalieren und drehen", "Tastatur: mit Pfeilen verschieben, mit Tab wechseln, mit Delete loeschen"] }
+          ]
+        },
+        privacy: {
+          items: [
+            { title: "1. Welche Daten wir erfassen", p1: "Standardmaessig laedt OmniCapture Ihre Screenshot- oder Annotationsinhalte nicht auf unsere Server hoch.", p2: "Screenshots, Textnotizen, Formen, Mosaik und Bearbeitungsschritte werden hauptsaechlich lokal verarbeitet, ebenso OCR-Erkennung und Textextraktion." },
+            { title: "2. Bildschirmaufnahme-Berechtigung", p1: "Die App fragt die macOS-Berechtigung zur Bildschirmaufnahme nur fuer von Ihnen gestartete Screenshot-Funktionen an.", p2: "Diese Berechtigung wird nicht dazu verwendet, Bildschirminhalte auf unsere Server zu laden." },
+            { title: "3. Dateien, Kopieren und Ziehen", p1: "Wenn Sie Inhalte speichern, kopieren oder ziehen, werden die Daten nur fuer die von Ihnen angeforderte Aktion genutzt.", p2: "Das Ergebnis bleibt unter Ihrer Kontrolle auf Ihrem Geraet oder in der gewaehlten Ziel-App." },
+            { title: "4. Drittanbieterdienste", p1: "Die aktuelle Version enthaelt keine Drittanbieter-Werbe-SDKs fuer Tracking, und OCR uebertraegt keine Daten.", p2: "Falls kuenftige Online-OCR- oder Drittanbieterdienste den Umgang mit Daten veraendern, aktualisieren wir diese Beschreibung." },
+            { title: "5. Datensicherheit", p1: "Wir versuchen unnoetige Datenbewegungen zu reduzieren und lokale Verarbeitung angemessen zu schuetzen.", p2: "Bitte beachten Sie auch Geraetesicherheit, Systemberechtigungen und Datenschutzrichtlinien der Ziel-Apps." },
+            { title: "6. Kontakt", p1: "Bei Fragen zu Datenschutz, Berechtigungen oder Datenverarbeitung kontaktieren Sie uns bitte per E-Mail.", p2: "Support-E-Mail: xiangying320@126.com" }
+          ]
+        },
+        changelog: {
+          items: [
+            { kicker: "Planned", title: "26.4.0 (Geplant)", desc: "Die geplante Version erweitert Mosaikstile, benutzerdefinierte SVG-Stile sowie OCR-Erkennung und Textextraktion.", list: ["Mosaik-Eintrag in der Werkzeugleiste", "Mehrere Stufen von Gauescher Unschärfe", "OCR-Erkennung und Textextraktion", "Import, Speicherung und Loeschen benutzerdefinierter SVG-Stile"] },
+            { kicker: "Current Release", title: "26.3.0", desc: "Die aktuelle Version konzentriert sich auf Annotationen und Bearbeitungskontrollen, damit die Kommunikation nach dem Screenshot vollstaendiger wirkt.", list: ["Pinsel-, Text- und Formwerkzeuge hinzugefuegt", "Loeschen, Drehen und Skalieren fuer Annotationen hinzugefuegt", "Steuerung fuer Farbe, Strichstaerke und Deckkraft hinzugefuegt"] }
+          ]
+        },
+        footer: {
+          title: "Screenshots leichter teilen und leichter verstaendlich machen.",
+          desc: "Gut geeignet fuer Reviews, Feedback, Dokumentation, Support und alltaegliche Arbeitsablaeufe.",
+          emailLabel: "Support:",
+          download: "Im App Store laden"
+        }
+      },
+      it: {
+        meta: {
+          title: "OmniCapture | Cattura rapida, note precise",
+          description: "OmniCapture e uno strumento di screenshot per macOS orientato alla produttivita, con annotazione chiara, OCR, oscuramento, pennelli SVG e drag and drop."
+        },
+        header: {
+          tagline: "Cattura rapida. Spiegazione chiara.",
+          navFeatures: "Funzioni",
+          navShots: "Schermate",
+          navPrivacy: "Privacy",
+          navChangelog: "Aggiornamenti"
+        },
+        hero: {
+          eyebrow: "Strumento screenshot per macOS",
+          title: "Cattura rapida, note precise",
+          subtitle: "Richiede macOS 15.0 o versione successiva.",
+          desc: "OmniCapture e uno strumento di screenshot per macOS pensato per lavorare piu velocemente. Cattura un'area in pochi secondi e spiegala con testo, forme, mosaico, OCR e pennelli SVG personalizzati.",
+          note: "Trascina per salvare o trascina direttamente in altre app, cosi review, comunicazione e lavoro quotidiano richiedono meno passaggi.",
+          download: "Scarica su App Store",
+          secondary: "Esplora le funzioni",
+          windowLabel: "Anteprima del flusso",
+          badges: ["OCR", "Oscuramento", "Pennello SVG"],
+          stats: [
+            { title: "Annota", desc: "Testo, forme, linee e evidenziazioni restano subito disponibili." },
+            { title: "Proteggi", desc: "Nascondi i dettagli sensibili con mosaico e mascheratura testo." },
+            { title: "Riusa", desc: "Estrai il testo e portalo subito nelle altre app." }
+          ]
+        },
+        features: {
+          title: "Funzioni principali",
+          desc: "Ogni modulo ha un compito chiaro, cosi la pagina resta semplice da leggere e il prodotto semplice da capire.",
+          items: [
+            { key: "capture", title: "Capture & Annotate", desc: "Avvia rapidamente uno screenshot e passa subito all'annotazione. Cattura, testo e enfasi visiva restano nello stesso flusso.", points: ["Command + Shift + S", "Doppio clic per testo", "Micro-regolazione con frecce"] },
+            { key: "shapes", title: "Shapes & Brushes", desc: "Usa frecce, linee, tratteggi, onde, rettangoli, cerchi, triangoli, ellissi, cuori e stelle. Puoi anche importare file SVG come pennelli personalizzati.", points: ["Stili di linea", "Libreria forme", "Import SVG"] },
+            { key: "redaction", title: "Redaction", desc: "Quando serve proteggere contenuti, usa mosaico, mascheratura testo con un clic e oscuramento a schermo intero senza uscire dal flusso.", points: ["Mosaico", "Mascheratura testo", "Oscuramento completo"] },
+            { key: "ocr", title: "OCR", desc: "Riconosci ed estrai il testo dagli screenshot per riutilizzare note, ticket e frammenti senza riscriverli.", points: ["Riconoscimento", "Estrazione", "Riutilizzo rapido"] },
+            { key: "workflow", title: "Drag Workflow", desc: "Dopo la cattura puoi trascinare per salvare o trascinare direttamente in chat, documenti e altre app per non interrompere il lavoro.", points: ["Trascina per salvare", "Trascina nelle app", "Meno passaggi"] }
+          ]
+        },
+        screenshots: null,
+        details: {
+          title: "Più contesto",
+          desc: "Un riepilogo rapido su posizionamento del prodotto, azioni comuni e flusso di lavoro.",
+          tabs: { overview: "Home", privacy: "Privacy", changelog: "Registro" }
+        },
+        overview: {
+          cards: [
+            { title: "Un flusso piu chiaro dopo la cattura", p1: "OmniCapture si concentra sull'efficienza dopo lo screenshot, non su una post-produzione pesante.", p2: "Selezione, annotazione, regolazione e output possono restare in un flusso compatto." },
+            { title: "Strumenti di annotazione completi", p1: "Colore, spessore, opacita, font e forme restano facili da raggiungere.", p2: "Quando una semplice freccia non basta, forme e pennelli SVG aggiungono piu struttura." },
+            { title: "Gestione diretta dei dettagli sensibili", p1: "Mosaico e mascheratura testo sono utili per supporto, collaborazione e review.", p2: "I contenuti sensibili possono essere trattati gia in fase di cattura, senza un secondo strumento." },
+            { title: "Output con meno attrito", p1: "Copia, trascina per salvare o trascina direttamente nell'app successiva.", p2: "Questo passaggio piu leggero funziona bene per chat, documentazione e feedback." }
+          ],
+          quick: [
+            { title: "Scorciatoie comuni", list: ["Command + Shift + S: avvia cattura", "Invio: conferma selezione / conferma screenshot", "Esc: esci da OCR / esci dalla cattura"] },
+            { title: "Azioni comuni", list: ["Click sinistro: conferma area, disegna o doppio clic per il testo", "Click destro: seleziona, sposta, ridimensiona e ruota annotazioni", "Tastiera: frecce per micro-regolare, Tab per scorrere, Delete per eliminare"] }
+          ]
+        },
+        privacy: {
+          items: [
+            { title: "1. Dati raccolti", p1: "Per impostazione predefinita, OmniCapture non carica sui nostri server il contenuto dei tuoi screenshot o delle annotazioni.", p2: "Screenshot, testo, forme, mosaico e azioni di modifica vengono elaborati principalmente sul tuo dispositivo, e anche OCR ed estrazione testo restano locali." },
+            { title: "2. Permesso di registrazione schermo", p1: "L'app richiede il permesso di registrazione schermo di macOS solo per le funzioni di cattura che avvii tu.", p2: "Questo permesso non viene usato per caricare il contenuto dello schermo sui nostri server." },
+            { title: "3. File, copia e trascinamento", p1: "Quando salvi, copi o trascini contenuti, i dati servono solo a completare l'azione richiesta.", p2: "Il risultato resta sotto il tuo controllo sul dispositivo o nell'app di destinazione scelta." },
+            { title: "4. Servizi di terze parti", p1: "La versione attuale non include SDK pubblicitari di terze parti per il tracciamento, e l'OCR non invia dati all'esterno.", p2: "Se futuri servizi OCR online o di terze parti cambieranno il trattamento dei dati, aggiorneremo questa descrizione." },
+            { title: "5. Sicurezza dei dati", p1: "Cerchiamo di ridurre i movimenti di dati non necessari e di proteggere il piu possibile l'elaborazione locale.", p2: "Ti consigliamo anche di controllare la sicurezza del dispositivo e i permessi di sistema." },
+            { title: "6. Contatti", p1: "Se hai domande su privacy, permessi o trattamento dei dati, contattaci via email.", p2: "Email di supporto: xiangying320@126.com" }
+          ]
+        },
+        changelog: {
+          items: [
+            { kicker: "Planned", title: "26.4.0 (Pianificato)", desc: "La versione pianificata amplia stili mosaico, stili SVG personalizzati, OCR e capacita di estrazione testo.", list: ["Aggiunta voce mosaico nella toolbar", "Supporto per diversi livelli di sfocatura gaussiana", "Aggiunta di OCR e estrazione testo", "Importazione, persistenza ed eliminazione di stili SVG personalizzati"] },
+            { kicker: "Current Release", title: "26.3.0", desc: "La versione attuale si concentra su copertura delle annotazioni e controlli di modifica per rendere piu completa la comunicazione dopo la cattura.", list: ["Aggiunti strumenti pennello, testo e forma", "Aggiunte eliminazione, rotazione e ridimensionamento delle annotazioni", "Aggiunti controlli per colore, spessore e opacita"] }
+          ]
+        },
+        footer: {
+          title: "Rendi gli screenshot piu facili da condividere e piu facili da capire.",
+          desc: "Adatto a review, feedback, documentazione, supporto e flussi di lavoro quotidiani.",
+          emailLabel: "Supporto:",
+          download: "Scarica su App Store"
+        }
+      },
+      ja: {
+        meta: {
+          title: "OmniCapture | 素早く撮って、正確に注釈",
+          description: "OmniCapture は、注釈、OCR、マスキング、SVG ブラシ、ドラッグ操作を備えた macOS 向けスクリーンショットツールです。"
+        },
+        header: {
+          tagline: "すばやく撮って、わかりやすく伝える。",
+          navFeatures: "機能",
+          navShots: "スクリーンショット",
+          navPrivacy: "プライバシー",
+          navChangelog: "更新"
+        },
+        hero: {
+          eyebrow: "macOS スクリーンショットツール",
+          title: "素早く撮って、正確に注釈",
+          subtitle: "macOS 15.0 以降が必要です。",
+          desc: "OmniCapture は、作業効率を重視した macOS 向けスクリーンショットツールです。任意の範囲を素早くキャプチャし、テキスト、図形、モザイク、OCR、SVG カスタムブラシで要点を明確にできます。",
+          note: "保存のためにドラッグしたり、他のアプリへ直接ドラッグしたりできるので、レビューや共有の手数を減らせます。",
+          download: "App Store で入手",
+          secondary: "機能を見る",
+          windowLabel: "ワークフロープレビュー",
+          badges: ["OCR", "マスキング", "SVG ブラシ"],
+          stats: [
+            { title: "注釈", desc: "テキスト、図形、線、強調がすぐ使えます。" },
+            { title: "保護", desc: "モザイクや文字マスクで機密情報を隠せます。" },
+            { title: "再利用", desc: "文字を抽出してそのまま他のアプリへ渡せます。" }
+          ]
+        },
+        features: {
+          title: "主な機能",
+          desc: "各モジュールの役割を明確にし、ページも製品も理解しやすく保ちます。",
+          items: [
+            { key: "capture", title: "Capture & Annotate", desc: "すばやくキャプチャを開始し、そのまま注釈に移れます。撮影、テキスト注釈、強調表示を一つの流れで行えます。", points: ["Command + Shift + S", "ダブルクリックで文字", "矢印キーで微調整"] },
+            { key: "shapes", title: "Shapes & Brushes", desc: "矢印、直線、破線、波線、長方形、円、三角形、楕円、ハート、星に対応し、SVG をカスタムブラシとして取り込めます。", points: ["線種", "図形ライブラリ", "SVG 取り込み"] },
+            { key: "redaction", title: "Redaction", desc: "機密情報を保護したいときは、モザイク、ワンタップ文字マスク、全画面マスクをキャプチャの流れの中で使えます。", points: ["モザイク", "文字マスク", "全画面マスク"] },
+            { key: "ocr", title: "OCR", desc: "スクリーンショット内の文字を認識して抽出できるため、メモやチケットの内容を再入力せずに再利用できます。", points: ["文字認識", "抽出", "すぐ再利用"] },
+            { key: "workflow", title: "Drag Workflow", desc: "撮影後はドラッグして保存したり、チャットや書類、他のアプリへ直接ドラッグしたりでき、流れが途切れません。", points: ["ドラッグ保存", "アプリへドラッグ", "余分な手順を削減"] }
+          ]
+        },
+        screenshots: null,
+        details: {
+          title: "補足情報",
+          desc: "製品の位置づけ、よく使う操作、作業の流れを簡潔にまとめています。",
+          tabs: { overview: "ホーム", privacy: "プライバシー", changelog: "更新履歴" }
+        },
+        overview: {
+          cards: [
+            { title: "撮った後の流れが明快", p1: "OmniCapture は、撮影後の説明効率に焦点を当てており、重い後処理を目的としていません。", p2: "選択、注釈、調整、出力を一つのコンパクトな流れにまとめられます。" },
+            { title: "注釈ツールが充実", p1: "色、線幅、不透明度、フォント、図形など、よく使う調整にすぐ触れます。", p2: "単純な矢印だけでは足りないときは、図形や SVG ブラシでより具体的に表現できます。" },
+            { title: "機密情報をその場で処理", p1: "モザイクや文字マスクは、サポート、共同作業、レビューの場面で役立ちます。", p2: "別のツールへ移る前に、キャプチャ段階でそのまま処理できます。" },
+            { title: "出力が軽い", p1: "コピー、ドラッグ保存、次のアプリへのドラッグに対応します。", p2: "チャット、文書作成、フィードバック連携がより軽くなります。" }
+          ],
+          quick: [
+            { title: "よく使うショートカット", list: ["Command + Shift + S: キャプチャ開始", "Enter: 選択範囲を確定 / スクリーンショットを確定", "Esc: OCR モード終了 / キャプチャ終了"] },
+            { title: "よく使う操作", list: ["左クリック: 範囲確定、描画、ダブルクリックで文字作成", "右クリック: 注釈を選択、移動、拡大縮小、回転", "キーボード: 矢印キーで微調整、Tab で切替、Delete で削除"] }
+          ]
+        },
+        privacy: {
+          items: [
+            { title: "1. 収集するデータ", p1: "初期設定では、OmniCapture はスクリーンショット内容や注釈内容を当社サーバーへアップロードしません。", p2: "スクリーンショット、文字注釈、図形、モザイクなどの編集は主にデバイス上で処理され、OCR 認識と文字抽出もローカルで完結します。" },
+            { title: "2. 画面収録権限", p1: "macOS の画面収録権限は、ユーザーが開始したスクリーンショット機能のためにのみ要求されます。", p2: "その権限を使って画面内容をサーバーへ送信することはありません。" },
+            { title: "3. ファイル、コピー、ドラッグ", p1: "保存、コピー、ドラッグを行う場合、データはユーザーが意図した操作を完了するためにのみ使われます。", p2: "結果はユーザーの管理下にあり、デバイスまたは選択したアプリに保存されます。" },
+            { title: "4. サードパーティサービス", p1: "現在のバージョンには、追跡目的の第三者広告 SDK は含まれておらず、OCR もデータを外部へ送信しません。", p2: "将来オンライン OCR や第三者サービスが追加され、データ処理に影響する場合は、この説明を更新します。" },
+            { title: "5. データ保護", p1: "不要なデータ移動を減らし、ローカル処理に関わるデータを適切に保護するよう努めています。", p2: "あわせて、デバイスの安全性やシステム権限、利用先アプリの方針もご確認ください。" },
+            { title: "6. お問い合わせ", p1: "プライバシー、権限、データ処理について質問がある場合は、メールでご連絡ください。", p2: "サポートメール: xiangying320@126.com" }
+          ]
+        },
+        changelog: {
+          items: [
+            { kicker: "Planned", title: "26.4.0（予定）", desc: "予定中のリリースでは、モザイク表現、カスタム SVG スタイルに加え、OCR 認識と文字抽出にも対応します。", list: ["ツールバーにモザイク項目を追加", "異なる強さのガウスぼかしに対応", "OCR 認識と文字抽出に対応", "カスタム SVG スタイルの取り込み、保持、削除に対応"] },
+            { kicker: "Current Release", title: "26.3.0", desc: "現在のリリースでは、注釈の対応範囲と編集操作を強化し、撮影後の説明をより完結にしています。", list: ["ブラシ、文字、図形ツールを追加", "注釈の削除、回転、拡大縮小に対応", "色、線幅、不透明度の調整に対応"] }
+          ]
+        },
+        footer: {
+          title: "スクリーンショットを、共有しやすく、伝わりやすく。",
+          desc: "レビュー、フィードバック、資料作成、サポート、日常業務に向いています。",
+          emailLabel: "サポート：",
+          download: "App Store で入手"
+        }
+      },
+      ko: {
+        meta: {
+          title: "OmniCapture | 빠른 캡처, 정확한 주석",
+          description: "OmniCapture는 주석, OCR, 마스킹, SVG 브러시, 드래그 워크플로를 지원하는 macOS 스크린샷 도구입니다."
+        },
+        header: {
+          tagline: "빠르게 캡처하고, 명확하게 설명하세요.",
+          navFeatures: "기능",
+          navShots: "스크린샷",
+          navPrivacy: "개인정보",
+          navChangelog: "업데이트"
+        },
+        hero: {
+          eyebrow: "macOS 스크린샷 도구",
+          title: "빠른 캡처, 정확한 주석",
+          subtitle: "macOS 15.0 이상이 필요합니다.",
+          desc: "OmniCapture는 업무 효율에 집중한 macOS 스크린샷 도구입니다. 원하는 영역을 빠르게 캡처하고 텍스트, 도형, 모자이크, OCR, SVG 커스텀 브러시로 핵심을 분명하게 설명할 수 있습니다.",
+          note: "드래그로 저장하거나 다른 앱으로 바로 드래그할 수 있어 리뷰, 커뮤니케이션, 일상 업무에서 중간 단계를 줄여 줍니다.",
+          download: "App Store에서 다운로드",
+          secondary: "기능 보기",
+          windowLabel: "워크플로 미리보기",
+          badges: ["OCR", "마스킹", "SVG 브러시"],
+          stats: [
+            { title: "주석", desc: "텍스트, 도형, 선, 강조를 바로 사용할 수 있습니다." },
+            { title: "보호", desc: "모자이크와 텍스트 마스킹으로 민감 정보를 숨길 수 있습니다." },
+            { title: "재사용", desc: "텍스트를 추출해 다른 앱으로 바로 넘길 수 있습니다." }
+          ]
+        },
+        features: {
+          title: "핵심 기능",
+          desc: "각 모듈의 역할을 분명히 나눠 페이지도, 제품도 이해하기 쉽게 구성했습니다.",
+          items: [
+            { key: "capture", title: "Capture & Annotate", desc: "스크린샷을 빠르게 시작하고 바로 주석 단계로 들어갈 수 있습니다. 캡처, 텍스트 메모, 강조 표시가 한 흐름 안에 있습니다.", points: ["Command + Shift + S", "더블클릭으로 텍스트", "방향키 미세 조정"] },
+            { key: "shapes", title: "Shapes & Brushes", desc: "화살표, 직선, 점선, 물결선, 사각형, 원, 삼각형, 타원, 하트, 별을 지원하며 SVG 파일을 커스텀 브러시로 가져올 수 있습니다.", points: ["선 스타일", "도형 라이브러리", "SVG 가져오기"] },
+            { key: "redaction", title: "Redaction", desc: "민감한 내용을 보호해야 할 때 모자이크, 원클릭 텍스트 마스킹, 전체 화면 마스킹을 캡처 흐름 안에서 바로 사용할 수 있습니다.", points: ["모자이크", "텍스트 마스킹", "전체 화면 마스킹"] },
+            { key: "ocr", title: "OCR", desc: "스크린샷 속 텍스트를 인식하고 추출해 메모, 티켓, 조각난 내용을 다시 입력하지 않고 바로 재사용할 수 있습니다.", points: ["문자 인식", "텍스트 추출", "빠른 재사용"] },
+            { key: "workflow", title: "Drag Workflow", desc: "캡처 후 드래그로 저장하거나 채팅, 문서, 다른 앱으로 바로 드래그해 흐름을 끊지 않고 넘길 수 있습니다.", points: ["드래그 저장", "앱으로 드래그", "중간 단계 축소"] }
+          ]
+        },
+        screenshots: null,
+        details: {
+          title: "추가 정보",
+          desc: "제품의 방향, 자주 쓰는 동작, 작업 흐름을 간단히 정리했습니다.",
+          tabs: { overview: "홈", privacy: "개인정보", changelog: "업데이트" }
+        },
+        overview: {
+          cards: [
+            { title: "캡처 후 흐름이 더 명확합니다", p1: "OmniCapture는 무거운 후편집보다 캡처 이후의 설명 효율에 집중합니다.", p2: "선택, 주석, 조정, 출력이 하나의 간결한 흐름으로 이어집니다." },
+            { title: "주석 도구가 충분히 갖춰져 있습니다", p1: "색상, 두께, 투명도, 폰트, 도형 같은 자주 쓰는 조절 항목에 쉽게 접근할 수 있습니다.", p2: "단순한 화살표로 부족할 때는 도형과 SVG 브러시로 더 구체적으로 표현할 수 있습니다." },
+            { title: "민감 정보 처리가 직접적입니다", p1: "모자이크와 텍스트 마스킹은 지원, 협업, 리뷰 흐름에 잘 맞습니다.", p2: "민감한 내용은 다른 도구로 옮기기 전에 캡처 단계에서 바로 처리할 수 있습니다." },
+            { title: "출력 과정의 마찰이 적습니다", p1: "복사, 드래그 저장, 다음 앱으로 직접 드래그를 지원합니다.", p2: "채팅, 문서 작성, 피드백 전달 같은 흐름에서 더 가볍게 이어집니다." }
+          ],
+          quick: [
+            { title: "자주 쓰는 단축키", list: ["Command + Shift + S: 캡처 시작", "Enter: 선택 영역 확인 / 스크린샷 확인", "Esc: OCR 모드 종료 / 캡처 종료"] },
+            { title: "자주 쓰는 동작", list: ["왼쪽 클릭: 영역 확정, 그리기, 더블클릭으로 텍스트 생성", "오른쪽 클릭: 주석 선택, 이동, 크기 조절, 회전", "키보드: 방향키 미세 조정, Tab 전환, Delete 삭제"] }
+          ]
+        },
+        privacy: {
+          items: [
+            { title: "1. 수집하는 데이터", p1: "기본적으로 OmniCapture는 스크린샷 내용이나 주석 내용을 당사 서버로 업로드하지 않습니다.", p2: "스크린샷, 텍스트, 도형, 모자이크와 관련 편집 작업은 주로 기기에서 처리되며 OCR 인식과 텍스트 추출도 로컬에서만 수행됩니다." },
+            { title: "2. 화면 기록 권한", p1: "앱은 사용자가 직접 시작한 스크린샷 기능을 위해서만 macOS 화면 기록 권한을 요청합니다.", p2: "이 권한을 이용해 화면 내용을 서버로 업로드하지 않습니다." },
+            { title: "3. 파일, 복사, 드래그", p1: "저장, 복사, 드래그를 수행할 때 데이터는 사용자가 의도한 현재 작업을 완료하는 데만 사용됩니다.", p2: "결과물은 사용자의 기기나 선택한 대상 앱 안에서 사용자의 통제하에 유지됩니다." },
+            { title: "4. 제3자 서비스", p1: "현재 버전에는 추적 목적의 제3자 광고 SDK가 포함되어 있지 않으며 OCR도 데이터를 외부로 전송하지 않습니다.", p2: "향후 온라인 OCR이나 제3자 서비스가 추가되어 데이터 처리 방식에 변화가 생기면 이 설명을 업데이트하겠습니다." },
+            { title: "5. 데이터 보안", p1: "불필요한 데이터 이동을 줄이고 로컬 처리 과정의 데이터를 보호하기 위해 합리적인 조치를 취합니다.", p2: "기기 보안, 시스템 권한, 대상 앱의 개인정보 정책도 함께 확인해 주세요." },
+            { title: "6. 문의", p1: "개인정보, 권한, 데이터 처리에 관한 질문이 있으면 이메일로 문의해 주세요.", p2: "지원 이메일: xiangying320@126.com" }
+          ]
+        },
+        changelog: {
+          items: [
+            { kicker: "Planned", title: "26.4.0 (예정)", desc: "예정된 버전에서는 모자이크 스타일, 커스텀 SVG 스타일과 함께 OCR 인식 및 텍스트 추출 능력도 확장합니다.", list: ["툴바에 모자이크 항목 추가", "여러 강도의 가우시안 블러 지원", "OCR 인식 및 텍스트 추출 지원", "커스텀 SVG 스타일의 가져오기, 유지, 삭제 지원"] },
+            { kicker: "Current Release", title: "26.3.0", desc: "현재 버전은 주석 기능 범위와 편집 제어를 강화해 캡처 후 커뮤니케이션을 더 완성도 있게 만듭니다.", list: ["브러시, 텍스트, 도형 도구 추가", "주석 삭제, 회전, 크기 조절 지원", "색상, 두께, 투명도 조절 지원"] }
+          ]
+        },
+        footer: {
+          title: "스크린샷을 더 쉽게 공유하고 더 쉽게 이해시키세요.",
+          desc: "리뷰, 피드백, 문서화, 지원, 일상 업무 흐름에 잘 맞습니다.",
+          emailLabel: "지원:",
+          download: "App Store에서 다운로드"
+        }
       }
     };
 
-    function detectLang() {
-      const q = new URLSearchParams(window.location.search).get("lang");
-      if (q === "zh" || q === "en") return q;
-      const stored = localStorage.getItem("omni_lang");
-      if (stored === "zh" || stored === "en") return stored;
-      return (navigator.language || "").toLowerCase().startsWith("zh") ? "zh" : "en";
+    const FALLBACK = "en";
+    const VALID_TABS = ["overview", "privacy", "changelog"];
+    let currentLang = FALLBACK;
+    let currentTab = "overview";
+    let currentPreviewSrc = "";
+
+    function getQueryState() {
+      const url = new URL(window.location.href);
+      return {
+        lang: url.searchParams.get("lang"),
+        tab: url.searchParams.get("tab")
+      };
     }
 
-    function applyLang(lang) {
-      const map = I18N[lang] || I18N.en;
-      document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
-      document.querySelectorAll("[data-i18n]").forEach(el => {
-        const key = el.getAttribute("data-i18n");
-        if (map[key]) el.textContent = map[key];
-      });
-      document.getElementById("btn-zh").classList.toggle("active", lang === "zh");
-      document.getElementById("btn-en").classList.toggle("active", lang === "en");
-      localStorage.setItem("omni_lang", lang);
+    function detectLang() {
+      const { lang } = getQueryState();
+      if (I18N[lang]) return lang;
+
+      const stored = localStorage.getItem("omni_lang");
+      if (I18N[stored]) return stored;
+
+      const nav = (navigator.language || "").toLowerCase();
+      if (nav.startsWith("zh-cn") || nav.startsWith("zh-sg") || nav === "zh") return "zh-Hans";
+      if (nav.startsWith("zh-tw") || nav.startsWith("zh-hk") || nav.startsWith("zh-mo")) return "zh-Hant";
+      if (nav.startsWith("fr")) return "fr";
+      if (nav.startsWith("de")) return "de";
+      if (nav.startsWith("it")) return "it";
+      if (nav.startsWith("ja")) return "ja";
+      if (nav.startsWith("ko")) return "ko";
+      return FALLBACK;
+    }
+
+    function detectTab() {
+      const { tab } = getQueryState();
+      return VALID_TABS.includes(tab) ? tab : "overview";
+    }
+
+    function setQueryState(lang, tab, replace = false) {
       const url = new URL(window.location.href);
       url.searchParams.set("lang", lang);
-      window.history.replaceState({}, "", url.toString());
-      document.getElementById("privacy-link").href = `./privacy.html?lang=${lang}`;
+      url.searchParams.set("tab", VALID_TABS.includes(tab) ? tab : "overview");
+      const method = replace ? "replaceState" : "pushState";
+      window.history[method]({}, "", url.toString());
     }
 
-    document.getElementById("btn-zh").addEventListener("click", () => applyLang("zh"));
-    document.getElementById("btn-en").addEventListener("click", () => applyLang("en"));
-    applyLang(detectLang());
+    function setHtmlLang(lang) {
+      const map = {
+        "zh-Hans": "zh-CN",
+        "zh-Hant": "zh-Hant",
+        en: "en",
+        fr: "fr",
+        de: "de",
+        it: "it",
+        ja: "ja",
+        ko: "ko"
+      };
+      document.documentElement.lang = map[lang] || "en";
+    }
+
+    function renderLangSelect(lang) {
+      const root = document.getElementById("lang-select");
+      root.innerHTML = LANGS.map(({ key, label }) => `<option value="${key}">${label}</option>`).join("");
+      root.value = lang;
+    }
+
+    function renderFeatureVisual(item) {
+      const src = FEATURE_ASSETS[item.key];
+      return `<img src="${src}" alt="${item.title}" loading="lazy" data-preview-src="${src}" data-preview-alt="${item.title}" />`;
+    }
+
+    function openLightbox(src, alt) {
+      currentPreviewSrc = src;
+      const lightbox = document.getElementById("image-lightbox");
+      const image = document.getElementById("lightbox-image");
+      image.src = src;
+      image.alt = alt || "";
+      lightbox.classList.add("open");
+      lightbox.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeLightbox() {
+      const lightbox = document.getElementById("image-lightbox");
+      const image = document.getElementById("lightbox-image");
+      lightbox.classList.remove("open");
+      lightbox.setAttribute("aria-hidden", "true");
+      image.removeAttribute("src");
+      image.alt = "";
+      currentPreviewSrc = "";
+      document.body.style.overflow = "";
+    }
+
+    function renderPage() {
+      const dict = I18N[currentLang] || I18N[FALLBACK];
+      const { header, hero, features, details, overview, privacy, changelog, footer, meta } = dict;
+
+      setHtmlLang(currentLang);
+      document.title = meta.title;
+      document.querySelector('meta[name="description"]').setAttribute("content", meta.description);
+
+      document.getElementById("brand-tagline").textContent = header.tagline;
+      document.getElementById("nav-overview").textContent = details.tabs.overview;
+      document.getElementById("nav-privacy").textContent = header.navPrivacy;
+      document.getElementById("nav-changelog").textContent = header.navChangelog;
+
+      document.getElementById("hero-eyebrow").textContent = hero.eyebrow;
+      document.getElementById("hero-title").textContent = hero.title;
+      document.getElementById("hero-subtitle").textContent = hero.subtitle;
+      document.getElementById("hero-desc").textContent = hero.desc;
+      document.getElementById("hero-note").textContent = hero.note;
+      document.getElementById("floating-download").textContent = footer.download;
+      document.getElementById("hero-window-label").textContent = hero.windowLabel;
+      hero.badges.forEach((label, index) => {
+        document.getElementById(`badge-${index + 1}`).textContent = label;
+      });
+      hero.stats.forEach((item, index) => {
+        document.getElementById(`stat-${index + 1}-title`).textContent = item.title;
+        document.getElementById(`stat-${index + 1}-desc`).textContent = item.desc;
+      });
+
+      document.getElementById("features-title").textContent = features.title;
+      document.getElementById("features-desc").textContent = features.desc;
+      document.getElementById("feature-grid").innerHTML = features.items.map((item) => `
+        <article class="feature-card">
+          <div>
+            <h3>${item.title}</h3>
+            <p>${item.desc}</p>
+            <div class="feature-points">${item.points.map((point) => `<span>${point}</span>`).join("")}</div>
+          </div>
+          <div class="feature-visual">${renderFeatureVisual(item)}</div>
+        </article>
+      `).join("");
+      document.querySelectorAll("#feature-grid [data-preview-src]").forEach((image) => {
+        image.addEventListener("click", () => {
+          openLightbox(image.dataset.previewSrc, image.dataset.previewAlt);
+        });
+      });
+
+      document.getElementById("details-title").textContent = details.title;
+      document.getElementById("details-desc").textContent = details.desc;
+      document.getElementById("privacy-title").textContent = details.tabs.privacy;
+      document.getElementById("privacy-desc").textContent = privacy.items[0].p1;
+      document.getElementById("changelog-title").textContent = details.tabs.changelog;
+      document.getElementById("changelog-desc").textContent = changelog.items[0].desc;
+
+      document.getElementById("overview-grid").innerHTML = overview.cards.map((item) => `
+        <article class="overview-card">
+          <h3>${item.title}</h3>
+          <p>${item.p1}</p>
+          <p>${item.p2}</p>
+        </article>
+      `).join("");
+      document.getElementById("quick-grid").innerHTML = overview.quick.map((item) => `
+        <article class="quick-card">
+          <h3>${item.title}</h3>
+          <ul class="quick-list">${item.list.map((point) => `<li>${point}</li>`).join("")}</ul>
+        </article>
+      `).join("");
+
+      document.getElementById("privacy-grid").innerHTML = privacy.items.map((item) => `
+        <article class="privacy-card">
+          <h3>${item.title}</h3>
+          <p>${item.p1}</p>
+          <p>${item.p2}</p>
+        </article>
+      `).join("");
+
+      document.getElementById("log-grid").innerHTML = changelog.items.map((item) => `
+        <article class="log-card">
+          <div class="log-kicker">${item.kicker}</div>
+          <h3>${item.title}</h3>
+          <p>${item.desc}</p>
+          <ul class="log-list">${item.list.map((point) => `<li>${point}</li>`).join("")}</ul>
+        </article>
+      `).join("");
+
+      document.getElementById("footer-title").textContent = footer.title;
+      document.getElementById("footer-desc").textContent = footer.desc;
+      document.getElementById("footer-email-label").textContent = footer.emailLabel;
+
+      renderLangSelect(currentLang);
+      applyTab(currentTab, true);
+    }
+
+    function applyTab(tab, silentUrl = false) {
+      currentTab = VALID_TABS.includes(tab) ? tab : "overview";
+
+      document.querySelectorAll(".page-tab-button").forEach((button) => {
+        button.classList.toggle("active", button.dataset.tab === currentTab);
+      });
+      document.querySelectorAll(".page-view").forEach((panel) => {
+        panel.classList.toggle("active", panel.dataset.view === currentTab);
+      });
+
+      if (!silentUrl) {
+        setQueryState(currentLang, currentTab, false);
+      }
+    }
+
+    function openTab(tab) {
+      applyTab(tab);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    document.querySelectorAll(".page-tab-button").forEach((button) => {
+      button.addEventListener("click", () => openTab(button.dataset.tab));
+    });
+
+    document.getElementById("lang-select").addEventListener("change", (event) => {
+      currentLang = event.target.value;
+      localStorage.setItem("omni_lang", currentLang);
+      renderPage();
+      setQueryState(currentLang, currentTab, true);
+    });
+
+    document.getElementById("lightbox-backdrop").addEventListener("click", closeLightbox);
+    document.getElementById("lightbox-close").addEventListener("click", closeLightbox);
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && currentPreviewSrc) {
+        closeLightbox();
+      }
+    });
+
+    window.addEventListener("popstate", () => {
+      currentLang = detectLang();
+      currentTab = detectTab();
+      renderPage();
+      applyTab(currentTab, true);
+    });
+
+    currentLang = detectLang();
+    currentTab = detectTab();
+    localStorage.setItem("omni_lang", currentLang);
+    renderPage();
+    setQueryState(currentLang, currentTab, true);
   </script>
 </body>
 </html>
