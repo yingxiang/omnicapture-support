@@ -6,7 +6,7 @@
   <title>OmniCapture</title>
   <meta
     name="description"
-    content="OmniCapture is a productivity-focused macOS screenshot and annotation tool with clear markup, OCR, redaction, and drag-and-drop workflows."
+    content="OmniCapture is a productivity-focused macOS screenshot and annotation tool with clear markup, OCR, redaction, and custom SVG brushes."
   />
   <style>
     :root {
@@ -212,14 +212,14 @@
     }
 
     .hero {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(320px, 520px);
-      gap: 30px;
-      align-items: center;
+      display: block;
     }
 
     .hero-copy {
+      width: 100%;
+      max-width: 960px;
       min-width: 0;
+      padding: 10px 0 6px;
     }
 
     .eyebrow {
@@ -260,10 +260,10 @@
 
     .hero-desc {
       margin: 0;
-      max-width: 680px;
+      max-width: 920px;
       color: var(--muted);
-      font-size: 1.02rem;
-      line-height: 1.8;
+      font-size: 1.04rem;
+      line-height: 1.85;
     }
 
     .hero-actions {
@@ -312,140 +312,10 @@
 
     .hero-note {
       margin-top: 14px;
+      max-width: 900px;
       color: var(--muted);
       font-size: 0.94rem;
       line-height: 1.7;
-    }
-
-    .hero-panel {
-      position: relative;
-      padding: 24px;
-      border-radius: var(--radius-xl);
-      border: 1px solid var(--line);
-      background: linear-gradient(180deg, #ffffff, #f7faff);
-      box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-
-    .hero-panel::before {
-      content: "";
-      position: absolute;
-      top: -80px;
-      right: -40px;
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      background: rgba(21, 112, 239, 0.08);
-    }
-
-    .hero-panel::after {
-      content: "";
-      position: absolute;
-      left: -30px;
-      bottom: -40px;
-      width: 160px;
-      height: 160px;
-      border-radius: 50%;
-      background: rgba(0, 163, 163, 0.08);
-    }
-
-    .hero-illustration {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      gap: 16px;
-    }
-
-    .illustration-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 14px;
-      align-items: center;
-    }
-
-    .mini-badges {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .mini-badge {
-      min-height: 34px;
-      padding: 0 12px;
-      display: inline-flex;
-      align-items: center;
-      border-radius: 999px;
-      color: var(--muted);
-      background: #ffffff;
-      border: 1px solid var(--line);
-      font-size: 0.88rem;
-      box-shadow: var(--shadow-soft);
-    }
-
-    .hero-screen {
-      overflow: hidden;
-      border-radius: 22px;
-      border: 1px solid var(--line);
-      background: #ffffff;
-      box-shadow: 0 18px 30px rgba(19, 35, 61, 0.08);
-    }
-
-    .hero-screen-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      min-height: 44px;
-      padding: 0 16px;
-      color: var(--muted);
-      font-size: 0.88rem;
-      border-bottom: 1px solid var(--line);
-      background: #fbfcfe;
-    }
-
-    .traffic {
-      display: flex;
-      gap: 8px;
-    }
-
-    .traffic span {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #d6dde8;
-    }
-
-    .hero-screen img {
-      width: 100%;
-      aspect-ratio: 16 / 10;
-      object-fit: cover;
-      background: #eff3f8;
-    }
-
-    .illustration-stats {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .stat-card {
-      padding: 14px;
-      border-radius: var(--radius-md);
-      background: #ffffff;
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow-soft);
-    }
-
-    .stat-card strong {
-      display: block;
-      margin-bottom: 6px;
-      font-size: 1rem;
-    }
-
-    .stat-card span {
-      color: var(--muted);
-      font-size: 0.88rem;
-      line-height: 1.6;
     }
 
     section {
@@ -791,7 +661,6 @@
     }
 
     @media (max-width: 1080px) {
-      .hero,
       .feature-grid,
       .overview-grid,
       .quick-grid {
@@ -830,11 +699,6 @@
         justify-content: flex-start;
       }
 
-      .illustration-stats {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-panel,
       .footer-cta {
         padding: 18px;
       }
@@ -851,7 +715,7 @@
     <div class="shell">
       <div class="header-bar">
         <div class="brand">
-          <img class="brand-mark" src="./assets/icon.png" alt="OmniCapture app icon" />
+          <img class="brand-mark" src="../OmniMAC/Resources/Assets.xcassets/AppIcon.appiconset/512.png" alt="OmniCapture app icon" />
           <div>
             <p class="brand-title">OmniCapture</p>
             <p class="brand-tagline" id="brand-tagline">Capture faster. Explain clearly.</p>
@@ -887,42 +751,6 @@
             <p class="hero-note" id="hero-note"></p>
           </div>
 
-          <div class="hero-panel" aria-hidden="true">
-            <div class="hero-illustration">
-              <div class="illustration-top">
-                <div class="mini-badges">
-                  <span class="mini-badge" id="badge-1">OCR</span>
-                  <span class="mini-badge" id="badge-2">Redaction</span>
-                  <span class="mini-badge" id="badge-3">SVG Brush</span>
-                </div>
-              </div>
-
-              <div class="hero-screen">
-                <div class="hero-screen-head">
-                  <div class="traffic" aria-hidden="true">
-                    <span></span><span></span><span></span>
-                  </div>
-                  <span id="hero-window-label">Workflow Preview</span>
-                </div>
-                <img src="./assets/screenshots/drag-workflow.png" alt="OmniCapture workflow preview" />
-              </div>
-
-              <div class="illustration-stats">
-                <div class="stat-card">
-                  <strong id="stat-1-title">Annotate</strong>
-                  <span id="stat-1-desc"></span>
-                </div>
-                <div class="stat-card">
-                  <strong id="stat-2-title">Protect</strong>
-                  <span id="stat-2-desc"></span>
-                </div>
-                <div class="stat-card">
-                  <strong id="stat-3-title">Reuse</strong>
-                  <span id="stat-3-desc"></span>
-                </div>
-              </div>
-            </div>
-          </div>
         </section>
 
         <section id="features">
@@ -1014,11 +842,12 @@
     ];
 
     const FEATURE_ASSETS = {
-      capture: "./assets/screenshots/rich-brushes.png",
-      shapes: "./assets/screenshots/svg-brushes.png",
-      redaction: "./assets/screenshots/masic.png",
-      ocr: "./assets/screenshots/ocr.png",
-      workflow: "./assets/screenshots/drag-workflow.png"
+      brushes: "./assets/screenshots/rich-brushes.png",
+      shapes: "./assets/screenshots/shapes.png",
+      customBrushes: "./assets/screenshots/svg-brushes.png",
+      mosaic: "./assets/screenshots/masic.png",
+      text: "./assets/screenshots/text-annotation.png",
+      ocr: "./assets/screenshots/ocr.png"
     };
 
     const SVG_ILLUSTRATION = `
@@ -1038,7 +867,7 @@
       "zh-Hans": {
         meta: {
           title: "OmniCapture | 快速截图，专业标注，即拖即用",
-          description: "OmniCapture 是一款面向效率场景的 macOS 截图与标注工具，支持清晰标注、打码、OCR、自定义 SVG 画笔与拖拽工作流。"
+          description: "OmniCapture 是一款面向效率场景的 macOS 截图与标注工具，支持清晰标注、打码、OCR、自定义 SVG 画笔与自定义 SVG 画笔。"
         },
         header: {
           tagline: "快速截图，清晰表达。",
@@ -1055,7 +884,6 @@
           note: "截图后可直接拖拽保存或拖拽到目标应用，减少中间步骤，让沟通、评审和整理更顺手。",
           download: "App Store 下载",
           secondary: "查看核心功能",
-          windowLabel: "工作流预览",
           badges: ["OCR", "一键打码", "SVG 画笔"],
           stats: [
             { title: "标注清楚", desc: "画笔、文字、图形和形状快速到位。" },
@@ -1068,34 +896,40 @@
           desc: "每个模块只处理一类职责，方便你在最短时间内完成截图、说明、保护与流转。",
           items: [
             {
-              key: "capture",
-              title: "Capture & Annotate",
-              desc: "快速启动截图后，立刻进入清晰的标注流程。基础截图、文字标注和重点强调放在同一节奏里完成。",
-              points: ["Command + Shift + S", "双击创建文本", "方向键微调"]
+              key: "brushes",
+              title: "画笔",
+              desc: "支持箭头、直线、虚线、波浪线，可旋转、调粗细、颜色、透明度。",
+              points: ["箭头", "虚线", "可旋转"]
             },
             {
               key: "shapes",
-              title: "Shapes & Brushes",
-              desc: "支持箭头、直线、虚线、波浪线、方形、圆形、三角形、椭圆形、爱心和五角星，也支持导入 SVG 作为自定义画笔。",
-              points: ["多种线条", "形状库", "SVG 导入"]
+              title: "形状",
+              desc: "支持方形、圆形、三角形、椭圆形、爱心、五角星，可旋转、调颜色、透明度、粗细。",
+              points: ["多种形状", "可旋转", "样式可调"]
             },
             {
-              key: "redaction",
-              title: "Redaction",
-              desc: "需要保护敏感内容时，可以直接使用涂抹马赛克、文字一键打码和全屏打码，减少二次处理。",
-              points: ["马赛克", "文字打码", "全屏打码"]
+              key: "customBrushes",
+              title: "自定义画笔",
+              desc: "内置 9 种图标画笔，支持导入更多 SVG 图形，可旋转、调粗细、透明度。",
+              points: ["9 种内置", "SVG 导入", "可旋转"]
+            },
+            {
+              key: "mosaic",
+              title: "马赛克",
+              desc: "支持涂抹、文字一键打码和全屏打码，可调粗细与马赛克程度。",
+              points: ["涂抹打码", "文字打码", "全屏打码"]
+            },
+            {
+              key: "text",
+              title: "文字",
+              desc: "支持字号、字体、颜色、透明度、旋转设置，适合补充说明与重点标记。",
+              points: ["字体", "透明度", "旋转设置"]
             },
             {
               key: "ocr",
               title: "OCR",
-              desc: "支持识别并提取截图中的文字，适合快速整理、粘贴和复用内容，不必手动重新输入。",
+              desc: "支持识别并提取截图文字，便于快速整理与复用。",
               points: ["文字识别", "文字提取", "整理复用"]
-            },
-            {
-              key: "workflow",
-              title: "Drag Workflow",
-              desc: "确认截图后可以直接拖拽保存，也可以拖拽到聊天、文档或其他目标应用，让工作流不断线。",
-              points: ["拖拽保存", "拖到应用", "减少中间步骤"]
             }
           ]
         },
@@ -1203,7 +1037,7 @@
       "zh-Hant": {
         meta: {
           title: "OmniCapture | 快速截圖，專業標註，即拖即用",
-          description: "OmniCapture 是一款為效率工作打造的 macOS 截圖與標註工具，支援清晰標記、打碼、OCR、自訂 SVG 畫筆與拖拽工作流。"
+          description: "OmniCapture 是一款為效率工作打造的 macOS 截圖與標註工具，支援清晰標記、打碼、OCR、自訂 SVG 畫筆與自定义 SVG 画笔。"
         },
         header: {
           tagline: "快速截圖，清楚表達。",
@@ -1220,7 +1054,6 @@
           note: "截圖後可直接拖拽儲存或拖拽到目標 App，減少中間步驟，讓溝通、審閱與整理更順暢。",
           download: "App Store 下載",
           secondary: "查看核心功能",
-          windowLabel: "工作流預覽",
           badges: ["OCR", "一鍵打碼", "SVG 畫筆"],
           stats: [
             { title: "標註清楚", desc: "畫筆、文字、圖形與形狀快速到位。" },
@@ -1233,34 +1066,40 @@
           desc: "每個模組只負責一類能力，讓你能在最短時間內完成截圖、說明、保護與流轉。",
           items: [
             {
-              key: "capture",
-              title: "Capture & Annotate",
-              desc: "快速啟動截圖後，立刻進入清晰的標註流程。基礎截圖、文字註解與重點強調可以在同一節奏裡完成。",
-              points: ["Command + Shift + S", "雙擊建立文字", "方向鍵微調"]
+              key: "brushes",
+              title: "畫筆",
+              desc: "支援箭頭、直線、虛線、波浪線，可旋轉、調粗細、顏色、透明度。",
+              points: ["箭頭", "虛線", "可旋轉"]
             },
             {
               key: "shapes",
-              title: "Shapes & Brushes",
-              desc: "支援箭頭、直線、虛線、波浪線、方形、圓形、三角形、橢圓形、愛心與五角星，也支援匯入 SVG 作為自訂畫筆。",
-              points: ["多種線條", "形狀庫", "SVG 匯入"]
+              title: "形狀",
+              desc: "支援方形、圓形、三角形、橢圓形、愛心、五角星，可旋轉、調顏色、透明度、粗細。",
+              points: ["多種形狀", "可旋轉", "樣式可調"]
             },
             {
-              key: "redaction",
-              title: "Redaction",
-              desc: "需要保護敏感資訊時，可以直接使用塗抹馬賽克、文字一鍵打碼與全螢幕打碼，減少二次處理。",
-              points: ["馬賽克", "文字打碼", "全螢幕打碼"]
+              key: "customBrushes",
+              title: "自訂畫筆",
+              desc: "內建 9 種圖示畫筆，支援匯入更多 SVG 圖形，可旋轉、調粗細、透明度。",
+              points: ["9 種內建", "SVG 匯入", "可旋轉"]
+            },
+            {
+              key: "mosaic",
+              title: "馬賽克",
+              desc: "支援塗抹、文字一鍵打碼與全螢幕打碼，可調粗細與馬賽克程度。",
+              points: ["塗抹打碼", "文字打碼", "全螢幕打碼"]
+            },
+            {
+              key: "text",
+              title: "文字",
+              desc: "支援字號、字體、顏色、透明度、旋轉設定，適合補充說明與重點標記。",
+              points: ["字體", "透明度", "旋轉設定"]
             },
             {
               key: "ocr",
               title: "OCR",
-              desc: "支援辨識並擷取截圖中的文字，適合快速整理、貼上與重用內容，不必重新輸入。",
-              points: ["文字辨識", "文字擷取", "整理重用"]
-            },
-            {
-              key: "workflow",
-              title: "Drag Workflow",
-              desc: "確認截圖後可直接拖拽儲存，也能拖拽到聊天、文件或其他目標 App，讓工作流不中斷。",
-              points: ["拖拽儲存", "拖到 App", "減少中間步驟"]
+              desc: "支援辨識並提取截圖文字，便於快速整理與重複利用。",
+              points: ["文字辨識", "文字提取", "整理重用"]
             }
           ]
         },
@@ -1368,7 +1207,7 @@
       en: {
         meta: {
           title: "OmniCapture | Capture fast, annotate clearly",
-          description: "OmniCapture is a productivity-focused macOS screenshot and annotation tool with clear markup, OCR, redaction, custom SVG brushes, and drag-and-drop workflows."
+          description: "OmniCapture is a productivity-focused macOS screenshot and annotation tool with clear markup, OCR, redaction, and custom SVG brushes."
         },
         header: {
           tagline: "Capture faster. Explain clearly.",
@@ -1385,7 +1224,6 @@
           note: "Drag to save or drag directly into other apps to reduce extra steps in reviews, communication, and everyday workflows.",
           download: "Download on the App Store",
           secondary: "Explore features",
-          windowLabel: "Workflow Preview",
           badges: ["OCR", "Redaction", "SVG Brush"],
           stats: [
             { title: "Annotate", desc: "Text, shapes, lines, and highlights stay easy to reach." },
@@ -1398,34 +1236,40 @@
           desc: "Each module has a clear job so the page stays easy to scan and the product stays easy to understand.",
           items: [
             {
-              key: "capture",
-              title: "Capture & Annotate",
-              desc: "Start a screenshot quickly, then move straight into annotation. Basic capture, text notes, and visual emphasis happen in one continuous flow.",
-              points: ["Command + Shift + S", "Double-click for text", "Arrow-key nudge"]
+              key: "brushes",
+              title: "Brushes",
+              desc: "Arrows, straight lines, dashed lines, and wavy lines with rotation plus adjustable width, color, and opacity.",
+              points: ["Arrows", "Dashed lines", "Rotation"]
             },
             {
               key: "shapes",
-              title: "Shapes & Brushes",
-              desc: "Use arrows, straight lines, dashed lines, waves, rectangles, circles, triangles, ellipses, hearts, and stars. You can also import SVG files as custom brushes.",
-              points: ["Line styles", "Shape library", "SVG import"]
+              title: "Shapes",
+              desc: "Rectangle, circle, triangle, ellipse, heart, and star with rotation plus adjustable color, opacity, and stroke width.",
+              points: ["Shape set", "Rotation", "Style controls"]
             },
             {
-              key: "redaction",
-              title: "Redaction",
-              desc: "When content needs protection, use mosaic blur, one-tap text masking, and full-screen redaction without leaving the screenshot workflow.",
-              points: ["Mosaic blur", "Text masking", "Full-screen redaction"]
+              key: "customBrushes",
+              title: "Custom Brushes",
+              desc: "9 built-in icon brushes, plus support for importing more SVG shapes with rotation plus adjustable width and opacity.",
+              points: ["9 built-ins", "SVG import", "Rotation"]
+            },
+            {
+              key: "mosaic",
+              title: "Mosaic",
+              desc: "Paint-on mosaic, one-tap text redaction, and full-screen redaction with adjustable brush size and blur strength.",
+              points: ["Brush mosaic", "Text redaction", "Full-screen redaction"]
+            },
+            {
+              key: "text",
+              title: "Text",
+              desc: "Adjust font size, font family, color, opacity, and rotation for notes, labels, and callouts.",
+              points: ["Font", "Opacity", "Rotation"]
             },
             {
               key: "ocr",
               title: "OCR",
-              desc: "Recognize and extract text from screenshots so notes, tickets, and snippets can be reused immediately instead of retyped manually.",
-              points: ["Text recognition", "Text extraction", "Quick reuse"]
-            },
-            {
-              key: "workflow",
-              title: "Drag Workflow",
-              desc: "After capture, drag to save or drag directly into chat, documents, or other apps so the handoff stays quick and uninterrupted.",
-              points: ["Drag to save", "Drag into apps", "Fewer extra steps"]
+              desc: "Recognize and extract text from screenshots for faster reuse and organization.",
+              points: ["Recognition", "Extraction", "Reuse"]
             }
           ]
         },
@@ -1550,7 +1394,6 @@
           note: "Glissez pour enregistrer ou glissez directement dans d'autres apps afin de reduire les etapes pendant les revues, les echanges et le travail quotidien.",
           download: "Telecharger sur l'App Store",
           secondary: "Voir les fonctions",
-          windowLabel: "Apercu du flux",
           badges: ["OCR", "Masquage", "Pinceau SVG"],
           stats: [
             { title: "Annoter", desc: "Texte, formes, lignes et mises en evidence restent simples d'acces." },
@@ -1563,34 +1406,40 @@
           desc: "Chaque module a un role clair, ce qui rend la page plus lisible et le produit plus facile a comprendre.",
           items: [
             {
-              key: "capture",
-              title: "Capture & Annotate",
-              desc: "Lancez une capture rapidement puis passez directement a l'annotation. Capture, notes texte et mise en valeur visuelle restent dans un seul flux.",
-              points: ["Command + Shift + S", "Double-clic pour texte", "Ajustement au clavier"]
+              key: "brushes",
+              title: "Pinceaux",
+              desc: "Fleches, lignes droites, lignes pointillees et lignes ondulees, avec rotation ainsi que reglage de l'epaisseur, de la couleur et de l'opacite.",
+              points: ["Fleches", "Pointilles", "Rotation"]
             },
             {
               key: "shapes",
-              title: "Shapes & Brushes",
-              desc: "Utilisez fleches, lignes, pointilles, vagues, rectangles, cercles, triangles, ellipses, coeurs et etoiles. Les fichiers SVG peuvent aussi servir de pinceaux personnalises.",
-              points: ["Styles de ligne", "Bibliotheque de formes", "Import SVG"]
+              title: "Formes",
+              desc: "Rectangle, cercle, triangle, ellipse, coeur et etoile, avec rotation ainsi que reglage de la couleur, de l'opacite et de l'epaisseur du contour.",
+              points: ["Jeu de formes", "Rotation", "Styles reglables"]
             },
             {
-              key: "redaction",
-              title: "Redaction",
-              desc: "Quand il faut proteger du contenu, utilisez le flou mosaique, le masquage texte en un clic et le masquage plein ecran sans quitter le flux de capture.",
-              points: ["Mosaique", "Masquage texte", "Masquage plein ecran"]
+              key: "customBrushes",
+              title: "Pinceaux personnalises",
+              desc: "9 pinceaux d'icones integres, avec possibilite d'importer d'autres formes SVG, de les faire pivoter et d'ajuster l'epaisseur et l'opacite.",
+              points: ["9 integres", "Import SVG", "Rotation"]
+            },
+            {
+              key: "mosaic",
+              title: "Mosaique",
+              desc: "Flou applique au pinceau, masquage de texte en un clic et masquage plein ecran, avec reglage de la taille et de l'intensite.",
+              points: ["Mosaique", "Masquage texte", "Plein ecran"]
+            },
+            {
+              key: "text",
+              title: "Texte",
+              desc: "Reglage de la taille, de la police, de la couleur, de l'opacite et de la rotation pour les notes et les explications.",
+              points: ["Police", "Opacite", "Rotation"]
             },
             {
               key: "ocr",
               title: "OCR",
-              desc: "Reconnaissez et extrayez le texte des captures afin de reutiliser rapidement notes, tickets et extraits sans ressaisie manuelle.",
-              points: ["Reconnaissance", "Extraction", "Reutilisation rapide"]
-            },
-            {
-              key: "workflow",
-              title: "Drag Workflow",
-              desc: "Apres la capture, glissez pour enregistrer ou glissez directement dans le chat, les documents ou d'autres apps pour garder un transfert rapide.",
-              points: ["Glisser pour enregistrer", "Glisser dans les apps", "Moins d'etapes"]
+              desc: "Reconnaissance et extraction du texte des captures pour le reutiliser plus facilement.",
+              points: ["Reconnaissance", "Extraction", "Reutilisation"]
             }
           ]
         },
@@ -1681,7 +1530,6 @@
           note: "Per Drag-and-drop speichern oder direkt in andere Apps uebernehmen, damit Reviews, Abstimmung und Tagesarbeit weniger Zwischenschritte brauchen.",
           download: "Im App Store laden",
           secondary: "Funktionen ansehen",
-          windowLabel: "Workflow-Vorschau",
           badges: ["OCR", "Maskierung", "SVG-Pinsel"],
           stats: [
             { title: "Annotieren", desc: "Text, Formen, Linien und Hervorhebungen bleiben schnell erreichbar." },
@@ -1693,11 +1541,12 @@
           title: "Kernfunktionen",
           desc: "Jedes Modul hat eine klare Aufgabe, damit die Seite leicht lesbar bleibt und das Produkt sofort verstaendlich ist.",
           items: [
-            { key: "capture", title: "Capture & Annotate", desc: "Starten Sie eine Aufnahme schnell und wechseln Sie direkt in die Annotation. Aufnahme, Textnotizen und Hervorhebungen bleiben in einem zusammenhaengenden Ablauf.", points: ["Command + Shift + S", "Doppelklick fuer Text", "Feinjustierung per Pfeiltaste"] },
-            { key: "shapes", title: "Shapes & Brushes", desc: "Nutzen Sie Pfeile, Linien, gestrichelte Linien, Wellen, Rechtecke, Kreise, Dreiecke, Ellipsen, Herzen und Sterne. SVG-Dateien lassen sich als eigene Pinsel importieren.", points: ["Linienstile", "Formbibliothek", "SVG-Import"] },
-            { key: "redaction", title: "Redaction", desc: "Wenn Inhalte geschuetzt werden muessen, nutzen Sie Mosaik, Ein-Klick-Textmaskierung und Vollbild-Maskierung direkt im Screenshot-Ablauf.", points: ["Mosaik", "Textmaskierung", "Vollbild-Maskierung"] },
-            { key: "ocr", title: "OCR", desc: "Text aus Screenshots erkennen und extrahieren, damit Notizen, Tickets und Ausschnitte sofort weiterverwendet werden koennen.", points: ["Texterkennung", "Extraktion", "Schnelle Weiterverwendung"] },
-            { key: "workflow", title: "Drag Workflow", desc: "Nach der Aufnahme per Drag-and-drop speichern oder direkt in Chat, Dokumente und andere Apps ziehen, damit der Ablauf nicht unterbrochen wird.", points: ["Per Ziehen speichern", "In Apps ziehen", "Weniger Zwischenschritte"] }
+            { key: "brushes", title: "Pinsel", desc: "Pfeile, gerade Linien, gestrichelte Linien und Wellenlinien mit Rotation sowie einstellbarer Staerke, Farbe und Deckkraft.", points: ["Pfeile", "Gestrichelt", "Rotation"] },
+            { key: "shapes", title: "Formen", desc: "Rechteck, Kreis, Dreieck, Ellipse, Herz und Stern mit Rotation sowie einstellbarer Farbe, Deckkraft und Linienstaerke.", points: ["Formensatz", "Rotation", "Stile steuerbar"] },
+            { key: "customBrushes", title: "Eigene Pinsel", desc: "9 integrierte Symbolpinsel, zusaetzlich lassen sich weitere SVG-Formen importieren; Rotation, Staerke und Deckkraft sind anpassbar.", points: ["9 integriert", "SVG-Import", "Rotation"] },
+            { key: "mosaic", title: "Mosaik", desc: "Freies Uebermalen, Ein-Klick-Textredaktion und Vollbild-Redaktion mit einstellbarer Pinselgroesse und Intensitaet.", points: ["Mosaik", "Textredaktion", "Vollbild"] },
+            { key: "text", title: "Text", desc: "Schriftgroesse, Schriftart, Farbe, Deckkraft und Rotation lassen sich fuer Hinweise und Markierungen anpassen.", points: ["Schrift", "Deckkraft", "Rotation"] },
+            { key: "ocr", title: "OCR", desc: "Erkennt und extrahiert Text aus Screenshots fuer schnellere Weiterverwendung.", points: ["Erkennung", "Extraktion", "Weiterverwenden"] }
           ]
         },
         screenshots: null,
@@ -1761,7 +1610,6 @@
           note: "Trascina per salvare o trascina direttamente in altre app, cosi review, comunicazione e lavoro quotidiano richiedono meno passaggi.",
           download: "Scarica su App Store",
           secondary: "Esplora le funzioni",
-          windowLabel: "Anteprima del flusso",
           badges: ["OCR", "Oscuramento", "Pennello SVG"],
           stats: [
             { title: "Annota", desc: "Testo, forme, linee e evidenziazioni restano subito disponibili." },
@@ -1773,11 +1621,12 @@
           title: "Funzioni principali",
           desc: "Ogni modulo ha un compito chiaro, cosi la pagina resta semplice da leggere e il prodotto semplice da capire.",
           items: [
-            { key: "capture", title: "Capture & Annotate", desc: "Avvia rapidamente uno screenshot e passa subito all'annotazione. Cattura, testo e enfasi visiva restano nello stesso flusso.", points: ["Command + Shift + S", "Doppio clic per testo", "Micro-regolazione con frecce"] },
-            { key: "shapes", title: "Shapes & Brushes", desc: "Usa frecce, linee, tratteggi, onde, rettangoli, cerchi, triangoli, ellissi, cuori e stelle. Puoi anche importare file SVG come pennelli personalizzati.", points: ["Stili di linea", "Libreria forme", "Import SVG"] },
-            { key: "redaction", title: "Redaction", desc: "Quando serve proteggere contenuti, usa mosaico, mascheratura testo con un clic e oscuramento a schermo intero senza uscire dal flusso.", points: ["Mosaico", "Mascheratura testo", "Oscuramento completo"] },
-            { key: "ocr", title: "OCR", desc: "Riconosci ed estrai il testo dagli screenshot per riutilizzare note, ticket e frammenti senza riscriverli.", points: ["Riconoscimento", "Estrazione", "Riutilizzo rapido"] },
-            { key: "workflow", title: "Drag Workflow", desc: "Dopo la cattura puoi trascinare per salvare o trascinare direttamente in chat, documenti e altre app per non interrompere il lavoro.", points: ["Trascina per salvare", "Trascina nelle app", "Meno passaggi"] }
+            { key: "brushes", title: "Pennelli", desc: "Frecce, linee dritte, linee tratteggiate e linee ondulate con rotazione, spessore, colore e opacita regolabili.", points: ["Frecce", "Tratteggi", "Rotazione"] },
+            { key: "shapes", title: "Forme", desc: "Rettangolo, cerchio, triangolo, ellisse, cuore e stella con rotazione, colore, opacita e spessore del tratto regolabili.", points: ["Set forme", "Rotazione", "Stili regolabili"] },
+            { key: "customBrushes", title: "Pennelli personalizzati", desc: "9 pennelli icona integrati, con supporto all'importazione di altre forme SVG e regolazione di rotazione, spessore e opacita.", points: ["9 integrati", "Import SVG", "Rotazione"] },
+            { key: "mosaic", title: "Mosaico", desc: "Applicazione a pennello, oscuramento testo con un clic e oscuramento a schermo intero con intensita e dimensione regolabili.", points: ["Mosaico", "Mascheratura testo", "Schermo intero"] },
+            { key: "text", title: "Testo", desc: "Dimensione carattere, font, colore, opacita e rotazione regolabili per note e spiegazioni.", points: ["Font", "Opacita", "Rotazione"] },
+            { key: "ocr", title: "OCR", desc: "Riconosce ed estrae il testo dagli screenshot per riutilizzarlo piu rapidamente.", points: ["Riconoscimento", "Estrazione", "Riutilizzo"] }
           ]
         },
         screenshots: null,
@@ -1824,7 +1673,7 @@
       ja: {
         meta: {
           title: "OmniCapture | 素早く撮って、正確に注釈",
-          description: "OmniCapture は、注釈、OCR、マスキング、SVG ブラシ、ドラッグ操作を備えた macOS 向けスクリーンショットツールです。"
+          description: "OmniCapture は、注釈、OCR、マスキング、SVG ブラシ、SVG ブラシを備えた macOS 向けスクリーンショットツールです。"
         },
         header: {
           tagline: "すばやく撮って、わかりやすく伝える。",
@@ -1841,7 +1690,6 @@
           note: "保存のためにドラッグしたり、他のアプリへ直接ドラッグしたりできるので、レビューや共有の手数を減らせます。",
           download: "App Store で入手",
           secondary: "機能を見る",
-          windowLabel: "ワークフロープレビュー",
           badges: ["OCR", "マスキング", "SVG ブラシ"],
           stats: [
             { title: "注釈", desc: "テキスト、図形、線、強調がすぐ使えます。" },
@@ -1853,11 +1701,12 @@
           title: "主な機能",
           desc: "各モジュールの役割を明確にし、ページも製品も理解しやすく保ちます。",
           items: [
-            { key: "capture", title: "Capture & Annotate", desc: "すばやくキャプチャを開始し、そのまま注釈に移れます。撮影、テキスト注釈、強調表示を一つの流れで行えます。", points: ["Command + Shift + S", "ダブルクリックで文字", "矢印キーで微調整"] },
-            { key: "shapes", title: "Shapes & Brushes", desc: "矢印、直線、破線、波線、長方形、円、三角形、楕円、ハート、星に対応し、SVG をカスタムブラシとして取り込めます。", points: ["線種", "図形ライブラリ", "SVG 取り込み"] },
-            { key: "redaction", title: "Redaction", desc: "機密情報を保護したいときは、モザイク、ワンタップ文字マスク、全画面マスクをキャプチャの流れの中で使えます。", points: ["モザイク", "文字マスク", "全画面マスク"] },
-            { key: "ocr", title: "OCR", desc: "スクリーンショット内の文字を認識して抽出できるため、メモやチケットの内容を再入力せずに再利用できます。", points: ["文字認識", "抽出", "すぐ再利用"] },
-            { key: "workflow", title: "Drag Workflow", desc: "撮影後はドラッグして保存したり、チャットや書類、他のアプリへ直接ドラッグしたりでき、流れが途切れません。", points: ["ドラッグ保存", "アプリへドラッグ", "余分な手順を削減"] }
+            { key: "brushes", title: "ブラシ", desc: "矢印、直線、破線、波線に対応し、回転、太さ・色・不透明度を調整できます。", points: ["矢印", "破線", "回転"] },
+            { key: "shapes", title: "図形", desc: "四角形、円、三角形、楕円、ハート、星に対応し、回転、色・不透明度・線の太さを調整できます。", points: ["図形セット", "回転", "スタイル調整"] },
+            { key: "customBrushes", title: "カスタムブラシ", desc: "9 種類のアイコンブラシを内蔵し、さらに SVG 図形を追加して使えます。回転、太さ、不透明度の調整にも対応します。", points: ["9 種類内蔵", "SVG 追加", "回転"] },
+            { key: "mosaic", title: "モザイク", desc: "塗りつぶし、文字のワンタップマスク、全画面マスクに対応し、ブラシサイズと強さを調整できます。", points: ["塗りつぶし", "文字マスク", "全画面マスク"] },
+            { key: "text", title: "テキスト", desc: "文字サイズ、フォント、色、不透明度、回転を調整でき、補足説明や強調表示に便利です。", points: ["フォント", "不透明度", "回転"] },
+            { key: "ocr", title: "OCR", desc: "スクリーンショット内の文字を認識・抽出し、すばやく再利用できます。", points: ["文字認識", "抽出", "再利用"] }
           ]
         },
         screenshots: null,
@@ -1904,7 +1753,7 @@
       ko: {
         meta: {
           title: "OmniCapture | 빠른 캡처, 정확한 주석",
-          description: "OmniCapture는 주석, OCR, 마스킹, SVG 브러시, 드래그 워크플로를 지원하는 macOS 스크린샷 도구입니다."
+          description: "OmniCapture는 주석, OCR, 마스킹, SVG 브러시, SVG 브러시를 지원하는 macOS 스크린샷 도구입니다."
         },
         header: {
           tagline: "빠르게 캡처하고, 명확하게 설명하세요.",
@@ -1921,7 +1770,6 @@
           note: "드래그로 저장하거나 다른 앱으로 바로 드래그할 수 있어 리뷰, 커뮤니케이션, 일상 업무에서 중간 단계를 줄여 줍니다.",
           download: "App Store에서 다운로드",
           secondary: "기능 보기",
-          windowLabel: "워크플로 미리보기",
           badges: ["OCR", "마스킹", "SVG 브러시"],
           stats: [
             { title: "주석", desc: "텍스트, 도형, 선, 강조를 바로 사용할 수 있습니다." },
@@ -1933,11 +1781,12 @@
           title: "핵심 기능",
           desc: "각 모듈의 역할을 분명히 나눠 페이지도, 제품도 이해하기 쉽게 구성했습니다.",
           items: [
-            { key: "capture", title: "Capture & Annotate", desc: "스크린샷을 빠르게 시작하고 바로 주석 단계로 들어갈 수 있습니다. 캡처, 텍스트 메모, 강조 표시가 한 흐름 안에 있습니다.", points: ["Command + Shift + S", "더블클릭으로 텍스트", "방향키 미세 조정"] },
-            { key: "shapes", title: "Shapes & Brushes", desc: "화살표, 직선, 점선, 물결선, 사각형, 원, 삼각형, 타원, 하트, 별을 지원하며 SVG 파일을 커스텀 브러시로 가져올 수 있습니다.", points: ["선 스타일", "도형 라이브러리", "SVG 가져오기"] },
-            { key: "redaction", title: "Redaction", desc: "민감한 내용을 보호해야 할 때 모자이크, 원클릭 텍스트 마스킹, 전체 화면 마스킹을 캡처 흐름 안에서 바로 사용할 수 있습니다.", points: ["모자이크", "텍스트 마스킹", "전체 화면 마스킹"] },
-            { key: "ocr", title: "OCR", desc: "스크린샷 속 텍스트를 인식하고 추출해 메모, 티켓, 조각난 내용을 다시 입력하지 않고 바로 재사용할 수 있습니다.", points: ["문자 인식", "텍스트 추출", "빠른 재사용"] },
-            { key: "workflow", title: "Drag Workflow", desc: "캡처 후 드래그로 저장하거나 채팅, 문서, 다른 앱으로 바로 드래그해 흐름을 끊지 않고 넘길 수 있습니다.", points: ["드래그 저장", "앱으로 드래그", "중간 단계 축소"] }
+            { key: "brushes", title: "브러시", desc: "화살표, 직선, 점선, 물결선을 지원하며 회전, 굵기, 색상, 투명도를 조절할 수 있습니다.", points: ["화살표", "점선", "회전"] },
+            { key: "shapes", title: "도형", desc: "사각형, 원형, 삼각형, 타원형, 하트, 별을 지원하며 회전, 색상, 투명도, 선 굵기를 조절할 수 있습니다.", points: ["도형 세트", "회전", "스타일 조절"] },
+            { key: "customBrushes", title: "커스텀 브러시", desc: "9가지 아이콘 브러시를 기본 제공하며, 추가 SVG 도형을 가져와 사용할 수 있습니다. 회전, 굵기, 투명도도 조절할 수 있습니다.", points: ["9가지 기본", "SVG 가져오기", "회전"] },
+            { key: "mosaic", title: "모자이크", desc: "브러시형 모자이크, 텍스트 원클릭 마스킹, 전체 화면 마스킹을 지원하며 브러시 크기와 강도를 조절할 수 있습니다.", points: ["브러시 모자이크", "텍스트 마스킹", "전체 화면"] },
+            { key: "text", title: "텍스트", desc: "글자 크기, 글꼴, 색상, 투명도, 회전을 조절할 수 있어 설명과 강조에 적합합니다.", points: ["글꼴", "투명도", "회전"] },
+            { key: "ocr", title: "OCR", desc: "스크린샷 속 텍스트를 인식하고 추출해 빠르게 재사용할 수 있습니다.", points: ["문자 인식", "텍스트 추출", "재사용"] }
           ]
         },
         screenshots: null,
@@ -2094,13 +1943,15 @@
       document.getElementById("hero-desc").textContent = hero.desc;
       document.getElementById("hero-note").textContent = hero.note;
       document.getElementById("floating-download").textContent = footer.download;
-      document.getElementById("hero-window-label").textContent = hero.windowLabel;
       hero.badges.forEach((label, index) => {
-        document.getElementById(`badge-${index + 1}`).textContent = label;
+        const badge = document.getElementById(`badge-${index + 1}`);
+        if (badge) badge.textContent = label;
       });
       hero.stats.forEach((item, index) => {
-        document.getElementById(`stat-${index + 1}-title`).textContent = item.title;
-        document.getElementById(`stat-${index + 1}-desc`).textContent = item.desc;
+        const title = document.getElementById(`stat-${index + 1}-title`);
+        const desc = document.getElementById(`stat-${index + 1}-desc`);
+        if (title) title.textContent = item.title;
+        if (desc) desc.textContent = item.desc;
       });
 
       document.getElementById("features-title").textContent = features.title;
