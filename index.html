@@ -212,12 +212,14 @@
     }
 
     .hero {
-      display: block;
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(320px, 420px);
+      gap: 28px;
+      align-items: center;
     }
 
     .hero-copy {
       width: 100%;
-      max-width: 960px;
       min-width: 0;
       padding: 10px 0 6px;
     }
@@ -316,6 +318,74 @@
       color: var(--muted);
       font-size: 0.94rem;
       line-height: 1.7;
+    }
+
+    .hero-media {
+      min-width: 0;
+    }
+
+    .hero-video-card {
+      overflow: hidden;
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at top left, rgba(21, 112, 239, 0.14), transparent 40%),
+        linear-gradient(180deg, #ffffff 0%, #f6f8fb 100%);
+      box-shadow: var(--shadow);
+      aspect-ratio: 4 / 3;
+    }
+
+    .hero-video-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px 18px 10px;
+    }
+
+    .hero-video-title {
+      margin: 0;
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .hero-video-status {
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .hero-video-shell {
+      padding: 0 14px 14px;
+    }
+
+    .hero-video {
+      width: 100%;
+      aspect-ratio: inherit;
+      display: none;
+      object-fit: cover;
+      border-radius: 18px;
+      background: #0f1728;
+    }
+
+    .hero-video.ready {
+      display: block;
+    }
+
+    .hero-video-empty {
+      display: grid;
+      place-items: center;
+      min-height: 220px;
+      padding: 20px;
+      border-radius: 18px;
+      border: 1px dashed rgba(96, 112, 134, 0.35);
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.7);
+      text-align: center;
+      line-height: 1.65;
+    }
+
+    .hero-video-empty[hidden] {
+      display: none;
     }
 
     section {
@@ -565,6 +635,10 @@
       font-weight: 600;
     }
 
+    .log-kicker:empty {
+      display: none;
+    }
+
     .footer-cta {
       margin-top: 64px;
       display: flex;
@@ -661,6 +735,10 @@
     }
 
     @media (max-width: 1080px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
       .feature-grid,
       .overview-grid,
       .quick-grid {
@@ -750,7 +828,18 @@
 
             <p class="hero-note" id="hero-note"></p>
           </div>
-
+          <div class="hero-media">
+            <div class="hero-video-card">
+              <div class="hero-video-header">
+                <p class="hero-video-title" id="hero-video-title">操作视频</p>
+                <span class="hero-video-status" id="hero-video-status">Loading…</span>
+              </div>
+              <div class="hero-video-shell">
+                <video class="hero-video" id="hero-video" autoplay muted playsinline preload="metadata"></video>
+                <div class="hero-video-empty" id="hero-video-empty" hidden></div>
+              </div>
+            </div>
+          </div>
         </section>
 
         <section id="features">
@@ -841,14 +930,20 @@
       { key: "ko", label: "한국어" }
     ];
 
-    const FEATURE_ASSETS = {
-      brushes: "./assets/screenshots/rich-brushes.png",
-      shapes: "./assets/screenshots/shapes.png",
-      customBrushes: "./assets/screenshots/svg-brushes.png",
-      mosaic: "./assets/screenshots/masic.png",
-      text: "./assets/screenshots/text-annotation.png",
-      ocr: "./assets/screenshots/ocr.png"
+    const FEATURE_ASSET_FILES = {
+      brushes: "rich-brushes",
+      shapes: "shapes",
+      customBrushes: "svg-brushes",
+      mosaic: "masic",
+      text: "text-annotation",
+      ocr: "ocr"
     };
+
+    const HERO_VIDEO_MANIFEST = "./assets/操作/manifest.json";
+    const HERO_VIDEO_FALLBACK_FILES = ["操作.mov"];
+    let heroVideoQueue = [];
+    let heroVideoIndex = 0;
+    let heroVideoLoaded = false;
 
     const SVG_ILLUSTRATION = `
       <svg viewBox="0 0 220 180" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1891,15 +1986,278 @@
       document.documentElement.lang = map[lang] || "en";
     }
 
+    function getHeroVideoLabel(lang) {
+      const labels = {
+        "zh-Hans": "操作视频",
+        "zh-Hant": "操作影片",
+        en: "Workflow videos",
+        fr: "Videos workflow",
+        de: "Workflow-Videos",
+        it: "Video workflow",
+        ja: "操作ビデオ",
+        ko: "작업 영상"
+      };
+      return labels[lang] || labels.en;
+    }
+
+    function getLocalizedChangelogItems(lang) {
+      const currentReleaseKicker = "";
+
+      const releases = {
+        "zh-Hans": [
+          {
+            kicker: currentReleaseKicker,
+            title: "26.4.1（即将上线）",
+            desc: "本次更新修复了文本标记无法旋转的问题，并持续优化整体操作体验。",
+            list: ["修复文本标记无法旋转的问题", "优化操作体验"]
+          },
+          {
+            kicker: "",
+            title: "26.4.0（已上线）",
+            desc: "计划版本重点扩展马赛克、自定义 SVG 样式，以及 OCR 识别与文字提取能力。",
+            list: ["工具栏新增马赛克入口", "支持不同程度的高斯模糊", "支持 OCR 识别与文字提取", "支持导入、持久化和删除自定义 SVG 样式"]
+          },
+          {
+            kicker: "",
+            title: "26.3.0",
+            desc: "当前版本围绕标注能力和编辑控制展开，让截图后的表达动作更完整。",
+            list: ["支持画笔、文字、形状", "支持标注删除、旋转、缩放", "支持颜色、粗细和透明度调整"]
+          }
+        ],
+        "zh-Hant": [
+          {
+            kicker: currentReleaseKicker,
+            title: "26.4.1（即將上線）",
+            desc: "本次更新修正了文字標記無法旋轉的問題，並持續優化整體操作體驗。",
+            list: ["修正文字標記無法旋轉的問題", "優化操作體驗"]
+          },
+          {
+            kicker: "",
+            title: "26.4.0（已上線）",
+            desc: "規劃版本重點擴充馬賽克、自訂 SVG 樣式，以及 OCR 辨識與文字擷取能力。",
+            list: ["工具列新增馬賽克入口", "支援不同程度的高斯模糊", "支援 OCR 辨識與文字擷取", "支援匯入、持久化與刪除自訂 SVG 樣式"]
+          },
+          {
+            kicker: "",
+            title: "26.3.0",
+            desc: "目前版本圍繞標註能力與編輯控制展開，讓截圖後的表達動作更完整。",
+            list: ["支援畫筆、文字、形狀", "支援標註刪除、旋轉、縮放", "支援顏色、粗細與透明度調整"]
+          }
+        ],
+        en: [
+          {
+            kicker: currentReleaseKicker,
+            title: "26.4.1 (Coming Soon)",
+            desc: "This update fixes text annotation rotation and continues smoothing everyday interaction details.",
+            list: ["Fixed an issue where text annotations could not rotate", "Interaction refinements"]
+          },
+          {
+            kicker: "",
+            title: "26.4.0 (Now Available)",
+            desc: "The planned release expands mosaic styles, custom SVG styles, plus OCR recognition and text extraction.",
+            list: ["Added a mosaic entry in the toolbar", "Supports multiple gaussian blur strengths", "Added OCR recognition and text extraction", "Supports importing, persisting, and deleting custom SVG styles"]
+          },
+          {
+            kicker: "",
+            title: "26.3.0",
+            desc: "This release focused on annotation coverage and editing controls to make post-capture explanation more complete.",
+            list: ["Added brush, text, and shape tools", "Added deletion, rotation, and scaling for annotations", "Added controls for color, line width, and opacity"]
+          }
+        ],
+        fr: [
+          {
+            kicker: currentReleaseKicker,
+            title: "26.4.1 (Bientot disponible)",
+            desc: "Cette mise a jour corrige la rotation du texte et continue d'ameliorer l'experience d'utilisation.",
+            list: ["Correction du probleme de rotation des annotations texte", "Amelioration de l'experience d'utilisation"]
+          },
+          {
+            kicker: "",
+            title: "26.4.0 (Disponible)",
+            desc: "La version prevue etend les styles de mosaique, les styles SVG personnalises, ainsi que l'OCR et l'extraction de texte.",
+            list: ["Ajouter une entree mosaique a la barre d'outils", "Prendre en charge plusieurs niveaux de flou gaussien", "Ajouter l'OCR et l'extraction de texte", "Permettre l'import, la conservation et la suppression de styles SVG personnalises"]
+          },
+          {
+            kicker: "",
+            title: "26.3.0",
+            desc: "La version actuelle se concentre sur les annotations et les controles d'edition pour rendre la communication apres capture plus complete.",
+            list: ["Ajout des outils pinceau, texte et forme", "Ajout de la suppression, rotation et mise a l'echelle des annotations", "Ajout des reglages de couleur, epaisseur et opacite"]
+          }
+        ],
+        de: [
+          {
+            kicker: currentReleaseKicker,
+            title: "26.4.1 (Demnaechst verfuegbar)",
+            desc: "Dieses Update behebt die fehlende Rotation fuer Textmarkierungen und verbessert weiter das Bediengefuehl.",
+            list: ["Problem behoben, durch das Textmarkierungen nicht gedreht werden konnten", "Optimierte Bedienerfahrung"]
+          },
+          {
+            kicker: "",
+            title: "26.4.0 (Verfuegbar)",
+            desc: "Die geplante Version erweitert Mosaikstile, benutzerdefinierte SVG-Stile sowie OCR-Erkennung und Textextraktion.",
+            list: ["Mosaik-Eintrag in der Werkzeugleiste", "Mehrere Stufen von Gauescher Unschärfe", "OCR-Erkennung und Textextraktion", "Import, Speicherung und Loeschen benutzerdefinierter SVG-Stile"]
+          },
+          {
+            kicker: "",
+            title: "26.3.0",
+            desc: "Die aktuelle Version konzentriert sich auf Annotationen und Bearbeitungskontrollen, damit die Kommunikation nach dem Screenshot vollstaendiger wirkt.",
+            list: ["Pinsel-, Text- und Formwerkzeuge hinzugefuegt", "Loeschen, Drehen und Skalieren fuer Annotationen hinzugefuegt", "Steuerung fuer Farbe, Strichstaerke und Deckkraft hinzugefuegt"]
+          }
+        ],
+        it: [
+          {
+            kicker: currentReleaseKicker,
+            title: "26.4.1 (In arrivo)",
+            desc: "Questo aggiornamento risolve la rotazione del testo e continua a migliorare l'esperienza d'uso.",
+            list: ["Risolto il problema che impediva la rotazione delle annotazioni di testo", "Esperienza d'uso ottimizzata"]
+          },
+          {
+            kicker: "",
+            title: "26.4.0 (Disponibile)",
+            desc: "La versione pianificata amplia stili mosaico, stili SVG personalizzati, OCR e capacita di estrazione testo.",
+            list: ["Aggiunta voce mosaico nella toolbar", "Supporto per diversi livelli di sfocatura gaussiana", "Aggiunta di OCR e estrazione testo", "Importazione, persistenza ed eliminazione di stili SVG personalizzati"]
+          },
+          {
+            kicker: "",
+            title: "26.3.0",
+            desc: "La versione attuale si concentra su copertura delle annotazioni e controlli di modifica per rendere piu completa la comunicazione dopo la cattura.",
+            list: ["Aggiunti strumenti pennello, testo e forma", "Aggiunte eliminazione, rotazione e ridimensionamento delle annotazioni", "Aggiunti controlli per colore, spessore e opacita"]
+          }
+        ],
+        ja: [
+          {
+            kicker: currentReleaseKicker,
+            title: "26.4.1（近日公開）",
+            desc: "このアップデートでは、テキスト注釈を回転できない問題を修正し、操作体験も継続して改善しています。",
+            list: ["テキスト注釈を回転できない問題を修正", "操作体験を改善中"]
+          },
+          {
+            kicker: "",
+            title: "26.4.0（配信中）",
+            desc: "予定中のリリースでは、モザイク表現、カスタム SVG スタイルに加え、OCR 認識と文字抽出にも対応します。",
+            list: ["ツールバーにモザイク項目を追加", "異なる強さのガウスぼかしに対応", "OCR 認識と文字抽出に対応", "カスタム SVG スタイルの取り込み、保持、削除に対応"]
+          },
+          {
+            kicker: "",
+            title: "26.3.0",
+            desc: "現在のリリースでは、注釈の対応範囲と編集操作を強化し、撮影後の説明をより完結にしています。",
+            list: ["ブラシ、文字、図形ツールを追加", "注釈の削除、回転、拡大縮小に対応", "色、線幅、不透明度の調整に対応"]
+          }
+        ],
+        ko: [
+          {
+            kicker: currentReleaseKicker,
+            title: "26.4.1 (곧 출시)",
+            desc: "이번 업데이트는 텍스트 주석 회전 문제를 수정하고 전반적인 조작 경험을 계속 다듬습니다.",
+            list: ["텍스트 주석이 회전되지 않던 문제 수정", "조작 경험 최적화"]
+          },
+          {
+            kicker: "",
+            title: "26.4.0 (출시됨)",
+            desc: "예정된 버전에서는 모자이크 스타일, 커스텀 SVG 스타일과 함께 OCR 인식 및 텍스트 추출 능력도 확장합니다.",
+            list: ["툴바에 모자이크 항목 추가", "여러 강도의 가우시안 블러 지원", "OCR 인식 및 텍스트 추출 지원", "커스텀 SVG 스타일의 가져오기, 유지, 삭제 지원"]
+          },
+          {
+            kicker: "",
+            title: "26.3.0",
+            desc: "현재 버전은 주석 기능 범위와 편집 제어를 강화해 캡처 후 커뮤니케이션을 더 완성도 있게 만듭니다.",
+            list: ["브러시, 텍스트, 도형 도구 추가", "주석 삭제, 회전, 크기 조절 지원", "색상, 두께, 투명도 조절 지원"]
+          }
+        ]
+      };
+
+      return releases[lang] || releases.en;
+    }
+
     function renderLangSelect(lang) {
       const root = document.getElementById("lang-select");
       root.innerHTML = LANGS.map(({ key, label }) => `<option value="${key}">${label}</option>`).join("");
       root.value = lang;
     }
 
+    function getFeatureAssetSrc(itemKey, lang) {
+      const file = FEATURE_ASSET_FILES[itemKey];
+      const locale = I18N[lang] ? lang : FALLBACK;
+      return `./assets/screenshots/${locale}/${file}_${locale}.png`;
+    }
+
     function renderFeatureVisual(item) {
-      const src = FEATURE_ASSETS[item.key];
+      const src = getFeatureAssetSrc(item.key, currentLang);
       return `<img src="${src}" alt="${item.title}" loading="lazy" data-preview-src="${src}" data-preview-alt="${item.title}" />`;
+    }
+
+    function setHeroVideoState(hasVideo, statusText) {
+      const video = document.getElementById("hero-video");
+      const empty = document.getElementById("hero-video-empty");
+      const status = document.getElementById("hero-video-status");
+      status.textContent = statusText;
+      video.classList.toggle("ready", hasVideo);
+      empty.hidden = hasVideo;
+    }
+
+    function syncHeroVideoAspectRatio() {
+      const video = document.getElementById("hero-video");
+      const card = document.querySelector(".hero-video-card");
+      if (!video || !card) return;
+      if (video.videoWidth > 0 && video.videoHeight > 0) {
+        card.style.aspectRatio = `${video.videoWidth} / ${video.videoHeight}`;
+      }
+    }
+
+    function playNextHeroVideo() {
+      if (!heroVideoQueue.length) return;
+      heroVideoIndex = (heroVideoIndex + 1) % heroVideoQueue.length;
+      const video = document.getElementById("hero-video");
+      video.src = heroVideoQueue[heroVideoIndex];
+      video.load();
+      video.play().catch(() => {
+        setHeroVideoState(false, "Video unavailable");
+      });
+    }
+
+    function buildHeroVideoQueue(files) {
+      return files
+        .filter((file) => typeof file === "string" && file.trim())
+        .map((file) => `./assets/操作/${file}`);
+    }
+
+    async function initHeroVideoCarousel() {
+      if (heroVideoLoaded) return;
+      heroVideoLoaded = true;
+      const video = document.getElementById("hero-video");
+      video.muted = true;
+      video.loop = false;
+      video.addEventListener("ended", playNextHeroVideo);
+      video.addEventListener("error", playNextHeroVideo);
+      video.addEventListener("loadedmetadata", syncHeroVideoAspectRatio);
+
+      try {
+        const response = await fetch(HERO_VIDEO_MANIFEST, { cache: "no-cache" });
+        if (!response.ok) throw new Error("manifest");
+        const manifest = await response.json();
+        const files = Array.isArray(manifest?.files) ? manifest.files : [];
+        heroVideoQueue = buildHeroVideoQueue(files);
+      } catch (error) {
+        heroVideoQueue = [];
+      }
+
+      if (!heroVideoQueue.length) {
+        heroVideoQueue = buildHeroVideoQueue(HERO_VIDEO_FALLBACK_FILES);
+      }
+
+      if (!heroVideoQueue.length) {
+        setHeroVideoState(false, "No videos");
+        return;
+      }
+
+      heroVideoIndex = 0;
+      video.src = heroVideoQueue[0];
+      video.load();
+      video.loop = heroVideoQueue.length === 1;
+      setHeroVideoState(true, `${heroVideoQueue.length} clip${heroVideoQueue.length > 1 ? "s" : ""}`);
+      await video.play().catch(() => {
+        setHeroVideoState(true, "Tap to play");
+      });
     }
 
     function openLightbox(src, alt) {
@@ -1927,6 +2285,7 @@
     function renderPage() {
       const dict = I18N[currentLang] || I18N[FALLBACK];
       const { header, hero, features, details, overview, privacy, changelog, footer, meta } = dict;
+      const localizedChangelogItems = getLocalizedChangelogItems(currentLang);
 
       setHtmlLang(currentLang);
       document.title = meta.title;
@@ -1942,6 +2301,7 @@
       document.getElementById("hero-subtitle").textContent = hero.subtitle;
       document.getElementById("hero-desc").textContent = hero.desc;
       document.getElementById("hero-note").textContent = hero.note;
+      document.getElementById("hero-video-title").textContent = getHeroVideoLabel(currentLang);
       document.getElementById("floating-download").textContent = footer.download;
       hero.badges.forEach((label, index) => {
         const badge = document.getElementById(`badge-${index + 1}`);
@@ -1977,7 +2337,7 @@
       document.getElementById("privacy-title").textContent = details.tabs.privacy;
       document.getElementById("privacy-desc").textContent = privacy.items[0].p1;
       document.getElementById("changelog-title").textContent = details.tabs.changelog;
-      document.getElementById("changelog-desc").textContent = changelog.items[0].desc;
+      document.getElementById("changelog-desc").textContent = localizedChangelogItems[0].desc;
 
       document.getElementById("overview-grid").innerHTML = overview.cards.map((item) => `
         <article class="overview-card">
@@ -2001,7 +2361,7 @@
         </article>
       `).join("");
 
-      document.getElementById("log-grid").innerHTML = changelog.items.map((item) => `
+      document.getElementById("log-grid").innerHTML = localizedChangelogItems.map((item) => `
         <article class="log-card">
           <div class="log-kicker">${item.kicker}</div>
           <h3>${item.title}</h3>
@@ -2016,6 +2376,7 @@
 
       renderLangSelect(currentLang);
       applyTab(currentTab, true);
+      initHeroVideoCarousel();
     }
 
     function applyTab(tab, silentUrl = false) {
