@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>OmniCapture</title>
+  <title>Maple</title>
   <meta
     name="description"
-    content="OmniCapture is a productivity-focused macOS screenshot and annotation tool with clear markup, OCR, redaction, and custom SVG brushes."
+    content="Maple is a productivity-focused macOS screenshot and annotation tool with clear markup, OCR, redaction, and custom SVG brushes."
   />
   <style>
     :root {
@@ -793,9 +793,9 @@
     <div class="shell">
       <div class="header-bar">
         <div class="brand">
-          <img class="brand-mark" src="./assets/icon.png" alt="OmniCapture app icon" />
+          <img class="brand-mark" src="./assets/icon.png" alt="Maple app icon" />
           <div>
-            <p class="brand-title">OmniCapture</p>
+            <p class="brand-title">Maple</p>
             <p class="brand-tagline" id="brand-tagline">Capture faster. Explain clearly.</p>
           </div>
         </div>
@@ -931,12 +931,25 @@
     ];
 
     const FEATURE_ASSET_FILES = {
-      brushes: "rich-brushes",
-      shapes: "shapes",
-      customBrushes: "svg-brushes",
-      mosaic: "masic",
-      text: "text-annotation",
-      ocr: "ocr"
+      brushes: "Annotation",
+      shapes: "Shapes",
+      customBrushes: "Custom Brush",
+      mosaic: "Mosaic",
+      text: "Text",
+      ocr: "OCR",
+      scrolling: "Scrolling",
+      colorPicker: "Color Picker"
+    };
+
+    const FEATURE_ASSET_LOCALES = {
+      "zh-Hans": "简体中文 (Simplified Chinese)",
+      "zh-Hant": "繁體中文 (Traditional Chinese)",
+      en: "English (英语)",
+      fr: "Français (法语)",
+      de: "Deutsch (德语)",
+      it: "Italiano (意大利语)",
+      ja: "日本語 (Japanese)",
+      ko: "한국어 (韩语)"
     };
 
     const HERO_VIDEO_MANIFEST = "./assets/操作/manifest.json";
@@ -961,11 +974,11 @@
     const I18N = {
       "zh-Hans": {
         meta: {
-          title: "OmniCapture | 快速截图，专业标注，即拖即用",
-          description: "OmniCapture 是一款面向效率场景的 macOS 截图与标注工具，支持清晰标注、打码、OCR、自定义 SVG 画笔与自定义 SVG 画笔。"
+          title: "Maple | 快速截图，专业标注，即拖即用",
+          description: "Maple 是一款为效率工作打造的 macOS 截图与标注工具，支持清晰标记、打码、OCR、自定义 SVG 画笔。"
         },
         header: {
-          tagline: "快速截图，清晰表达。",
+          tagline: "快速截图，清楚表达。",
           navFeatures: "功能",
           navShots: "截图",
           navPrivacy: "隐私",
@@ -974,64 +987,76 @@
         hero: {
           eyebrow: "macOS 截图与标注工具",
           title: "快速截图，专业标注，即拖即用",
-          subtitle: "macOS 15.0 或更高版本",
-          desc: "OmniCapture 是一款面向效率场景的 macOS 截图与标注工具。你可以快速截取任意区域，并用画笔、图形、马赛克、文字、OCR 与自定义 SVG 画笔把重点说明清楚。",
-          note: "截图后可直接拖拽保存或拖拽到目标应用，减少中间步骤，让沟通、评审和整理更顺手。",
+          subtitle: "macOS 15.0 或以上版本",
+          desc: "Maple 是一款为效率工作打造的 macOS 截图工具。你可以快速截取任意区域，并用画笔、图形、马赛克、文字、OCR 与自定义 SVG 画笔把重点说清楚。",
+          note: "截图后可直接拖拽保存或拖拽到目标 App，减少中间步骤，让沟通、审阅与整理更顺畅。",
           download: "App Store 下载",
           secondary: "查看核心功能",
           badges: ["OCR", "一键打码", "SVG 画笔"],
           stats: [
-            { title: "标注清楚", desc: "画笔、文字、图形和形状快速到位。" },
-            { title: "内容可控", desc: "支持马赛克、文字打码和全屏打码。" },
-            { title: "结果即用", desc: "支持拖拽保存、拖拽到目标应用。" }
+            { title: "标注清楚", desc: "画笔、文字、图形与形状快速到位。" },
+            { title: "内容可控", desc: "支持马赛克、文字打码与全屏打码。" },
+            { title: "结果即用", desc: "支持拖拽保存与拖拽到目标 App。" }
           ]
         },
         features: {
           title: "核心功能",
-          desc: "每个模块只处理一类职责，方便你在最短时间内完成截图、说明、保护与流转。",
+          desc: "每个模块只负责一类能力，让你能在最短时间内完成截图、说明、保护与流转。",
           items: [
-            {
-              key: "brushes",
-              title: "画笔",
-              desc: "支持箭头、直线、虚线、波浪线，可旋转、调粗细、颜色、透明度。",
-              points: ["箭头", "虚线", "可旋转"]
-            },
             {
               key: "shapes",
               title: "形状",
-              desc: "支持方形、圆形、三角形、椭圆形、爱心、五角星，可旋转、调颜色、透明度、粗细。",
-              points: ["多种形状", "可旋转", "样式可调"]
+              desc: "支持实心方形、实心圆形、实心三角形、实心椭圆、实心爱心、实心五角星，空心方形、空心圆形、空心三角形、空心椭圆、空心爱心、空心五角星；可以任意调节形状粗细、颜色、透明度；支持旋转、缩放及像素级微调。",
+              points: ["实心/空心", "旋转缩放", "像素级微调"]
+            },
+            {
+              key: "brushes",
+              title: "画笔",
+              desc: "支持常规箭头、直线、虚线、波浪线，可以任意调节画笔粗细、颜色、透明度；支持旋转、缩放及像素级微调。",
+              points: ["箭头/直线", "虚线/波浪线", "旋转缩放"]
             },
             {
               key: "customBrushes",
               title: "自定义画笔",
-              desc: "内置 9 种图标画笔，支持导入更多 SVG 图形，可旋转、调粗细、透明度。",
-              points: ["9 种内置", "SVG 导入", "可旋转"]
+              desc: "内置了 9 种 emoji 画笔，你甚至可以自己导入更多 SVG 画笔，拓展性极强；可以任意调节画笔粗细、颜色、透明度；支持旋转、缩放及像素级微调。",
+              points: ["9 种 emoji", "SVG 导入", "拓展性强"]
             },
             {
               key: "mosaic",
-              title: "马赛克",
-              desc: "支持涂抹、文字一键打码和全屏打码，可调粗细与马赛克程度。",
-              points: ["涂抹打码", "文字打码", "全屏打码"]
+              title: "马赛克能力",
+              desc: "支持文字一键打码、全屏打码、自定义打码，可调马赛克粗细、模糊程度。支持位移、像素级微调。",
+              points: ["文字打码", "全屏打码", "自定义打码"]
             },
             {
               key: "text",
               title: "文字",
-              desc: "支持字号、字体、颜色、透明度、旋转设置，适合补充说明与重点标记。",
-              points: ["字体", "透明度", "旋转设置"]
+              desc: "支持字号、字体、颜色、透明度；支持文字旋转，像素级微调。",
+              points: ["字号字体", "旋转", "像素级微调"]
             },
             {
               key: "ocr",
               title: "OCR",
-              desc: "支持识别并提取截图文字，便于快速整理与复用。",
-              points: ["文字识别", "文字提取", "整理复用"]
+              desc: "支持 30 种语言的 OCR 识别，识别速度快准，文字识别按区块原图原位置还原，随意提取任意位置文字。",
+              points: ["30 种语言", "识别快准", "自由提取"]
+            },
+            {
+              key: "scrolling",
+              title: "长截图",
+              desc: "针对文档特殊优化，对比市面其他截图软件，对文档长截屏出现的错位等情况做到了像素级 0 误差。",
+              points: ["文档优化", "像素级 0 误差", "长截屏"]
+            },
+            {
+              key: "colorPicker",
+              title: "颜色提取",
+              desc: "像素级放大镜，实时颜色提取，一键复制 RGB 色值或 16 进制颜色色值。",
+              points: ["像素级放大镜", "实时提取", "RGB/16 进制"]
             }
           ]
         },
         screenshots: null,
         details: {
-          title: "补充说明",
-          desc: "继续了解产品定位、常用操作和工作方式。",
+          title: "补足说明",
+          desc: "继续了解产品定位、常用操作与工作方式。",
           tabs: {
             overview: "主页",
             privacy: "隐私",
@@ -1042,33 +1067,33 @@
           cards: [
             {
               title: "截图与说明更连贯",
-              p1: "OmniCapture 聚焦的是截图之后的表达效率，而不是复杂的后期处理。",
-              p2: "你可以在一次操作里完成选区、标注、调整和输出。"
+              p1: "Maple 聚焦的是截图之后的表达效率，而不是复杂的后期处理。",
+              p2: "你可以在一次操作里完成选区、标注、调整与输出。"
             },
             {
               title: "标注工具更完整",
               p1: "支持颜色、粗细、透明度、字体和形状等常见调整项。",
-              p2: "当简单箭头不够时，还可以用形状和 SVG 画笔补充更具体的语义。"
+              p2: "当简单箭头不够时，还可以用形状与 SVG 画笔补充更具体的语义。"
             },
             {
               title: "敏感信息处理更直接",
-              p1: "马赛克和文字打码能力适合客服、协作与评审场景。",
-              p2: "需要保护的信息可以在截图阶段直接处理，不必跳到其他工具。"
+              p1: "马赛克与文字打码能力适合客服、协作与审阅场景。",
+              p2: "需要保护的信息可在截图阶段直接处理，不必切换到其他工具。"
             },
             {
               title: "输出方式更省步骤",
-              p1: "支持复制、拖拽保存和拖拽到目标应用。",
-              p2: "对于聊天沟通、文档编写和任务反馈，这样的流转更轻便。"
+              p1: "支持复制、拖拽保存与拖拽到目标 App。",
+              p2: "对聊天沟通、文件撰写与任务反馈来说，这样的流转更轻便。"
             }
           ],
           quick: [
             {
               title: "常用快捷键",
-              list: ["Command + Shift + S：启动截图", "回车：确认选区 / 确认截图", "Esc：退出 OCR 模式 / 退出截屏"]
+              list: ["Command + Shift + S：启动截图", "Enter：确认选区 / 确认截图", "Esc：离开 OCR 模式 / 离开截图"]
             },
             {
               title: "常用操作",
-              list: ["左键：确认选区、拖拽绘制、双击创建文本；拖拽边角缩放；拖拽旋转按钮旋转", "右键：选中标注、移动", "键盘：方向键微调，Tab 切换，Delete 删除"]
+              list: ["左键：确认选区、拖拽绘制、双击建立文字；拖拽边角缩放；拖拽旋转按钮旋转", "右键：选取标注、移动", "键盘：方向键微调，Tab 切换，Delete 删除"]
             }
           ]
         },
@@ -1076,33 +1101,38 @@
           items: [
             {
               title: "1. 我们收集的数据",
-              p1: "默认情况下，OmniCapture 不会将你的截图内容或标注内容上传到我们的服务器。",
-              p2: "截图、文字标注、图形标注、马赛克和相关编辑操作主要在你的设备本地完成，OCR 识别与文字提取也仅在本地处理。"
+              p1: "默认情况下，Maple 不会将你的截图内容或标注内容上传到我们的服务器。",
+              p2: "截图、文字标注、图形标注、马赛克与相关编辑操作主要在你的设备本地完成，OCR 识别与文字提取也仅在本地处理。"
             },
             {
               title: "2. 屏幕录制权限",
-              p1: "应用会请求 macOS 的屏幕录制权限，仅用于你主动发起的截图与相关工作流。",
-              p2: "我们不会因为获取该权限而将你的屏幕内容上传到服务器。"
+              p1: "App 会要求 macOS 的屏幕录制权限，仅用于你主动发起的截图与相关工作流。",
+              p2: "该权限不会用于将你的屏幕内容上传到我们的服务器。"
             },
             {
-              title: "3. 文件、复制与拖拽",
+              title: "3. 辅助功能权限",
+              p1: "App 会要求 macOS 的辅助功能权限，仅用于你主动发起的长截屏功能。",
+              p2: "该权限仅在执行长截屏相关操作时使用，不会用于收集或上传你的内容。"
+            },
+            {
+              title: "4. 文件、复制与拖拽",
               p1: "当你执行保存、复制或拖拽操作时，数据仅用于完成你明确发起的当前动作。",
-              p2: "相关内容由你控制，并保存在你的设备或你指定的目标应用中。"
+              p2: "结果始终由你控制，并保存在你的设备上或你选择的目标 App 中。"
             },
             {
-              title: "4. 第三方服务",
-              p1: "当前版本不包含用于广告追踪的第三方广告 SDK，OCR 识别不会将数据上报。",
-              p2: "如果未来引入在线 OCR 或第三方服务，并影响数据处理方式，我们会更新说明。"
+              title: "5. 第三方服务",
+              p1: "当前版本不包含用于跟踪的第三方广告 SDK，OCR 识别也不会上传数据。",
+              p2: "如果未来在线 OCR 或第三方服务改变了数据处理方式，我们会更新这段说明。"
             },
             {
-              title: "5. 数据安全",
-              p1: "我们会尽量减少不必要的数据流转，并采取合理措施保护本地处理流程中的数据安全。",
-              p2: "也建议你关注设备安全、系统权限设置和目标应用本身的隐私策略。"
+              title: "6. 数据安全",
+              p1: "我们会尽量减少不必要的数据流转，并采取合理措施保护本地处理过程中涉及的数据。",
+              p2: "你也应一并留意设备安全、系统权限设置，以及目标 App 的隐私政策。"
             },
             {
-              title: "6. 联系我们",
+              title: "7. 联系我们",
               p1: "如果你对隐私、权限或数据处理方式有疑问，可以通过支持邮箱联系我们。",
-              p2: "支持邮箱：xiangying320@126.com"
+              p2: "Support email: xiangying320@126.com"
             }
           ]
         },
@@ -1110,29 +1140,41 @@
           items: [
             {
               kicker: "Current Release",
-              title: "26.4.0（已上线）",
-              desc: "计划版本重点扩展马赛克、自定义 SVG 样式，以及 OCR 识别与文字提取能力。",
-              list: ["工具栏新增马赛克入口", "支持不同程度的高斯模糊", "支持 OCR 识别与文字提取", "支持导入、持久化和删除自定义 SVG 样式"]
+              title: "26.4.2（即将上线）",
+              desc: "本次更新新增屏幕实时取色与长截图拼接能力，让取色与文档整理更顺手。",
+              list: ["新增屏幕实时取色，按 H、R 键快捷复制色值", "新增长截图，支持文档无缝拼接"]
+            },
+            {
+              kicker: "",
+              title: "26.4.1（已上线）",
+              desc: "本次更新修复了文本标记无法旋转的问题，并持续优化整体操作体验。",
+              list: ["修复文本标记无法旋转的问题", "操作体验优化中"]
+            },
+            {
+              kicker: "",
+              title: "26.4.0",
+              desc: "重点扩展马赛克、自定义 SVG 样式，以及 OCR 识别与文字提取能力。",
+              list: ["新增工具栏马赛克入口", "支持多种高斯模糊强度", "新增 OCR 识别与文字提取", "支持导入、保存与删除自定义 SVG 样式"]
             },
             {
               kicker: "",
               title: "26.3.0",
               desc: "当前版本围绕标注能力和编辑控制展开，让截图后的表达动作更完整。",
-              list: ["支持画笔、文字、形状", "支持标注删除、旋转、缩放", "支持颜色、粗细和透明度调整"]
+              list: ["新增画笔、文字与图形工具", "新增标注删除、旋转与缩放能力", "新增颜色、线宽与透明度控制"]
             }
           ]
         },
         footer: {
           title: "把截图这件小事，做得更轻、更快，也更顺手。",
-          desc: "适合评审、反馈、说明文档、客服沟通和日常办公场景。",
-          emailLabel: "支持邮箱：",
+          desc: "适合审阅、反馈、说明文件、客服沟通与日常办公场景。",
+          emailLabel: "Support:",
           download: "App Store 下载"
         }
       },
       "zh-Hant": {
         meta: {
-          title: "OmniCapture | 快速截圖，專業標註，即拖即用",
-          description: "OmniCapture 是一款為效率工作打造的 macOS 截圖與標註工具，支援清晰標記、打碼、OCR、自訂 SVG 畫筆與自定义 SVG 画笔。"
+          title: "Maple | 快速截圖，專業標註，即拖即用",
+          description: "Maple 是一款為效率工作打造的 macOS 截圖與標註工具，支援清晰標記、打碼、OCR、自訂 SVG 畫筆與自定义 SVG 画笔。"
         },
         header: {
           tagline: "快速截圖，清楚表達。",
@@ -1145,7 +1187,7 @@
           eyebrow: "macOS 截圖與標註工具",
           title: "快速截圖，專業標註，即拖即用",
           subtitle: "macOS 15.0 或以上版本",
-          desc: "OmniCapture 是一款為效率工作打造的 macOS 截圖工具。你可以快速擷取任意區域，並用畫筆、圖形、馬賽克、文字、OCR 與自訂 SVG 畫筆把重點說清楚。",
+          desc: "Maple 是一款為效率工作打造的 macOS 截圖工具。你可以快速擷取任意區域，並用畫筆、圖形、馬賽克、文字、OCR 與自訂 SVG 畫筆把重點說清楚。",
           note: "截圖後可直接拖拽儲存或拖拽到目標 App，減少中間步驟，讓溝通、審閱與整理更順暢。",
           download: "App Store 下載",
           secondary: "查看核心功能",
@@ -1161,46 +1203,58 @@
           desc: "每個模組只負責一類能力，讓你能在最短時間內完成截圖、說明、保護與流轉。",
           items: [
             {
-              key: "brushes",
-              title: "畫筆",
-              desc: "支援箭頭、直線、虛線、波浪線，可旋轉、調粗細、顏色、透明度。",
-              points: ["箭頭", "虛線", "可旋轉"]
-            },
-            {
               key: "shapes",
               title: "形狀",
-              desc: "支援方形、圓形、三角形、橢圓形、愛心、五角星，可旋轉、調顏色、透明度、粗細。",
-              points: ["多種形狀", "可旋轉", "樣式可調"]
+              desc: "支援實心方形、實心圓形、實心三角形、實心橢圓、實心愛心、實心五角星，空心方形、空心圓形、空心三角形、空心橢圓、空心愛心、空心五角星；可任意調節形狀粗細、顏色、透明度；支援旋轉、縮放及像素級微調。",
+              points: ["實心/空心", "旋轉縮放", "像素級微調"]
+            },
+            {
+              key: "brushes",
+              title: "畫筆",
+              desc: "支援常規箭頭、直線、虛線、波浪線，可任意調節畫筆粗細、顏色、透明度；支援旋轉、縮放及像素級微調。",
+              points: ["箭頭/直線", "虛線/波浪線", "旋轉縮放"]
             },
             {
               key: "customBrushes",
               title: "自訂畫筆",
-              desc: "內建 9 種圖示畫筆，支援匯入更多 SVG 圖形，可旋轉、調粗細、透明度。",
-              points: ["9 種內建", "SVG 匯入", "可旋轉"]
+              desc: "同時內建 9 種 emoji 畫筆，甚至可自行匯入更多 SVG 畫筆，擴充性極強；可任意調節畫筆粗細、顏色、透明度；支援旋轉、縮放及像素級微調。",
+              points: ["9 種 emoji", "SVG 匯入", "擴充性強"]
             },
             {
               key: "mosaic",
               title: "馬賽克",
-              desc: "支援塗抹、文字一鍵打碼與全螢幕打碼，可調粗細與馬賽克程度。",
-              points: ["塗抹打碼", "文字打碼", "全螢幕打碼"]
+              desc: "支援文字一鍵打碼、全螢幕打碼、自訂打碼，可調馬賽克粗細、模糊程度。支援位移、像素級微調。",
+              points: ["文字打碼", "全螢幕打碼", "自訂打碼"]
             },
             {
               key: "text",
               title: "文字",
-              desc: "支援字號、字體、顏色、透明度、旋轉設定，適合補充說明與重點標記。",
-              points: ["字體", "透明度", "旋轉設定"]
+              desc: "支援字號、字體、顏色、透明度；支援文字旋轉，像素級微調。",
+              points: ["字號字體", "旋轉", "像素級微調"]
             },
             {
               key: "ocr",
               title: "OCR",
-              desc: "支援辨識並提取截圖文字，便於快速整理與重複利用。",
-              points: ["文字辨識", "文字提取", "整理重用"]
+              desc: "支援 30 種語言的 OCR 辨識，辨識速度快且準確，文字辨識按區塊原圖原位置還原，可隨意提取任意位置文字。",
+              points: ["30 種語言", "辨識快且準確", "自由提取"]
+            },
+            {
+              key: "scrolling",
+              title: "長截圖",
+              desc: "針對文件特別優化，相較市面其他截圖軟體，對文件長截圖出現的錯位等情況達到像素級零誤差。",
+              points: ["文件優化", "像素級零誤差", "長截圖"]
+            },
+            {
+              key: "colorPicker",
+              title: "顏色提取",
+              desc: "像素級放大鏡，即時顏色提取，一鍵複製 RGB 色值或十六進位色值。",
+              points: ["像素級放大鏡", "即時提取", "RGB/十六進位"]
             }
           ]
         },
         screenshots: null,
         details: {
-          title: "補充說明",
+          title: "補足說明",
           desc: "繼續了解產品定位、常用操作與工作方式。",
           tabs: {
             overview: "主頁",
@@ -1212,7 +1266,7 @@
           cards: [
             {
               title: "截圖與說明更連貫",
-              p1: "OmniCapture 聚焦的是截圖之後的表達效率，而不是複雜的後期處理。",
+              p1: "Maple 聚焦的是截圖之後的表達效率，而不是複雜的後期處理。",
               p2: "你可以在一次操作裡完成選區、標註、調整與輸出。"
             },
             {
@@ -1234,11 +1288,11 @@
           quick: [
             {
               title: "常用快捷鍵",
-              list: ["Command + Shift + S：啟動截圖", "Enter：確認選區 / 確認截圖", "Esc：離開 OCR 模式 / 離開截圖"]
+              list: ["Command + Shift + S: start capture", "Enter: confirm selection / confirm screenshot", "Esc: exit OCR mode / exit capture"]
             },
             {
               title: "常用操作",
-              list: ["左鍵：確認選區、拖拽繪製、雙擊建立文字；拖拽邊角縮放；拖拽旋轉按鈕旋轉", "右鍵：選取標註、移動", "鍵盤：方向鍵微調，Tab 切換，Delete 刪除"]
+              list: ["Left click: confirm area, draw, double-click to create text, resize from corners, and rotate from the rotate handle", "Right click: select and move annotations", "Keyboard: nudge with arrows, cycle with Tab, remove with Delete"]
             }
           ]
         },
@@ -1246,63 +1300,70 @@
           items: [
             {
               title: "1. 我們收集的資料",
-              p1: "預設情況下，OmniCapture 不會將你的截圖內容或標註內容上傳到我們的伺服器。",
+              p1: "預設情況下，Maple 不會將你的截圖內容或標註內容上傳到我們的伺服器。",
               p2: "截圖、文字標註、圖形標註、馬賽克與相關編輯操作主要在你的裝置本地完成，OCR 辨識與文字擷取也僅在本地處理。"
             },
             {
               title: "2. 螢幕錄製權限",
               p1: "App 會要求 macOS 的螢幕錄製權限，僅用於你主動發起的截圖與相關工作流。",
-              p2: "我們不會因取得此權限而將你的畫面內容上傳到伺服器。"
+              p2: "該權限不會用於將你的螢幕內容上傳到我們的伺服器。"
             },
             {
-              title: "3. 檔案、複製與拖拽",
+              title: "3. 輔助功能權限",
+              p1: "App 會要求 macOS 的輔助功能權限，僅用於你主動發起的長截圖功能。",
+              p2: "該權限僅會在執行長截圖相關操作時使用，不會用於收集或上傳你的內容。"
+            },
+            {
+              title: "4. 文件、複製與拖拽",
               p1: "當你執行儲存、複製或拖拽操作時，資料僅用於完成你明確發起的當前動作。",
-              p2: "相關內容由你控制，並保存在你的裝置或你指定的目標 App 中。"
+              p2: "結果始終由你控制，並保存在你的裝置上或你選擇的目標 App 中。"
             },
             {
-              title: "4. 第三方服務",
-              p1: "目前版本不包含用於廣告追蹤的第三方廣告 SDK，OCR 辨識也不會將資料上傳。",
-              p2: "若未來引入線上 OCR 或第三方服務，並影響資料處理方式，我們會更新說明。"
+              title: "5. 第三方服務",
+              p1: "目前版本不包含用於追蹤的第三方廣告 SDK，OCR 辨識也不會上傳資料。",
+              p2: "如果未來線上 OCR 或第三方服務改變了資料處理方式，我們會更新這段說明。"
             },
             {
-              title: "5. 資料安全",
-              p1: "我們會盡量減少不必要的資料流轉，並採取合理措施保護本地處理流程中的資料安全。",
-              p2: "也建議你關注裝置安全、系統權限設定與目標 App 自身的隱私策略。"
+              title: "6. 資料安全",
+              p1: "我們會盡量減少不必要的資料流轉，並採取合理措施保護本地處理過程中涉及的資料。",
+              p2: "你也應一併留意裝置安全、系統權限設定，以及目標 App 的隱私政策。"
             },
             {
-              title: "6. 聯絡我們",
+              title: "7. 聯絡我們",
               p1: "如果你對隱私、權限或資料處理方式有疑問，可以透過支援信箱聯絡我們。",
-              p2: "支援信箱：xiangying320@126.com"
+              p2: "Support email: xiangying320@126.com"
             }
           ]
         },
         changelog: {
           items: [
+            { kicker: "Current Release", title: "26.4.2 (Coming Soon)", desc: "This update adds live screen color picking and scrolling capture stitching for smoother color sampling and document capture workflows.", list: ["Added live screen color picking, with H and R shortcuts to quickly copy color values", "Added scrolling screenshots with seamless document stitching"] },
+            { kicker: "", title: "26.4.1 (Now Available)", desc: "This update fixes text annotation rotation and continues smoothing everyday interaction details.", list: ["Fixed an issue where text annotations could not rotate", "Interaction refinements"] },
             {
-              kicker: "Current Release",
-              title: "26.4.0（已上線）",
-              desc: "規劃版本重點擴充馬賽克、自訂 SVG 樣式，以及 OCR 辨識與文字擷取能力。",
-              list: ["工具列新增馬賽克入口", "支援不同程度的高斯模糊", "支援 OCR 辨識與文字擷取", "支援匯入、持久化與刪除自訂 SVG 樣式"]
+              kicker: "",
+              title: "26.4.0",
+              desc: "The release expands mosaic styles, custom SVG styles, plus OCR recognition and text extraction.",
+              list: ["Add a mosaic entry to the toolbar", "Support multiple levels of Gaussian blur", "Add OCR recognition and text extraction", "Support importing, persisting, and deleting custom SVG styles"]
             },
             {
               kicker: "",
               title: "26.3.0",
-              desc: "目前版本圍繞標註能力與編輯控制展開，讓截圖後的表達動作更完整。",
-              list: ["支援畫筆、文字、形狀", "支援標註刪除、旋轉、縮放", "支援顏色、粗細與透明度調整"]
+              desc: "This release focused on annotation coverage and editing controls to make post-capture explanation more complete.",
+              list: ["Added brush, text, and shape tools", "Added deletion, rotation, and scaling for annotations", "Added controls for color, line width, and opacity"]
             }
           ]
         },
         footer: {
           title: "把截圖這件小事，做得更輕、更快，也更順手。",
           desc: "適合審閱、回饋、說明文件、客服溝通與日常辦公場景。",
-          emailLabel: "支援信箱：",
-          download: "App Store 下載"
+          emailLabel: "Support:",
+          download: "Download on the App Store"
         }
       },
       en: {
         meta: {
-          title: "OmniCapture | Capture fast, annotate clearly",
-          description: "OmniCapture is a productivity-focused macOS screenshot and annotation tool with clear markup, OCR, redaction, and custom SVG brushes."
+          title: "Maple | Capture fast, annotate clearly",
+          description: "Maple is a productivity-focused macOS screenshot and annotation tool with clear markup, OCR, redaction, and custom SVG brushes."
         },
         header: {
           tagline: "Capture faster. Explain clearly.",
@@ -1315,7 +1376,7 @@
           eyebrow: "macOS Screenshot Tool",
           title: "Capture fast, annotate clearly",
           subtitle: "Requires macOS 15.0 or later.",
-          desc: "OmniCapture is a productivity-focused screenshot tool for macOS. Capture any area quickly, then explain what matters with text, shapes, mosaic blur, OCR, and custom SVG brush styles.",
+          desc: "Maple is a productivity-focused screenshot tool for macOS. Capture any area quickly, then explain what matters with text, shapes, mosaic blur, OCR, and custom SVG brush styles.",
           note: "Drag to save or drag directly into other apps to reduce extra steps in reviews, communication, and everyday workflows.",
           download: "Download on the App Store",
           secondary: "Explore features",
@@ -1331,40 +1392,52 @@
           desc: "Each module has a clear job so the page stays easy to scan and the product stays easy to understand.",
           items: [
             {
-              key: "brushes",
-              title: "Brushes",
-              desc: "Arrows, straight lines, dashed lines, and wavy lines with rotation plus adjustable width, color, and opacity.",
-              points: ["Arrows", "Dashed lines", "Rotation"]
-            },
-            {
               key: "shapes",
               title: "Shapes",
-              desc: "Rectangle, circle, triangle, ellipse, heart, and star with rotation plus adjustable color, opacity, and stroke width.",
-              points: ["Shape set", "Rotation", "Style controls"]
+              desc: "Filled and outlined rectangles, circles, triangles, ellipses, hearts, and stars; freely adjust stroke width, color, and opacity; supports rotation, scaling, and pixel-level nudging.",
+              points: ["Filled & outlined", "Rotate & scale", "Pixel-level nudging"]
+            },
+            {
+              key: "brushes",
+              title: "Brush",
+              desc: "Arrows, straight lines, dashed lines, and wavy lines; adjust width, color, and opacity; supports rotation, scaling, and pixel-level nudging.",
+              points: ["Arrows & lines", "Dashed & wavy", "Rotate & scale"]
             },
             {
               key: "customBrushes",
               title: "Custom Brushes",
-              desc: "9 built-in icon brushes, plus support for importing more SVG shapes with rotation plus adjustable width and opacity.",
-              points: ["9 built-ins", "SVG import", "Rotation"]
+              desc: "9 built-in emoji brushes; import additional SVG brushes for unlimited extensibility; adjust width, color, and opacity; supports rotation, scaling, and pixel-level nudging.",
+              points: ["9 emoji brushes", "SVG import", "Unlimited extensibility"]
             },
             {
               key: "mosaic",
               title: "Mosaic",
-              desc: "Paint-on mosaic, one-tap text redaction, and full-screen redaction with adjustable brush size and blur strength.",
-              points: ["Brush mosaic", "Text redaction", "Full-screen redaction"]
+              desc: "One-tap text redaction, full-screen redaction, and custom redaction; adjustable mosaic size and blur strength; supports nudging and pixel-level adjustment.",
+              points: ["Text redaction", "Full-screen", "Custom redaction"]
             },
             {
               key: "text",
               title: "Text",
-              desc: "Adjust font size, font family, color, opacity, and rotation for notes, labels, and callouts.",
-              points: ["Font", "Opacity", "Rotation"]
+              desc: "Adjustable font size, typeface, color, and opacity; supports rotation and pixel-level nudging.",
+              points: ["Size & typeface", "Rotation", "Pixel-level nudging"]
             },
             {
               key: "ocr",
               title: "OCR",
-              desc: "Recognize and extract text from screenshots for faster reuse and organization.",
-              points: ["Recognition", "Extraction", "Reuse"]
+              desc: "Recognizes text in 30 languages with fast, accurate results; restores text block positions from the original image; extract text from any area freely.",
+              points: ["30 languages", "Fast & accurate", "Free extraction"]
+            },
+            {
+              key: "scrolling",
+              title: "Long screenshot",
+              desc: "Specially optimized for documents and achieves pixel-perfect stitching with zero misalignment, outperforming other screenshot tools on the market.",
+              points: ["Document optimized", "Zero misalignment", "Pixel-perfect stitching"]
+            },
+            {
+              key: "colorPicker",
+              title: "Color picker",
+              desc: "Pixel-level magnifier with real-time color sampling; copy RGB or hex values in one click.",
+              points: ["Pixel magnifier", "Real-time sampling", "RGB / HEX"]
             }
           ]
         },
@@ -1382,7 +1455,7 @@
           cards: [
             {
               title: "A clearer post-capture flow",
-              p1: "OmniCapture focuses on what happens after the screenshot is taken, not on heavyweight editing.",
+              p1: "Maple focuses on what happens after the screenshot is taken, not on heavyweight editing.",
               p2: "Selection, annotation, adjustment, and output can stay in one compact flow."
             },
             {
@@ -1414,52 +1487,19 @@
         },
         privacy: {
           items: [
-            {
-              title: "1. Data We Collect",
-              p1: "By default, OmniCapture does not upload your screenshot content or annotation content to our servers.",
-              p2: "Screenshots, text notes, shapes, mosaic edits, and related editing actions are primarily processed on your device, and OCR recognition and text extraction stay local as well."
-            },
-            {
-              title: "2. Screen Recording Permission",
-              p1: "The app requests macOS Screen Recording permission only for screenshot features and workflows that you actively trigger.",
-              p2: "That permission is not used to upload your screen content to our servers."
-            },
-            {
-              title: "3. Files, Copy, and Drag",
-              p1: "When you save, copy, or drag content, the data is used only to complete the action you intentionally requested.",
-              p2: "The result stays under your control and is stored on your device or in the destination app you choose."
-            },
-            {
-              title: "4. Third-Party Services",
-              p1: "The current version does not include third-party advertising SDKs for tracking, and OCR recognition does not upload data.",
-              p2: "If future online OCR or third-party services change how data is handled, we will update this description."
-            },
-            {
-              title: "5. Data Security",
-              p1: "We aim to reduce unnecessary data movement and take reasonable steps to protect data involved in local processing.",
-              p2: "You should also review device security, system permissions, and the privacy practices of destination apps."
-            },
-            {
-              title: "6. Contact Us",
-              p1: "If you have questions about privacy, permissions, or data handling, please contact us by email.",
-              p2: "Support email: xiangying320@126.com"
-            }
+            { title: "1. Data We Collect", p1: "By default, Maple does not upload your screenshot content or annotation content to our servers.", p2: "Screenshots, text notes, shapes, mosaic edits, and related editing actions are primarily processed on your device, and OCR recognition and text extraction stay local as well." },
+            { title: "2. Screen Recording Permission", p1: "The app requests macOS Screen Recording permission only for screenshot features and workflows that you actively trigger.", p2: "That permission is not used to upload your screen content to our servers." },
+            { title: "3. Accessibility Permission", p1: "The app requests macOS Accessibility permission only for the scrolling screenshot feature that you actively trigger.", p2: "That permission is used only while performing scrolling screenshot actions and is not used to collect or upload your content." },
+            { title: "4. Files, Copy, and Drag", p1: "When you save, copy, or drag content, the data is used only to complete the action you intentionally requested.", p2: "The result stays under your control and is stored on your device or in the destination app you choose." },
+            { title: "5. Third-Party Services", p1: "The current version does not include third-party advertising SDKs for tracking, and OCR recognition does not upload data.", p2: "If future online OCR or third-party services change how data is handled, we will update this description." },
+            { title: "6. Data Security", p1: "We aim to reduce unnecessary data movement and take reasonable steps to protect data involved in local processing.", p2: "You should also review device security, system permissions, and the privacy practices of destination apps." },
+            { title: "7. Contact Us", p1: "If you have questions about privacy, permissions, or data handling, please contact us by email.", p2: "Support email: xiangying320@126.com" }
           ]
         },
         changelog: {
           items: [
-            {
-              kicker: "Current Release",
-              title: "26.4.0 (Now Available)",
-              desc: "The Current Release release expands mosaic styles, custom SVG styles, and OCR recognition plus text extraction.",
-              list: ["Add a mosaic entry to the toolbar", "Support multiple levels of Gaussian blur", "Add OCR recognition and text extraction", "Support importing, persisting, and deleting custom SVG styles"]
-            },
-            {
-              kicker: "",
-              title: "26.3.0",
-              desc: "The  focuses on annotation coverage and editing controls so post-capture communication feels more complete.",
-              list: ["Added brush, text, and shape tools", "Added deletion, rotation, and scaling for annotations", "Added controls for color, line width, and opacity"]
-            }
+            { kicker: "Current Release", title: "26.4.0 (Now Available)", desc: "The Current Release release expands mosaic styles, custom SVG styles, and OCR recognition plus text extraction.", list: ["Add a mosaic entry to the toolbar", "Support multiple levels of Gaussian blur", "Add OCR recognition and text extraction", "Support importing, persisting, and deleting custom SVG styles"] },
+            { kicker: "", title: "26.3.0", desc: "The  focuses on annotation coverage and editing controls so post-capture communication feels more complete.", list: ["Added brush, text, and shape tools", "Added deletion, rotation, and scaling for annotations", "Added controls for color, line width, and opacity"] }
           ]
         },
         footer: {
@@ -1471,8 +1511,8 @@
       },
       fr: {
         meta: {
-          title: "OmniCapture | Capture rapide, annotation pro",
-          description: "OmniCapture est un outil de capture d'ecran macOS concu pour la productivite, avec annotation claire, OCR, masquage, pinceaux SVG et glisser-deposer."
+          title: "Maple | Capture rapide, annotation pro",
+          description: "Maple est un outil de capture d'ecran macOS concu pour la productivite, avec annotation claire, OCR, masquage, pinceaux SVG et glisser-deposer."
         },
         header: {
           tagline: "Capture rapide, explication claire.",
@@ -1485,7 +1525,7 @@
           eyebrow: "Outil de capture d'ecran macOS",
           title: "Capture rapide, annotation pro",
           subtitle: "Necessite macOS 15.0 ou version ulterieure.",
-          desc: "OmniCapture est un outil de capture d'ecran macOS concu pour la productivite. Capturez une zone rapidement, puis expliquez clairement avec du texte, des formes, du flou mosaique, l'OCR et des pinceaux SVG personnalises.",
+          desc: "Maple est un outil de capture d'ecran macOS concu pour la productivite. Capturez une zone rapidement, puis expliquez clairement avec du texte, des formes, du flou mosaique, l'OCR et des pinceaux SVG personnalises.",
           note: "Glissez pour enregistrer ou glissez directement dans d'autres apps afin de reduire les etapes pendant les revues, les echanges et le travail quotidien.",
           download: "Telecharger sur l'App Store",
           secondary: "Voir les fonctions",
@@ -1501,40 +1541,52 @@
           desc: "Chaque module a un role clair, ce qui rend la page plus lisible et le produit plus facile a comprendre.",
           items: [
             {
-              key: "brushes",
-              title: "Pinceaux",
-              desc: "Fleches, lignes droites, lignes pointillees et lignes ondulees, avec rotation ainsi que reglage de l'epaisseur, de la couleur et de l'opacite.",
-              points: ["Fleches", "Pointilles", "Rotation"]
-            },
-            {
               key: "shapes",
               title: "Formes",
-              desc: "Rectangle, cercle, triangle, ellipse, coeur et etoile, avec rotation ainsi que reglage de la couleur, de l'opacite et de l'epaisseur du contour.",
-              points: ["Jeu de formes", "Rotation", "Styles reglables"]
+              desc: "Formes pleines et vides (rectangle, cercle, triangle, ellipse, cœur, étoile) ; épaisseur, couleur et opacité réglables librement ; rotation, mise à l’échelle et ajustement au pixel près.",
+              points: ["Pleines et vides", "Rotation / échelle", "Ajustement au pixel"]
+            },
+            {
+              key: "brushes",
+              title: "Pinceau",
+              desc: "Flèches, lignes droites, pointillés et vagues ; épaisseur, couleur et opacité réglables ; rotation, mise à l’échelle et ajustement au pixel près.",
+              points: ["Flèches et lignes", "Pointillés / vagues", "Rotation / échelle"]
             },
             {
               key: "customBrushes",
-              title: "Pinceaux personnalises",
-              desc: "9 pinceaux d'icones integres, avec possibilite d'importer d'autres formes SVG, de les faire pivoter et d'ajuster l'epaisseur et l'opacite.",
-              points: ["9 integres", "Import SVG", "Rotation"]
+              title: "Pinceaux personnalisés",
+              desc: "9 pinceaux emoji intégrés ; importez vos propres pinceaux SVG pour une extensibilité illimitée ; épaisseur, couleur et opacité réglables ; rotation, mise à l’échelle et ajustement au pixel près.",
+              points: ["9 pinceaux emoji", "Import SVG", "Extensibilité illimitée"]
             },
             {
               key: "mosaic",
-              title: "Mosaique",
-              desc: "Flou applique au pinceau, masquage de texte en un clic et masquage plein ecran, avec reglage de la taille et de l'intensite.",
-              points: ["Mosaique", "Masquage texte", "Plein ecran"]
+              title: "Mosaïque",
+              desc: "Masquage de texte en un clic, masquage plein écran et masquage personnalisé ; taille et intensité du flou réglables ; déplacement et ajustement au pixel près.",
+              points: ["Masquage texte", "Plein écran", "Personnalisé"]
             },
             {
               key: "text",
               title: "Texte",
-              desc: "Reglage de la taille, de la police, de la couleur, de l'opacite et de la rotation pour les notes et les explications.",
-              points: ["Police", "Opacite", "Rotation"]
+              desc: "Taille, police, couleur et opacité réglables ; rotation et ajustement au pixel près.",
+              points: ["Taille et police", "Rotation", "Ajustement au pixel"]
             },
             {
               key: "ocr",
               title: "OCR",
-              desc: "Reconnaissance et extraction du texte des captures pour le reutiliser plus facilement.",
-              points: ["Reconnaissance", "Extraction", "Reutilisation"]
+              desc: "Reconnaissance dans 30 langues, rapide et précise ; restitution du texte à l’emplacement exact du bloc d’origine ; extraction libre depuis n’importe quelle zone.",
+              points: ["30 langues", "Rapide et précise", "Extraction libre"]
+            },
+            {
+              key: "scrolling",
+              title: "Capture longue",
+              desc: "Optimisée spécialement pour les documents et garantit un assemblage au pixel près, sans aucun décalage, mieux que les autres outils du marché.",
+              points: ["Optimisée documents", "Zéro décalage", "Assemblage parfait"]
+            },
+            {
+              key: "colorPicker",
+              title: "Pipette de couleur",
+              desc: "Loupe au niveau du pixel avec échantillonnage en temps réel ; copiez la valeur RGB ou hexadécimale en un clic.",
+              points: ["Loupe pixel", "Temps réel", "RGB / hex"]
             }
           ]
         },
@@ -1542,17 +1594,13 @@
         details: {
           title: "Contexte produit",
           desc: "Un resume rapide du positionnement produit, des actions courantes et du flux de travail.",
-          tabs: {
-            overview: "Accueil",
-            privacy: "Confidentialite",
-            changelog: "Journal"
-          }
+          tabs: { overview: "Accueil", privacy: "Confidentialite", changelog: "Journal" }
         },
         overview: {
           cards: [
             {
               title: "Un flux apres capture plus clair",
-              p1: "OmniCapture se concentre sur l'efficacite apres la capture, pas sur un montage complexe.",
+              p1: "Maple se concentre sur l'efficacite apres la capture, pas sur un montage complexe.",
               p2: "Selection, annotation, ajustement et sortie peuvent rester dans un flux compact."
             },
             {
@@ -1573,28 +1621,31 @@
           ],
           quick: [
             {
-              title: "Raccourcis courants",
-              list: ["Command + Shift + S : lancer la capture", "Entree : confirmer la selection / confirmer la capture", "Esc : quitter l'OCR / quitter la capture"]
+              title: "Hauefige Kurzbefehle",
+              list: ["Command + Shift + S: Aufnahme starten", "Enter: Auswahl bestaetigen / Screenshot bestaetigen", "Esc: OCR-Modus verlassen / Aufnahme verlassen"]
             },
             {
-              title: "Actions courantes",
-              list: ["Clic gauche : confirmer, dessiner ou double-cliquer pour le texte", "Clic droit : selectionner, deplacer, redimensionner et faire pivoter", "Clavier : fleches pour ajuster, Tab pour parcourir, Suppr pour supprimer"]
+              title: "Hauefige Aktionen",
+              list: ["Linksklick: Bereich bestaetigen, zeichnen oder per Doppelklick Text anlegen", "Rechtsklick: Annotationen auswaehlen, verschieben, skalieren und drehen", "Tastatur: mit Pfeilen verschieben, mit Tab wechseln, mit Delete loeschen"]
             }
           ]
         },
         privacy: {
           items: [
-            { title: "1. Donnees collectees", p1: "Par defaut, OmniCapture n'envoie pas vos captures ni vos annotations vers nos serveurs.", p2: "Captures, texte, formes, mosaique et actions d'edition sont principalement traites sur votre appareil, et l'OCR ainsi que l'extraction de texte restent egalement en local." },
-            { title: "2. Autorisation d'enregistrement d'ecran", p1: "L'app demande l'autorisation d'enregistrement d'ecran de macOS uniquement pour les fonctions de capture que vous lancez.", p2: "Cette autorisation n'est pas utilisee pour televerser votre contenu d'ecran." },
-            { title: "3. Fichiers, copie et glisser-deposer", p1: "Quand vous enregistrez, copiez ou glissez du contenu, les donnees servent seulement a realiser l'action demandee.", p2: "Le resultat reste sous votre controle sur votre appareil ou dans l'app de destination choisie." },
-            { title: "4. Services tiers", p1: "La version actuelle n'inclut pas de SDK publicitaires tiers pour le suivi, et l'OCR n'envoie pas vos donnees.", p2: "Si un futur service OCR en ligne ou tiers modifie la facon dont les donnees sont traitees, cette description sera mise a jour." },
-            { title: "5. Securite des donnees", p1: "Nous cherchons a reduire les mouvements de donnees inutiles et a proteger les traitements locaux.", p2: "Nous vous recommandons aussi de verifier la securite de l'appareil et les autorisations systeme." },
-            { title: "6. Nous contacter", p1: "Pour toute question sur la confidentialite, les autorisations ou les donnees, contactez-nous par email.", p2: "Email de support : xiangying320@126.com" }
+            { title: "1. Donnees collectees", p1: "Par defaut, Maple n'envoie pas vos captures ni vos annotations vers nos serveurs.", p2: "Captures, texte, formes, mosaique et actions d'edition sont principalement traites sur votre appareil, et l'OCR ainsi que l'extraction de texte restent egalement en local." },
+            { title: "2. Autorisation d'enregistrement d'ecran", p1: "Die App fragt die macOS-Berechtigung zur Bildschirmaufnahme nur fuer von Ihnen gestartete Screenshot-Funktionen an.", p2: "Diese Berechtigung wird nicht dazu verwendet, Bildschirminhalte auf unsere Server zu laden." },
+            { title: "3. Autorisation d'accessibilite", p1: "L'app demande l'autorisation Accessibilite de macOS uniquement pour la fonction de capture d'ecran longue que vous declenchez vous-meme.", p2: "Cette autorisation est utilisee uniquement pendant les actions de capture d'ecran longue et ne sert pas a collecter ni a envoyer votre contenu." },
+            { title: "4. Fichiers, copie et glisser-deposer", p1: "Lorsque vous enregistrez, copiez ou glissez un contenu, les donnees servent uniquement a accomplir l'action que vous avez demandee.", p2: "Le resultat reste sous votre controle, sur votre appareil ou dans l'application de destination que vous choisissez." },
+            { title: "5. Services tiers", p1: "La version actuelle n'inclut pas de SDK publicitaires tiers pour le suivi, et l'OCR ne transmet pas de donnees.", p2: "Si de futurs services OCR en ligne ou services tiers modifient le traitement des donnees, nous mettrons cette description a jour." },
+            { title: "6. Securite des donnees", p1: "Nous cherchons a reduire les mouvements de donnees inutiles et a proteger raisonnablement les donnees impliquees dans le traitement local.", p2: "Nous vous recommandons aussi de verifier la securite de votre appareil, les autorisations systeme et les regles de confidentialite des applications de destination." },
+            { title: "7. Contact", p1: "Si vous avez des questions sur la confidentialite, les autorisations ou le traitement des donnees, contactez-nous par e-mail.", p2: "E-mail de support: xiangying320@126.com" }
           ]
         },
         changelog: {
           items: [
-            { kicker: "Current Release", title: "26.4.0 (Disponible)", desc: "La version prevue etend les styles de mosaique, les styles SVG personnalises, ainsi que l'OCR et l'extraction de texte.", list: ["Ajouter une entree mosaique a la barre d'outils", "Prendre en charge plusieurs niveaux de flou gaussien", "Ajouter l'OCR et l'extraction de texte", "Permettre l'import, la conservation et la suppression de styles SVG personnalises"] },
+            { kicker: "Current Release", title: "26.4.2 (Bientot disponible)", desc: "Cette mise a jour ajoute un selecteur de couleur a l'ecran en temps reel ainsi que la capture defilante avec assemblage continu des documents.", list: ["Ajout du prelevement de couleur en temps reel a l'ecran, avec raccourcis H et R pour copier rapidement la valeur", "Ajout des captures longues avec assemblage continu des documents"] },
+            { kicker: "", title: "26.4.1 (Disponible)", desc: "Cette mise a jour corrige la rotation du texte et continue d'ameliorer l'experience d'utilisation.", list: ["Correction du probleme de rotation des annotations texte", "Amelioration de l'experience d'utilisation"] },
+            { kicker: "", title: "26.4.0 (Disponible)", desc: "La version etend les styles de mosaique, les styles SVG personnalises, ainsi que l'OCR et l'extraction de texte.", list: ["Ajouter une entree mosaique a la barre d'outils", "Prendre en charge plusieurs niveaux de flou gaussien", "Ajouter l'OCR et l'extraction de texte", "Permettre l'import, la conservation et la suppression de styles SVG personnalises"] },
             { kicker: "", title: "26.3.0", desc: "La version actuelle se concentre sur les annotations et les controles d'edition pour rendre la communication apres capture plus complete.", list: ["Ajout des outils pinceau, texte et forme", "Ajout de la suppression, rotation et mise a l'echelle des annotations", "Ajout des reglages de couleur, epaisseur et opacite"] }
           ]
         },
@@ -1607,8 +1658,8 @@
       },
       de: {
         meta: {
-          title: "OmniCapture | Schnell erfassen, klar markieren",
-          description: "OmniCapture ist ein produktives Screenshot-Tool fuer macOS mit klarer Annotation, OCR, Maskierung, benutzerdefinierten SVG-Pinseln und Drag-and-drop."
+          title: "Maple | Schnell erfassen, klar markieren",
+          description: "Maple ist ein produktives Screenshot-Tool fuer macOS mit klarer Annotation, OCR, Maskierung, benutzerdefinierten SVG-Pinseln und Drag-and-drop."
         },
         header: {
           tagline: "Schneller erfassen. Klarer erklaeren.",
@@ -1621,7 +1672,7 @@
           eyebrow: "macOS Screenshot-Tool",
           title: "Schnell erfassen, klar markieren",
           subtitle: "Erfordert macOS 15.0 oder neuer.",
-          desc: "OmniCapture ist ein Screenshot-Tool fuer macOS mit Fokus auf Produktivitaet. Erfassen Sie schnell einen Bereich und erklaeren Sie ihn mit Text, Formen, Mosaik, OCR und eigenen SVG-Pinseln.",
+          desc: "Maple ist ein Screenshot-Tool fuer macOS mit Fokus auf Produktivitaet. Erfassen Sie schnell einen Bereich und erklaeren Sie ihn mit Text, Formen, Mosaik, OCR und eigenen SVG-Pinseln.",
           note: "Per Drag-and-drop speichern oder direkt in andere Apps uebernehmen, damit Reviews, Abstimmung und Tagesarbeit weniger Zwischenschritte brauchen.",
           download: "Im App Store laden",
           secondary: "Funktionen ansehen",
@@ -1636,12 +1687,14 @@
           title: "Kernfunktionen",
           desc: "Jedes Modul hat eine klare Aufgabe, damit die Seite leicht lesbar bleibt und das Produkt sofort verstaendlich ist.",
           items: [
-            { key: "brushes", title: "Pinsel", desc: "Pfeile, gerade Linien, gestrichelte Linien und Wellenlinien mit Rotation sowie einstellbarer Staerke, Farbe und Deckkraft.", points: ["Pfeile", "Gestrichelt", "Rotation"] },
-            { key: "shapes", title: "Formen", desc: "Rechteck, Kreis, Dreieck, Ellipse, Herz und Stern mit Rotation sowie einstellbarer Farbe, Deckkraft und Linienstaerke.", points: ["Formensatz", "Rotation", "Stile steuerbar"] },
-            { key: "customBrushes", title: "Eigene Pinsel", desc: "9 integrierte Symbolpinsel, zusaetzlich lassen sich weitere SVG-Formen importieren; Rotation, Staerke und Deckkraft sind anpassbar.", points: ["9 integriert", "SVG-Import", "Rotation"] },
-            { key: "mosaic", title: "Mosaik", desc: "Freies Uebermalen, Ein-Klick-Textredaktion und Vollbild-Redaktion mit einstellbarer Pinselgroesse und Intensitaet.", points: ["Mosaik", "Textredaktion", "Vollbild"] },
-            { key: "text", title: "Text", desc: "Schriftgroesse, Schriftart, Farbe, Deckkraft und Rotation lassen sich fuer Hinweise und Markierungen anpassen.", points: ["Schrift", "Deckkraft", "Rotation"] },
-            { key: "ocr", title: "OCR", desc: "Erkennt und extrahiert Text aus Screenshots fuer schnellere Weiterverwendung.", points: ["Erkennung", "Extraktion", "Weiterverwenden"] }
+            { key: "shapes", title: "Formen", desc: "Gefuellte und umrandete Rechtecke, Kreise, Dreiecke, Ellipsen, Herzen und Sterne; Staerke, Farbe und Deckkraft frei einstellbar; Rotation, Skalierung und pixelgenaue Feinkorrektur.", points: ["Gefuellt & umrandet", "Rotation & Skalierung", "Pixelgenau"] },
+            { key: "brushes", title: "Pinsel", desc: "Pfeile, gerade Linien, gestrichelte Linien und Wellenlinien; Staerke, Farbe und Deckkraft einstellbar; Rotation, Skalierung und pixelgenaue Feinkorrektur.", points: ["Pfeile & Linien", "Gestrichelt & Wellen", "Rotation & Skalierung"] },
+            { key: "customBrushes", title: "Eigene Pinsel", desc: "9 integrierte Emoji-Pinsel; eigene SVG-Pinsel importierbar fuer unbegrenzte Erweiterbarkeit; Staerke, Farbe und Deckkraft einstellbar; Rotation, Skalierung und pixelgenaue Feinkorrektur.", points: ["9 Emoji-Pinsel", "SVG-Import", "Unbegrenzt erweiterbar"] },
+            { key: "mosaic", title: "Mosaik", desc: "Ein-Klick-Textredaktion, Vollbild-Redaktion und benutzerdefinierte Redaktion; Pinselgroesse und Unschaerfestaerke einstellbar; Verschiebung und pixelgenaue Feinkorrektur.", points: ["Textredaktion", "Vollbild", "Benutzerdefiniert"] },
+            { key: "text", title: "Text", desc: "Schriftgroesse, Schriftart, Farbe und Deckkraft einstellbar; Rotation und pixelgenaue Feinkorrektur.", points: ["Groesse & Schriftart", "Rotation", "Pixelgenau"] },
+            { key: "ocr", title: "OCR", desc: "Texterkennung in 30 Sprachen, schnell und praezise; Textbloecke werden an ihrer Originalposition wiederhergestellt; Text aus beliebigen Bereichen frei extrahierbar.", points: ["30 Sprachen", "Schnell & praezise", "Frei extrahierbar"] },
+            { key: "scrolling", title: "Langer Screenshot", desc: "Speziell fuer Dokumente optimiert und erreicht pixelgenaues Zusammenfuegen ohne Versatz, besser als andere Screenshot-Tools auf dem Markt.", points: ["Fuer Dokumente", "Ohne Versatz", "Pixelgenaues Fuegen"] },
+            { key: "colorPicker", title: "Farbpipette", desc: "Lupe auf Pixelebene mit Echtzeit-Farbaufnahme; RGB- oder Hex-Wert per Klick kopieren.", points: ["Pixel-Lupe", "Echtzeit", "RGB / Hex"] }
           ]
         },
         screenshots: null,
@@ -1652,10 +1705,10 @@
         },
         overview: {
           cards: [
-            { title: "Klarerer Ablauf nach der Aufnahme", p1: "OmniCapture konzentriert sich auf die Effizienz nach dem Screenshot, nicht auf schwere Nachbearbeitung.", p2: "Auswahl, Annotation, Anpassung und Ausgabe koennen in einem kompakten Ablauf bleiben." },
+            { title: "Klarerer Ablauf nach der Aufnahme", p1: "Maple konzentriert sich auf die Effizienz nach dem Screenshot, nicht auf schwere Nachbearbeitung.", p2: "Auswahl, Annotation, Anpassung und Ausgabe koennen in einem kompakten Ablauf bleiben." },
             { title: "Vollstaendige Annotationswerkzeuge", p1: "Farbe, Strichstaerke, Deckkraft, Schriftwahl und Formen sind schnell erreichbar.", p2: "Wenn einfache Pfeile nicht reichen, ergaenzen Formen und SVG-Pinsel die Ausdrucksmoeglichkeiten." },
             { title: "Direkter Umgang mit sensiblen Details", p1: "Mosaik und Textmaskierung helfen bei Support, Zusammenarbeit und Reviews.", p2: "Sensible Inhalte lassen sich waehrend der Aufnahme behandeln statt in einem zweiten Tool." },
-            { title: "Ausgabe mit weniger Reibung", p1: "Kopieren, per Drag-and-drop speichern oder direkt in die naechste App ziehen.", p2: "Das passt gut fuer Chat, Dokumentation und Aufgabenfeedback." }
+            { title: "Output mit weniger Reibung", p1: "Kopieren, per Drag-and-drop speichern oder direkt in die naechste App ziehen.", p2: "Das passt gut fuer Chat, Dokumentation und Aufgabenfeedback." }
           ],
           quick: [
             { title: "Hauefige Kurzbefehle", list: ["Command + Shift + S: Aufnahme starten", "Enter: Auswahl bestaetigen / Screenshot bestaetigen", "Esc: OCR-Modus verlassen / Aufnahme verlassen"] },
@@ -1664,17 +1717,20 @@
         },
         privacy: {
           items: [
-            { title: "1. Welche Daten wir erfassen", p1: "Standardmaessig laedt OmniCapture Ihre Screenshot- oder Annotationsinhalte nicht auf unsere Server hoch.", p2: "Screenshots, Textnotizen, Formen, Mosaik und Bearbeitungsschritte werden hauptsaechlich lokal verarbeitet, ebenso OCR-Erkennung und Textextraktion." },
+            { title: "1. Welche Daten wir erfassen", p1: "Per default, Maple lädt Ihre Screenshots oder Annotationen nicht auf unsere Server hoch.", p2: "Screenshots, Textnotizen, Formen, Mosaik und Bearbeitungsschritte werden hauptsaechlich lokal verarbeitet, ebenso OCR-Erkennung und Textextraktion." },
             { title: "2. Bildschirmaufnahme-Berechtigung", p1: "Die App fragt die macOS-Berechtigung zur Bildschirmaufnahme nur fuer von Ihnen gestartete Screenshot-Funktionen an.", p2: "Diese Berechtigung wird nicht dazu verwendet, Bildschirminhalte auf unsere Server zu laden." },
-            { title: "3. Dateien, Kopieren und Ziehen", p1: "Wenn Sie Inhalte speichern, kopieren oder ziehen, werden die Daten nur fuer die von Ihnen angeforderte Aktion genutzt.", p2: "Das Ergebnis bleibt unter Ihrer Kontrolle auf Ihrem Geraet oder in der gewaehlten Ziel-App." },
-            { title: "4. Drittanbieterdienste", p1: "Die aktuelle Version enthaelt keine Drittanbieter-Werbe-SDKs fuer Tracking, und OCR uebertraegt keine Daten.", p2: "Falls kuenftige Online-OCR- oder Drittanbieterdienste den Umgang mit Daten veraendern, aktualisieren wir diese Beschreibung." },
-            { title: "5. Datensicherheit", p1: "Wir versuchen unnoetige Datenbewegungen zu reduzieren und lokale Verarbeitung angemessen zu schuetzen.", p2: "Bitte beachten Sie auch Geraetesicherheit, Systemberechtigungen und Datenschutzrichtlinien der Ziel-Apps." },
-            { title: "6. Kontakt", p1: "Bei Fragen zu Datenschutz, Berechtigungen oder Datenverarbeitung kontaktieren Sie uns bitte per E-Mail.", p2: "Support-E-Mail: xiangying320@126.com" }
+            { title: "3. Bedienungshilfen-Berechtigung", p1: "Die App fragt die macOS-Bedienungshilfen-Berechtigung nur fuer die von Ihnen aktiv gestartete Scroll-Screenshot-Funktion an.", p2: "Diese Berechtigung wird nur waehrend Scroll-Screenshot-Aktionen verwendet und nicht dazu, Ihre Inhalte zu sammeln oder hochzuladen." },
+            { title: "4. Dateien, Kopieren und Ziehen", p1: "Wenn Sie Inhalte speichern, kopieren oder ziehen, werden die Daten nur fuer die von Ihnen angeforderte Aktion genutzt.", p2: "Das Ergebnis bleibt unter Ihrer Kontrolle auf Ihrem Geraet oder in der gewaehlten Ziel-App." },
+            { title: "5. Drittanbieterdienste", p1: "Die aktuelle Version enthaelt keine Drittanbieter-Werbe-SDKs fuer Tracking, und OCR uebertraegt keine Daten.", p2: "Falls kuenftige Online-OCR- oder Drittanbieterdienste den Umgang mit Daten veraendern, aktualisieren wir diese Beschreibung." },
+            { title: "6. Datensicherheit", p1: "Wir versuchen unnoetige Datenbewegungen zu reduzieren und lokale Verarbeitung angemessen zu schuetzen.", p2: "Bitte beachten Sie auch Geraetesicherheit, Systemberechtigungen und Datenschutzrichtlinien der Ziel-Apps." },
+            { title: "7. Kontakt", p1: "Bei Fragen zu Datenschutz, Berechtigungen oder Datenverarbeitung kontaktieren Sie uns bitte per E-Mail.", p2: "Support-E-Mail: xiangying320@126.com" }
           ]
         },
         changelog: {
           items: [
-            { kicker: "Current Release", title: "26.4.0 (Verfuegbar)", desc: "Die geplante Version erweitert Mosaikstile, benutzerdefinierte SVG-Stile sowie OCR-Erkennung und Textextraktion.", list: ["Mosaik-Eintrag in der Werkzeugleiste", "Mehrere Stufen von Gauescher Unschärfe", "OCR-Erkennung und Textextraktion", "Import, Speicherung und Loeschen benutzerdefinierter SVG-Stile"] },
+            { kicker: "Current Release", title: "26.4.2 (Demnaechst verfuegbar)", desc: "Dieses Update fuegt eine Live-Farbauswahl auf dem Bildschirm sowie Scroll-Screenshots mit nahtloser Dokumentzusammenfuegung hinzu.", list: ["Live-Farbauswahl auf dem Bildschirm hinzugefuegt, mit H- und R-Tasten zum schnellen Kopieren von Farbwerten", "Scroll-Screenshots mit nahtloser Dokumentzusammenfuegung hinzugefuegt"] },
+            { kicker: "", title: "26.4.1 (Verfuegbar)", desc: "Dieses Update behebt die fehlende Rotation fuer Textmarkierungen und verbessert weiter das Bedienerfuehl.", list: ["Problem behoben, durch das Textmarkierungen nicht gedreht werden konnten", "Optimierte Bedienerfahrung"] },
+            { kicker: "", title: "26.4.0 (Verfuegbar)", desc: "Die Version erweitert Mosaikstile, benutzerdefinierte SVG-Stile sowie OCR-Erkennung und Textextraktion.", list: ["Mosaik-Eintrag in der Werkzeugleiste", "Mehrere Stufen von Gauescher Unschärfe", "OCR-Erkennung und Textextraktion", "Import, Speicherung und Loeschen benutzerdefinierter SVG-Stile"] },
             { kicker: "", title: "26.3.0", desc: "Die aktuelle Version konzentriert sich auf Annotationen und Bearbeitungskontrollen, damit die Kommunikation nach dem Screenshot vollstaendiger wirkt.", list: ["Pinsel-, Text- und Formwerkzeuge hinzugefuegt", "Loeschen, Drehen und Skalieren fuer Annotationen hinzugefuegt", "Steuerung fuer Farbe, Strichstaerke und Deckkraft hinzugefuegt"] }
           ]
         },
@@ -1687,8 +1743,8 @@
       },
       it: {
         meta: {
-          title: "OmniCapture | Cattura rapida, note precise",
-          description: "OmniCapture e uno strumento di screenshot per macOS orientato alla produttivita, con annotazione chiara, OCR, oscuramento, pennelli SVG e drag and drop."
+          title: "Maple | Cattura rapida, note precise",
+          description: "Maple e uno strumento di screenshot per macOS orientato alla produttivita, con annotazione chiara, OCR, oscuramento, pennelli SVG e drag and drop."
         },
         header: {
           tagline: "Cattura rapida. Spiegazione chiara.",
@@ -1701,7 +1757,7 @@
           eyebrow: "Strumento screenshot per macOS",
           title: "Cattura rapida, note precise",
           subtitle: "Richiede macOS 15.0 o versione successiva.",
-          desc: "OmniCapture e uno strumento di screenshot per macOS pensato per lavorare piu velocemente. Cattura un'area in pochi secondi e spiegala con testo, forme, mosaico, OCR e pennelli SVG personalizzati.",
+          desc: "Maple e uno strumento di screenshot per macOS pensato per lavorare piu velocemente. Cattura un'area in pochi secondi e spiegala con testo, forme, mosaico, OCR e pennelli SVG personalizzati.",
           note: "Trascina per salvare o trascina direttamente in altre app, cosi review, comunicazione e lavoro quotidiano richiedono meno passaggi.",
           download: "Scarica su App Store",
           secondary: "Esplora le funzioni",
@@ -1716,12 +1772,14 @@
           title: "Funzioni principali",
           desc: "Ogni modulo ha un compito chiaro, cosi la pagina resta semplice da leggere e il prodotto semplice da capire.",
           items: [
-            { key: "brushes", title: "Pennelli", desc: "Frecce, linee dritte, linee tratteggiate e linee ondulate con rotazione, spessore, colore e opacita regolabili.", points: ["Frecce", "Tratteggi", "Rotazione"] },
-            { key: "shapes", title: "Forme", desc: "Rettangolo, cerchio, triangolo, ellisse, cuore e stella con rotazione, colore, opacita e spessore del tratto regolabili.", points: ["Set forme", "Rotazione", "Stili regolabili"] },
-            { key: "customBrushes", title: "Pennelli personalizzati", desc: "9 pennelli icona integrati, con supporto all'importazione di altre forme SVG e regolazione di rotazione, spessore e opacita.", points: ["9 integrati", "Import SVG", "Rotazione"] },
-            { key: "mosaic", title: "Mosaico", desc: "Applicazione a pennello, oscuramento testo con un clic e oscuramento a schermo intero con intensita e dimensione regolabili.", points: ["Mosaico", "Mascheratura testo", "Schermo intero"] },
-            { key: "text", title: "Testo", desc: "Dimensione carattere, font, colore, opacita e rotazione regolabili per note e spiegazioni.", points: ["Font", "Opacita", "Rotazione"] },
-            { key: "ocr", title: "OCR", desc: "Riconosce ed estrae il testo dagli screenshot per riutilizzarlo piu rapidamente.", points: ["Riconoscimento", "Estrazione", "Riutilizzo"] }
+            { key: "shapes", title: "Forme", desc: "Forme piene e vuote (rettangolo, cerchio, triangolo, ellisse, cuore, stella); spessore, colore e opacita regolabili liberamente; rotazione, ridimensionamento e regolazione al pixel.", points: ["Piene e vuote", "Rotazione / scala", "Regolazione al pixel"] },
+            { key: "brushes", title: "Pennello", desc: "Frecce, linee dritte, tratteggiate e ondulate; spessore, colore e opacita regolabili; rotazione, ridimensionamento e regolazione al pixel.", points: ["Frecce e linee", "Tratteggiate / ondulate", "Rotazione / scala"] },
+            { key: "customBrushes", title: "Pennelli personalizzati", desc: "9 pennelli emoji integrati; importa pennelli SVG personalizzati per un'estensibilita illimitata; spessore, colore e opacita regolabili; rotazione, ridimensionamento e regolazione al pixel.", points: ["9 pennelli emoji", "Import SVG", "Estensibilita illimitata"] },
+            { key: "mosaic", title: "Mosaico", desc: "Oscuramento testo con un clic, oscuramento a schermo intero e personalizzato; dimensione e intensita del mosaico regolabili; spostamento e regolazione al pixel.", points: ["Testo", "Schermo intero", "Personalizzato"] },
+            { key: "text", title: "Testo", desc: "Dimensione, font, colore e opacita regolabili; rotazione e regolazione al pixel.", points: ["Dimensione e font", "Rotazione", "Regolazione al pixel"] },
+            { key: "ocr", title: "OCR", desc: "Riconoscimento in 30 lingue, veloce e preciso; il testo viene ripristinato nella posizione originale del blocco; estrazione libera da qualsiasi area.", points: ["30 lingue", "Veloce e preciso", "Estrazione libera"] },
+            { key: "scrolling", title: "Screenshot lungo", desc: "Ottimizzato appositamente per i documenti e garantisce unione perfetta al pixel, senza disallineamenti, superiore agli altri strumenti sul mercato.", points: ["Per documenti", "Senza disallineamenti", "Unione perfetta"] },
+            { key: "colorPicker", title: "Selettore colore", desc: "Lente d'ingrandimento a livello di pixel con campionamento in tempo reale; copia il valore RGB o esadecimale con un clic.", points: ["Lente pixel", "Tempo reale", "RGB / HEX"] }
           ]
         },
         screenshots: null,
@@ -1732,43 +1790,46 @@
         },
         overview: {
           cards: [
-            { title: "Un flusso piu chiaro dopo la cattura", p1: "OmniCapture si concentra sull'efficienza dopo lo screenshot, non su una post-produzione pesante.", p2: "Selezione, annotazione, regolazione e output possono restare in un flusso compatto." },
+            { title: "Un flusso piu chiaro dopo la cattura", p1: "Maple si concentra sull'efficienza dopo lo screenshot, non su una post-produzione pesante.", p2: "Selezione, annotazione, regolazione e output possono restare in un flusso compatto." },
             { title: "Strumenti di annotazione completi", p1: "Colore, spessore, opacita, font e forme restano facili da raggiungere.", p2: "Quando una semplice freccia non basta, forme e pennelli SVG aggiungono piu struttura." },
             { title: "Gestione diretta dei dettagli sensibili", p1: "Mosaico e mascheratura testo sono utili per supporto, collaborazione e review.", p2: "I contenuti sensibili possono essere trattati gia in fase di cattura, senza un secondo strumento." },
             { title: "Output con meno attrito", p1: "Copia, trascina per salvare o trascina direttamente nell'app successiva.", p2: "Questo passaggio piu leggero funziona bene per chat, documentazione e feedback." }
           ],
           quick: [
-            { title: "Scorciatoie comuni", list: ["Command + Shift + S: avvia cattura", "Invio: conferma selezione / conferma screenshot", "Esc: esci da OCR / esci dalla cattura"] },
+            { title: "Scorciatoie comuni", list: ["Command + Shift + S: avvia cattura", "Enter: conferma selezione / conferma screenshot", "Esc: esci da OCR / esci dalla cattura"] },
             { title: "Azioni comuni", list: ["Click sinistro: conferma area, disegna o doppio clic per il testo", "Click destro: seleziona, sposta, ridimensiona e ruota annotazioni", "Tastiera: frecce per micro-regolare, Tab per scorrere, Delete per eliminare"] }
           ]
         },
         privacy: {
           items: [
-            { title: "1. Dati raccolti", p1: "Per impostazione predefinita, OmniCapture non carica sui nostri server il contenuto dei tuoi screenshot o delle annotazioni.", p2: "Screenshot, testo, forme, mosaico e azioni di modifica vengono elaborati principalmente sul tuo dispositivo, e anche OCR ed estrazione testo restano locali." },
+            { title: "1. Dati raccolti", p1: "Per impostazione predefinita, Maple non carica sui nostri server il contenuto dei tuoi screenshot o delle annotazioni.", p2: "Screenshot, testo, forme, mosaico e azioni di modifica vengono elaborati principalmente sul tuo dispositivo, e anche OCR ed estrazione testo restano locali." },
             { title: "2. Permesso di registrazione schermo", p1: "L'app richiede il permesso di registrazione schermo di macOS solo per le funzioni di cattura che avvii tu.", p2: "Questo permesso non viene usato per caricare il contenuto dello schermo sui nostri server." },
-            { title: "3. File, copia e trascinamento", p1: "Quando salvi, copi o trascini contenuti, i dati servono solo a completare l'azione richiesta.", p2: "Il risultato resta sotto il tuo controllo sul dispositivo o nell'app di destinazione scelta." },
-            { title: "4. Servizi di terze parti", p1: "La versione attuale non include SDK pubblicitari di terze parti per il tracciamento, e l'OCR non invia dati all'esterno.", p2: "Se futuri servizi OCR online o di terze parti cambieranno il trattamento dei dati, aggiorneremo questa descrizione." },
-            { title: "5. Sicurezza dei dati", p1: "Cerchiamo di ridurre i movimenti di dati non necessari e di proteggere il piu possibile l'elaborazione locale.", p2: "Ti consigliamo anche di controllare la sicurezza del dispositivo e i permessi di sistema." },
-            { title: "6. Contatti", p1: "Se hai domande su privacy, permessi o trattamento dei dati, contattaci via email.", p2: "Email di supporto: xiangying320@126.com" }
+            { title: "3. Permesso di Accessibilita", p1: "L'app richiede il permesso Accessibilita di macOS solo per la funzione di screenshot lungo che avvii tu.", p2: "Questo permesso viene usato solo durante le azioni legate allo screenshot lungo e non per raccogliere o caricare i tuoi contenuti." },
+            { title: "4. File, copia e trascinamento", p1: "Quando salvi, copi o trascini contenuti, i dati servono solo a completare l'azione richiesta.", p2: "Il risultato resta sotto il tuo controllo sul dispositivo o nell'app di destinazione scelta." },
+            { title: "5. Servizi di terze parti", p1: "La versione attuale non include SDK pubblicitari di terze parti per il tracciamento, e l'OCR non invia dati all'esterno.", p2: "Se futuri servizi OCR online o di terze parti cambieranno il trattamento dei dati, aggiorneremo questa descrizione." },
+            { title: "6. Sicurezza dei dati", p1: "Cerchiamo di ridurre i movimenti di dati non necessari e di proteggere il piu possibile l'elaborazione locale.", p2: "Ti consigliamo anche di controllare la sicurezza del dispositivo e i permessi di sistema." },
+            { title: "7. Contatti", p1: "Se hai domande su privacy, permessi o trattamento dei dati, contattaci via email.", p2: "Email di supporto: xiangying320@126.com" }
           ]
         },
         changelog: {
           items: [
-            { kicker: "Current Release", title: "26.4.0 (Disponibile)", desc: "La versione pianificata amplia stili mosaico, stili SVG personalizzati, OCR e capacita di estrazione testo.", list: ["Aggiunta voce mosaico nella toolbar", "Supporto per diversi livelli di sfocatura gaussiana", "Aggiunta di OCR e estrazione testo", "Importazione, persistenza ed eliminazione di stili SVG personalizzati"] },
-            { kicker: "", title: "26.3.0", desc: "La versione attuale si concentra su copertura delle annotazioni e controlli di modifica per rendere piu completa la comunicazione dopo la cattura.", list: ["Aggiunti strumenti pennello, testo e forma", "Aggiunte eliminazione, rotazione e ridimensionamento delle annotazioni", "Aggiunti controlli per colore, spessore e opacita"] }
+            { kicker: "Current Release", title: "26.4.2（近日公開）", desc: "このアップデートでは、画面上のリアルタイム色取得と、書類を途切れなくつなげる長いスクリーンショットに対応しました。", list: ["画面上のリアルタイム色取得を追加し、H キーと R キーで色値をすばやくコピー可能", "長いスクリーンショットを追加し、書類をシームレスにつなげて保存可能"] },
+            { kicker: "", title: "26.4.1（配信中）", desc: "このアップデートでは、テキスト注釈を回転できない問題を修正し、操作体験も継続して改善しています。", list: ["テキスト注釈を回転できない問題を修正", "操作体験を改善中"] },
+            { kicker: "", title: "26.4.0（配信中）", desc: "このバージョンでは、モザイク表現、カスタム SVG スタイルに加え、OCR 認識と文字抽出にも対応します。", list: ["ツールバーにモザイク項目を追加", "異なる強さのガウスぼかしに対応", "OCR 認識と文字抽出に対応", "カスタム SVG スタイルの取り込み、保持、削除に対応"] },
+            { kicker: "", title: "26.3.0", desc: "現在のリリースでは、注釈の対応範囲と編集操作を強化し、撮影後の説明をより完結にしています。", list: ["ブラシ、文字、図形ツールを追加", "注釈の削除、回転、拡大縮小に対応", "色、線幅、不透明度の調整に対応"] }
           ]
         },
         footer: {
-          title: "Rendi gli screenshot piu facili da condividere e piu facili da capire.",
-          desc: "Adatto a review, feedback, documentazione, supporto e flussi di lavoro quotidiani.",
-          emailLabel: "Supporto:",
-          download: "Scarica su App Store"
+          title: "スクリーンショットを、共有しやすく、伝わりやすく。",
+          desc: "レビュー、フィードバック、資料作成、サポート、日常業務に向いています。",
+          emailLabel: "サポート：",
+          download: "App Store で入手"
         }
       },
       ja: {
         meta: {
-          title: "OmniCapture | 素早く撮って、正確に注釈",
-          description: "OmniCapture は、注釈、OCR、マスキング、SVG ブラシ、SVG ブラシを備えた macOS 向けスクリーンショットツールです。"
+          title: "Maple | 素早く撮って、正確に注釈",
+          description: "Maple は、注釈、OCR、マスキング、SVG ブラシ、SVG ブラシを備えた macOS 向けスクリーンショットツールです。"
         },
         header: {
           tagline: "すばやく撮って、わかりやすく伝える。",
@@ -1781,8 +1842,8 @@
           eyebrow: "macOS スクリーンショットツール",
           title: "素早く撮って、正確に注釈",
           subtitle: "macOS 15.0 以降が必要です。",
-          desc: "OmniCapture は、作業効率を重視した macOS 向けスクリーンショットツールです。任意の範囲を素早くキャプチャし、テキスト、図形、モザイク、OCR、SVG カスタムブラシで要点を明確にできます。",
-          note: "保存のためにドラッグしたり、他のアプリへ直接ドラッグしたりできるので、レビューや共有の手数を減らせます。",
+          desc: "Maple は、作業効率を重視した macOS 向けスクリーンショットツールです。任意の範囲を素早くキャプチャし、テキスト、図形、モザイク、OCR、SVG カスタムブラシで要点を明確にできます。",
+          note: "ドラッグで保存したり、他のアプリへ直接ドラッグしたりできるので、レビューや共有の手数を減らせます。",
           download: "App Store で入手",
           secondary: "機能を見る",
           badges: ["OCR", "マスキング", "SVG ブラシ"],
@@ -1796,12 +1857,14 @@
           title: "主な機能",
           desc: "各モジュールの役割を明確にし、ページも製品も理解しやすく保ちます。",
           items: [
-            { key: "brushes", title: "ブラシ", desc: "矢印、直線、破線、波線に対応し、回転、太さ・色・不透明度を調整できます。", points: ["矢印", "破線", "回転"] },
-            { key: "shapes", title: "図形", desc: "四角形、円、三角形、楕円、ハート、星に対応し、回転、色・不透明度・線の太さを調整できます。", points: ["図形セット", "回転", "スタイル調整"] },
-            { key: "customBrushes", title: "カスタムブラシ", desc: "9 種類のアイコンブラシを内蔵し、さらに SVG 図形を追加して使えます。回転、太さ、不透明度の調整にも対応します。", points: ["9 種類内蔵", "SVG 追加", "回転"] },
-            { key: "mosaic", title: "モザイク", desc: "塗りつぶし、文字のワンタップマスク、全画面マスクに対応し、ブラシサイズと強さを調整できます。", points: ["塗りつぶし", "文字マスク", "全画面マスク"] },
-            { key: "text", title: "テキスト", desc: "文字サイズ、フォント、色、不透明度、回転を調整でき、補足説明や強調表示に便利です。", points: ["フォント", "不透明度", "回転"] },
-            { key: "ocr", title: "OCR", desc: "スクリーンショット内の文字を認識・抽出し、すばやく再利用できます。", points: ["文字認識", "抽出", "再利用"] }
+            { key: "shapes", title: "図形", desc: "塗りつぶし・枠線の四角形、円、三角形、楕円、ハート、星に対応。太さ・色・不透明度を自由に調整でき、回転・拡縮・ピクセル単位の微調整も可能。", points: ["塗りつぶし / 枠線", "回転・拡縮", "ピクセル単位"] },
+            { key: "brushes", title: "ブラシ", desc: "矢印、直線、破線、波線に対応。太さ・色・不透明度の調整、回転・拡縮・ピクセル単位の微調整が可能。", points: ["矢印と線", "破線 / 波線", "回転・拡縮"] },
+            { key: "customBrushes", title: "カスタムブラシ", desc: "9種類の絵文字ブラシを内蔵。SVGブラシの追加インポートにも対応し、拡張性は無限大。太さ・色・不透明度の調整、回転・拡縮・ピクセル単位の微調整が可能。", points: ["9種類の絵文字", "SVG追加", "拡張性"] },
+            { key: "mosaic", title: "モザイク", desc: "文字のワンタップマスク、全画面マスク、カスタムマスクに対応。モザイクの粗さとぼかし強度を調整でき、移動やピクセル単位の微調整も可能。", points: ["文字マスク", "全画面", "カスタム"] },
+            { key: "text", title: "テキスト", desc: "文字サイズ・フォント・色・不透明度を調整可能。回転とピクセル単位の微調整にも対応。", points: ["サイズとフォント", "回転", "ピクセル単位"] },
+            { key: "ocr", title: "OCR", desc: "30言語のテキスト認識に対応し、高速かつ正確。認識したテキストはブロック単位で元の位置に復元され、任意の場所から自由に抽出できます。", points: ["30言語", "高速かつ正確", "自由抽出"] },
+            { key: "scrolling", title: "長尺スクリーンショット", desc: "ドキュメント向けに特別最適化。他のツールで起きがちなズレをピクセル単位でゼロに抑えます。", points: ["文書最適化", "ズレなし", "ピクセル精度"] },
+            { key: "colorPicker", title: "カラーピッカー", desc: "ピクセル単位のルーペでリアルタイムに色を取得。RGBまたはHEX値をワンクリックでコピーできます。", points: ["ピクセルルーペ", "リアルタイム", "RGB / HEX"] }
           ]
         },
         screenshots: null,
@@ -1812,10 +1875,10 @@
         },
         overview: {
           cards: [
-            { title: "撮った後の流れが明快", p1: "OmniCapture は、撮影後の説明効率に焦点を当てており、重い後処理を目的としていません。", p2: "選択、注釈、調整、出力を一つのコンパクトな流れにまとめられます。" },
+            { title: "撮った後の流れが明快", p1: "Maple は、撮影後の説明効率に焦点を当てており、重い後処理を目的としていません。", p2: "選択、注釈、調整、出力が一つのコンパクトな流れにまとめられます。" },
             { title: "注釈ツールが充実", p1: "色、線幅、不透明度、フォント、図形など、よく使う調整にすぐ触れます。", p2: "単純な矢印だけでは足りないときは、図形や SVG ブラシでより具体的に表現できます。" },
-            { title: "機密情報をその場で処理", p1: "モザイクや文字マスクは、サポート、共同作業、レビューの場面で役立ちます。", p2: "別のツールへ移る前に、キャプチャ段階でそのまま処理できます。" },
-            { title: "出力が軽い", p1: "コピー、ドラッグ保存、次のアプリへのドラッグに対応します。", p2: "チャット、文書作成、フィードバック連携がより軽くなります。" }
+            { title: "機密情報をその場で処理", p1: "モザイクや文字マスクは、サポート、共同作業、レビューの場面で役立ちます。", p2: "機密な内容は、他のツールへ移る前に、キャプチャ段階でそのまま処理できます。" },
+            { title: "出力が軽い", p1: "コピー、ドラッグ保存、次のアプリへ直接ドラッグに対応します。", p2: "チャット、文書作成、フィードバック連携がより軽くなります。" }
           ],
           quick: [
             { title: "よく使うショートカット", list: ["Command + Shift + S: キャプチャ開始", "Enter: 選択範囲を確定 / スクリーンショットを確定", "Esc: OCR モード終了 / キャプチャ終了"] },
@@ -1824,17 +1887,20 @@
         },
         privacy: {
           items: [
-            { title: "1. 収集するデータ", p1: "初期設定では、OmniCapture はスクリーンショット内容や注釈内容を当社サーバーへアップロードしません。", p2: "スクリーンショット、文字注釈、図形、モザイクなどの編集は主にデバイス上で処理され、OCR 認識と文字抽出もローカルで完結します。" },
-            { title: "2. 画面収録権限", p1: "macOS の画面収録権限は、ユーザーが開始したスクリーンショット機能のためにのみ要求されます。", p2: "その権限を使って画面内容をサーバーへ送信することはありません。" },
-            { title: "3. ファイル、コピー、ドラッグ", p1: "保存、コピー、ドラッグを行う場合、データはユーザーが意図した操作を完了するためにのみ使われます。", p2: "結果はユーザーの管理下にあり、デバイスまたは選択したアプリに保存されます。" },
-            { title: "4. サードパーティサービス", p1: "現在のバージョンには、追跡目的の第三者広告 SDK は含まれておらず、OCR もデータを外部へ送信しません。", p2: "将来オンライン OCR や第三者サービスが追加され、データ処理に影響する場合は、この説明を更新します。" },
-            { title: "5. データ保護", p1: "不要なデータ移動を減らし、ローカル処理に関わるデータを適切に保護するよう努めています。", p2: "あわせて、デバイスの安全性やシステム権限、利用先アプリの方針もご確認ください。" },
-            { title: "6. お問い合わせ", p1: "プライバシー、権限、データ処理について質問がある場合は、メールでご連絡ください。", p2: "サポートメール: xiangying320@126.com" }
+            { title: "1. 収集するデータ", p1: "初期設定では、Maple はスクリーンショット内容や注釈内容を当社サーバーへアップロードしません。", p2: "スクリーンショット、文字注釈、図形、モザイクなどの編集は主にデバイス上で処理され、OCR 認識と文字抽出もローカルで完結します。" },
+            { title: "2. 画面収録権限", p1: "App は、ユーザーが開始したスクリーンショット機能のためにのみ macOS の画面収録権限を要求します。", p2: "この権限を使って画面内容をサーバーへ送信しないです。" },
+            { title: "3. アクセシビリティ権限", p1: "App は、ユーザーが自ら開始した長いスクリーンショット機能のためにのみ macOS のアクセシビリティ権限を要求します。", p2: "この権限は長いスクリーンショット関連の操作中にのみ使用され、コンテンツの収集やアップロードには使用されません。" },
+            { title: "4. ファイル、コピー、ドラッグ", p1: "保存、コピー、ドラッグを行う場合、データはユーザーが意図した操作を完了するためにのみ使われます。", p2: "結果はユーザーの管理下にあり、デバイスまたは選択したアプリに保存されます。" },
+            { title: "5. 第三方サービス", p1: "現在のバージョンには、追跡目的の第三者広告 SDK は含まれておらず、OCR もデータを外部へ送信しません。", p2: "将来オンライン OCR や第三者サービスが追加され、データ処理に影響が生じる場合は、この説明を更新します。" },
+            { title: "6. データ保護", p1: "不要なデータ移動を減らし、ローカル処理に関わるデータを適切に保護するよう努めています。", p2: "あわせて、デバイスの安全性やシステム権限、利用先アプリの方針もご確認ください。" },
+            { title: "7. お問い合わせ", p1: "プライバシー、権限、データ処理について質問がある場合は、メールでご連絡ください。", p2: "サポートメール: xiangying320@126.com" }
           ]
         },
         changelog: {
           items: [
-            { kicker: "Current Release", title: "26.4.0（配信中）", desc: "予定中のリリースでは、モザイク表現、カスタム SVG スタイルに加え、OCR 認識と文字抽出にも対応します。", list: ["ツールバーにモザイク項目を追加", "異なる強さのガウスぼかしに対応", "OCR 認識と文字抽出に対応", "カスタム SVG スタイルの取り込み、保持、削除に対応"] },
+            { kicker: "Current Release", title: "26.4.2（近日公開）", desc: "このアップデートでは、画面上のリアルタイム色取得と、書類を途切れなくつなげる長いスクリーンショットに対応しました。", list: ["画面上のリアルタイム色取得を追加し、H キーと R キーで色値をすばやくコピー可能", "長いスクリーンショットを追加し、書類をシームレスにつなげて保存可能"] },
+            { kicker: "", title: "26.4.1（配信中）", desc: "このアップデートでは、テキスト注釈を回転できない問題を修正し、操作体験も継続して改善しています。", list: ["テキスト注釈を回転できない問題を修正", "操作体験を改善中"] },
+            { kicker: "", title: "26.4.0（配信中）", desc: "このバージョンでは、モザイク表現、カスタム SVG スタイルに加え、OCR 認識と文字抽出にも対応します。", list: ["ツールバーにモザイク項目を追加", "異なる強さのガウスぼかしに対応", "OCR 認識と文字抽出に対応", "カスタム SVG スタイルの取り込み、保持、削除に対応"] },
             { kicker: "", title: "26.3.0", desc: "現在のリリースでは、注釈の対応範囲と編集操作を強化し、撮影後の説明をより完結にしています。", list: ["ブラシ、文字、図形ツールを追加", "注釈の削除、回転、拡大縮小に対応", "色、線幅、不透明度の調整に対応"] }
           ]
         },
@@ -1847,8 +1913,8 @@
       },
       ko: {
         meta: {
-          title: "OmniCapture | 빠른 캡처, 정확한 주석",
-          description: "OmniCapture는 주석, OCR, 마스킹, SVG 브러시, SVG 브러시를 지원하는 macOS 스크린샷 도구입니다."
+          title: "Maple | 빠른 캡처, 정확한 주석",
+          description: "Maple는 주석, OCR, 마스킹, SVG 브러시, SVG 브러시를 지원하는 macOS 스크린샷 도구입니다."
         },
         header: {
           tagline: "빠르게 캡처하고, 명확하게 설명하세요.",
@@ -1861,13 +1927,13 @@
           eyebrow: "macOS 스크린샷 도구",
           title: "빠른 캡처, 정확한 주석",
           subtitle: "macOS 15.0 이상이 필요합니다.",
-          desc: "OmniCapture는 업무 효율에 집중한 macOS 스크린샷 도구입니다. 원하는 영역을 빠르게 캡처하고 텍스트, 도형, 모자이크, OCR, SVG 커스텀 브러시로 핵심을 분명하게 설명할 수 있습니다.",
+          desc: "Maple는 업무 효율에 집중한 macOS 스크린샷 도구입니다. 원하는 영역을 빠르게 캡처하고 텍스트, 도형, 모자이크, OCR, SVG 커스텀 브러시로 핵심을 분명하게 설명할 수 있습니다.",
           note: "드래그로 저장하거나 다른 앱으로 바로 드래그할 수 있어 리뷰, 커뮤니케이션, 일상 업무에서 중간 단계를 줄여 줍니다.",
           download: "App Store에서 다운로드",
           secondary: "기능 보기",
           badges: ["OCR", "마스킹", "SVG 브러시"],
           stats: [
-            { title: "주석", desc: "텍스트, 도형, 선, 강조를 바로 사용할 수 있습니다." },
+            { title: "주석", desc: "텍스트, 도형, 선, 강조가 바로 사용할 수 있습니다." },
             { title: "보호", desc: "모자이크와 텍스트 마스킹으로 민감 정보를 숨길 수 있습니다." },
             { title: "재사용", desc: "텍스트를 추출해 다른 앱으로 바로 넘길 수 있습니다." }
           ]
@@ -1876,12 +1942,14 @@
           title: "핵심 기능",
           desc: "각 모듈의 역할을 분명히 나눠 페이지도, 제품도 이해하기 쉽게 구성했습니다.",
           items: [
-            { key: "brushes", title: "브러시", desc: "화살표, 직선, 점선, 물결선을 지원하며 회전, 굵기, 색상, 투명도를 조절할 수 있습니다.", points: ["화살표", "점선", "회전"] },
-            { key: "shapes", title: "도형", desc: "사각형, 원형, 삼각형, 타원형, 하트, 별을 지원하며 회전, 색상, 투명도, 선 굵기를 조절할 수 있습니다.", points: ["도형 세트", "회전", "스타일 조절"] },
-            { key: "customBrushes", title: "커스텀 브러시", desc: "9가지 아이콘 브러시를 기본 제공하며, 추가 SVG 도형을 가져와 사용할 수 있습니다. 회전, 굵기, 투명도도 조절할 수 있습니다.", points: ["9가지 기본", "SVG 가져오기", "회전"] },
-            { key: "mosaic", title: "모자이크", desc: "브러시형 모자이크, 텍스트 원클릭 마스킹, 전체 화면 마스킹을 지원하며 브러시 크기와 강도를 조절할 수 있습니다.", points: ["브러시 모자이크", "텍스트 마스킹", "전체 화면"] },
-            { key: "text", title: "텍스트", desc: "글자 크기, 글꼴, 색상, 투명도, 회전을 조절할 수 있어 설명과 강조에 적합합니다.", points: ["글꼴", "투명도", "회전"] },
-            { key: "ocr", title: "OCR", desc: "스크린샷 속 텍스트를 인식하고 추출해 빠르게 재사용할 수 있습니다.", points: ["문자 인식", "텍스트 추출", "재사용"] }
+            { key: "shapes", title: "도형", desc: "채운 도형과 테두리 도형(사각형, 원형, 삼각형, 타원형, 하트, 별) 지원. 선 굵기, 색상, 투명도를 자유롭게 조절하고 회전, 크기 조절, 픽셀 단위 미세 조정 가능.", points: ["채움 / 테두리", "회전 / 크기 조절", "픽셀 단위"] },
+            { key: "brushes", title: "브러시", desc: "화살표, 직선, 점선, 물결선 지원. 굵기, 색상, 투명도 조절 및 회전, 크기 조절, 픽셀 단위 미세 조정 지원.", points: ["화살표와 선", "점선 / 물결선", "회전 / 크기 조절"] },
+            { key: "customBrushes", title: "커스텀 브러시", desc: "9가지 이모지 브러시 기본 제공. SVG 브러시 추가 가져오기로 무한 확장 가능. 굵기, 색상, 투명도 조절 및 회전, 크기 조절, 픽셀 단위 미세 조정 지원.", points: ["9가지 이모지", "SVG 가져오기", "무한 확장"] },
+            { key: "mosaic", title: "모자이크", desc: "텍스트 원클릭 마스킹, 전체 화면 마스킹, 사용자 지정 마스킹 지원. 모자이크 크기와 블러 강도 조절 가능. 이동 및 픽셀 단위 미세 조정 지원.", points: ["텍스트 마스킹", "전체 화면", "사용자 지정"] },
+            { key: "text", title: "텍스트", desc: "글자 크기, 글꼴, 색상, 투명도 조절 가능. 회전 및 픽셀 단위 미세 조정 지원.", points: ["크기와 글꼴", "회전", "픽셀 단위"] },
+            { key: "ocr", title: "OCR", desc: "30개 언어 텍스트 인식 지원, 빠르고 정확함. 인식된 텍스트는 원본 블록 위치에 그대로 복원되며 원하는 위치의 텍스트를 자유롭게 추출 가능.", points: ["30개 언어", "빠르고 정확", "자유 추출"] },
+            { key: "scrolling", title: "긴 스크린샷", desc: "문서에 특화된 최적화로 다른 도구에서 발생하는 어긋남 없이 픽셀 단위 정밀도를 구현.", points: ["문서 특화", "어긋남 없음", "픽셀 정밀도"] },
+            { key: "colorPicker", title: "컬러 피커", desc: "픽셀 단위 돋보기로 실시간 색상 추출. RGB 또는 HEX 값을 한 번에 복사 가능.", points: ["픽셀 돋보기", "실시간 추출", "RGB / HEX"] }
           ]
         },
         screenshots: null,
@@ -1892,7 +1960,7 @@
         },
         overview: {
           cards: [
-            { title: "캡처 후 흐름이 더 명확합니다", p1: "OmniCapture는 무거운 후편집보다 캡처 이후의 설명 효율에 집중합니다.", p2: "선택, 주석, 조정, 출력이 하나의 간결한 흐름으로 이어집니다." },
+            { title: "캡처 후 흐름이 더 명확합니다", p1: "Maple는 무거운 후편집보다 캡처 이후의 설명 효율에 집중합니다.", p2: "선택, 주석, 조정, 출력이 하나의 간결한 흐름으로 이어집니다." },
             { title: "주석 도구가 충분히 갖춰져 있습니다", p1: "색상, 두께, 투명도, 폰트, 도형 같은 자주 쓰는 조절 항목에 쉽게 접근할 수 있습니다.", p2: "단순한 화살표로 부족할 때는 도형과 SVG 브러시로 더 구체적으로 표현할 수 있습니다." },
             { title: "민감 정보 처리가 직접적입니다", p1: "모자이크와 텍스트 마스킹은 지원, 협업, 리뷰 흐름에 잘 맞습니다.", p2: "민감한 내용은 다른 도구로 옮기기 전에 캡처 단계에서 바로 처리할 수 있습니다." },
             { title: "출력 과정의 마찰이 적습니다", p1: "복사, 드래그 저장, 다음 앱으로 직접 드래그를 지원합니다.", p2: "채팅, 문서 작성, 피드백 전달 같은 흐름에서 더 가볍게 이어집니다." }
@@ -1904,17 +1972,20 @@
         },
         privacy: {
           items: [
-            { title: "1. 수집하는 데이터", p1: "기본적으로 OmniCapture는 스크린샷 내용이나 주석 내용을 당사 서버로 업로드하지 않습니다.", p2: "스크린샷, 텍스트, 도형, 모자이크와 관련 편집 작업은 주로 기기에서 처리되며 OCR 인식과 텍스트 추출도 로컬에서만 수행됩니다." },
+            { title: "1. 수집하는 데이터", p1: "기본적으로 Maple는 스크린샷 내용이나 주석 내용을 당사 서버로 업로드하지 않습니다.", p2: "스크린샷, 텍스트, 도형, 모자이크와 관련 편집 작업은 주로 기기에서 처리되며 OCR 인식과 텍스트 추출도 로컬에서만 수행됩니다." },
             { title: "2. 화면 기록 권한", p1: "앱은 사용자가 직접 시작한 스크린샷 기능을 위해서만 macOS 화면 기록 권한을 요청합니다.", p2: "이 권한을 이용해 화면 내용을 서버로 업로드하지 않습니다." },
-            { title: "3. 파일, 복사, 드래그", p1: "저장, 복사, 드래그를 수행할 때 데이터는 사용자가 의도한 현재 작업을 완료하는 데만 사용됩니다.", p2: "결과물은 사용자의 기기나 선택한 대상 앱 안에서 사용자의 통제하에 유지됩니다." },
-            { title: "4. 제3자 서비스", p1: "현재 버전에는 추적 목적의 제3자 광고 SDK가 포함되어 있지 않으며 OCR도 데이터를 외부로 전송하지 않습니다.", p2: "향후 온라인 OCR이나 제3자 서비스가 추가되어 데이터 처리 방식에 변화가 생기면 이 설명을 업데이트하겠습니다." },
-            { title: "5. 데이터 보안", p1: "불필요한 데이터 이동을 줄이고 로컬 처리 과정의 데이터를 보호하기 위해 합리적인 조치를 취합니다.", p2: "기기 보안, 시스템 권한, 대상 앱의 개인정보 정책도 함께 확인해 주세요." },
-            { title: "6. 문의", p1: "개인정보, 권한, 데이터 처리에 관한 질문이 있으면 이메일로 문의해 주세요.", p2: "지원 이메일: xiangying320@126.com" }
+            { title: "3. 손쉬운 사용 권한", p1: "앱은 사용자가 직접 시작한 긴 스크린샷 기능을 위해서만 macOS 손쉬운 사용 권한을 요청합니다.", p2: "이 권한은 긴 스크린샷 관련 동작을 수행할 때만 사용되며, 사용자의 콘텐츠를 수집하거나 업로드하는 데 사용되지 않습니다." },
+            { title: "4. 파일, 복사, 드래그", p1: "저장, 복사, 드래그를 수행할 때 데이터는 사용자가 의도한 현재 작업을 완료하는 데만 사용됩니다.", p2: "결과물은 사용자의 기기나 선택한 대상 앱 안에서 사용자의 통제하에 유지됩니다." },
+            { title: "5. 제3자 서비스", p1: "현재 버전에는 추적 목적의 제3자 광고 SDK가 포함되어 있지 않으며 OCR도 데이터를 외부로 전송하지 않습니다.", p2: "향후 온라인 OCR이나 제3자 서비스가 추가되어 데이터 처리 방식에 변화가 생기면 이 설명을 업데이트하겠습니다." },
+            { title: "6. 데이터 보안", p1: "불필요한 데이터 이동을 줄이고 로컬 처리 과정의 데이터를 보호하기 위해 합리적인 조치를 취합니다.", p2: "기기 보안, 시스템 권한, 대상 앱의 개인정보 정책도 함께 확인해 주세요." },
+            { title: "7. 문의", p1: "개인정보, 권한, 데이터 처리에 관한 질문이 있으면 이메일로 문의해 주세요.", p2: "지원 이메일: xiangying320@126.com" }
           ]
         },
         changelog: {
           items: [
-            { kicker: "Current Release", title: "26.4.0 (출시됨)", desc: "예정된 버전에서는 모자이크 스타일, 커스텀 SVG 스타일과 함께 OCR 인식 및 텍스트 추출 능력도 확장합니다.", list: ["툴바에 모자이크 항목 추가", "여러 강도의 가우시안 블러 지원", "OCR 인식 및 텍스트 추출 지원", "커스텀 SVG 스타일의 가져오기, 유지, 삭제 지원"] },
+            { kicker: "Current Release", title: "26.4.2 (곧 출시)", desc: "이번 업데이트는 화면 실시간 색상 추출과 문서를 끊김 없이 이어 붙이는 긴 스크린샷 기능을 추가합니다.", list: ["화면 실시간 색상 추출을 추가하고 H, R 키로 색상 값을 빠르게 복사할 수 있습니다", "긴 스크린샷을 추가해 문서를 자연스럽게 이어 붙일 수 있습니다"] },
+            { kicker: "", title: "26.4.1 (출시됨)", desc: "이번 업데이트는 텍스트 주석 회전 문제를 수정하고 전반적인 조작 경험을 계속 다듬습니다.", list: ["텍스트 주석이 회전되지 않던 문제 수정", "조작 경험 최적화"] },
+            { kicker: "", title: "26.4.0 (출시됨)", desc: "이 버전은 모자이크 스타일, 커스텀 SVG 스타일과 함께 OCR 인식 및 텍스트 추출 능력도 확장합니다.", list: ["툴바에 모자이크 항목 추가", "여러 강도의 가우시안 블러 지원", "OCR 인식 및 텍스트 추출 지원", "커스텀 SVG 스타일의 가져오기, 유지, 삭제 지원"] },
             { kicker: "", title: "26.3.0", desc: "현재 버전은 주석 기능 범위와 편집 제어를 강화해 캡처 후 커뮤니케이션을 더 완성도 있게 만듭니다.", list: ["브러시, 텍스트, 도형 도구 추가", "주석 삭제, 회전, 크기 조절 지원", "색상, 두께, 투명도 조절 지원"] }
           ]
         },
@@ -2007,55 +2078,73 @@
         "zh-Hans": [
           {
             kicker: currentReleaseKicker,
-            title: "26.4.1（即将上线）",
+            title: "26.4.2（即将上线）",
+            desc: "本次更新新增屏幕实时取色与长截图拼接能力，让取色与文档整理更顺手。",
+            list: ["新增屏幕实时取色，按 H、R 键快捷复制色值", "新增长截图，文档无缝拼接"]
+          },
+          {
+            kicker: "",
+            title: "26.4.1（已上线）",
             desc: "本次更新修复了文本标记无法旋转的问题，并持续优化整体操作体验。",
             list: ["修复文本标记无法旋转的问题", "优化操作体验"]
           },
           {
             kicker: "",
-            title: "26.4.0（已上线）",
-            desc: "计划版本重点扩展马赛克、自定义 SVG 样式，以及 OCR 识别与文字提取能力。",
-            list: ["工具栏新增马赛克入口", "支持不同程度的高斯模糊", "支持 OCR 识别与文字提取", "支持导入、持久化和删除自定义 SVG 样式"]
+            title: "26.4.0",
+            desc: "重点扩展马赛克、自定义 SVG 样式，以及 OCR 识别与文字提取能力。",
+            list: ["新增工具栏马赛克入口", "支持多级高斯模糊强度", "新增 OCR 识别与文字提取", "支持导入、保存与删除自定义 SVG 样式"]
           },
           {
             kicker: "",
             title: "26.3.0",
             desc: "当前版本围绕标注能力和编辑控制展开，让截图后的表达动作更完整。",
-            list: ["支持画笔、文字、形状", "支持标注删除、旋转、缩放", "支持颜色、粗细和透明度调整"]
+            list: ["新增画笔、文字和图形工具", "新增标注删除、旋转和缩放能力", "新增颜色、线宽和透明度控制"]
           }
         ],
         "zh-Hant": [
           {
             kicker: currentReleaseKicker,
-            title: "26.4.1（即將上線）",
-            desc: "本次更新修正了文字標記無法旋轉的問題，並持續優化整體操作體驗。",
-            list: ["修正文字標記無法旋轉的問題", "優化操作體驗"]
+            title: "26.4.2（即將上線）",
+            desc: "本次更新新增螢幕即時取色與長截圖拼接能力，讓取色與文件整理更順手。",
+            list: ["新增螢幕即時取色，按 H、R 鍵可快捷複製色值", "新增長截圖，支援文件無縫拼接"]
           },
           {
             kicker: "",
-            title: "26.4.0（已上線）",
-            desc: "規劃版本重點擴充馬賽克、自訂 SVG 樣式，以及 OCR 辨識與文字擷取能力。",
-            list: ["工具列新增馬賽克入口", "支援不同程度的高斯模糊", "支援 OCR 辨識與文字擷取", "支援匯入、持久化與刪除自訂 SVG 樣式"]
+            title: "26.4.1（已上線）",
+            desc: "本次更新修正了文字標記無法旋轉的問題，並持續優化整體操作體驗。",
+            list: ["修正文字標記無法旋轉的問題", "操作體驗改善中"]
+          },
+          {
+            kicker: "",
+            title: "26.4.0",
+            desc: "重點擴充馬賽克、自訂 SVG 樣式，以及 OCR 認識與文字擷取能力。",
+            list: ["新增工具列馬賽克入口", "支援多種高斯模糊強度", "新增 OCR 辨識與文字擷取", "支援匯入、保存與刪除自訂 SVG 樣式"]
           },
           {
             kicker: "",
             title: "26.3.0",
             desc: "目前版本圍繞標註能力與編輯控制展開，讓截圖後的表達動作更完整。",
-            list: ["支援畫筆、文字、形狀", "支援標註刪除、旋轉、縮放", "支援顏色、粗細與透明度調整"]
+            list: ["新增畫筆、文字與圖形工具", "新增標註刪除、旋轉與縮放能力", "新增顏色、線寬與透明度控制"]
           }
         ],
         en: [
           {
             kicker: currentReleaseKicker,
-            title: "26.4.1 (Coming Soon)",
+            title: "26.4.2 (Coming Soon)",
+            desc: "This update adds live screen color picking and scrolling capture stitching for smoother color sampling and document capture workflows.",
+            list: ["Added live screen color picking, with H and R shortcuts to quickly copy color values", "Added scrolling screenshots with seamless document stitching"]
+          },
+          {
+            kicker: "",
+            title: "26.4.1 (Now Available)",
             desc: "This update fixes text annotation rotation and continues smoothing everyday interaction details.",
             list: ["Fixed an issue where text annotations could not rotate", "Interaction refinements"]
           },
           {
             kicker: "",
-            title: "26.4.0 (Now Available)",
-            desc: "The planned release expands mosaic styles, custom SVG styles, plus OCR recognition and text extraction.",
-            list: ["Added a mosaic entry in the toolbar", "Supports multiple gaussian blur strengths", "Added OCR recognition and text extraction", "Supports importing, persisting, and deleting custom SVG styles"]
+            title: "26.4.0",
+            desc: "The release expands mosaic styles, custom SVG styles, plus OCR recognition and text extraction.",
+            list: ["Add a mosaic entry to the toolbar", "Supports multiple gaussian blur strengths", "Add OCR recognition and text extraction", "Supports importing, persisting, and deleting custom SVG styles"]
           },
           {
             kicker: "",
@@ -2067,14 +2156,20 @@
         fr: [
           {
             kicker: currentReleaseKicker,
-            title: "26.4.1 (Bientot disponible)",
+            title: "26.4.2 (Bientot disponible)",
+            desc: "Cette mise a jour ajoute un selecteur de couleur a l'ecran en temps reel ainsi que la capture defilante avec assemblage continu des documents.",
+            list: ["Ajout du prelevement de couleur en temps reel a l'ecran, avec raccourcis H et R pour copier rapidement la valeur", "Ajout des captures longues avec assemblage continu des documents"]
+          },
+          {
+            kicker: "",
+            title: "26.4.1 (Disponible)",
             desc: "Cette mise a jour corrige la rotation du texte et continue d'ameliorer l'experience d'utilisation.",
             list: ["Correction du probleme de rotation des annotations texte", "Amelioration de l'experience d'utilisation"]
           },
           {
             kicker: "",
-            title: "26.4.0 (Disponible)",
-            desc: "La version prevue etend les styles de mosaique, les styles SVG personnalises, ainsi que l'OCR et l'extraction de texte.",
+            title: "26.4.0",
+            desc: "La version etend les styles de mosaique, les styles SVG personnalises, ainsi que l'OCR et l'extraction de texte.",
             list: ["Ajouter une entree mosaique a la barre d'outils", "Prendre en charge plusieurs niveaux de flou gaussien", "Ajouter l'OCR et l'extraction de texte", "Permettre l'import, la conservation et la suppression de styles SVG personnalises"]
           },
           {
@@ -2087,14 +2182,20 @@
         de: [
           {
             kicker: currentReleaseKicker,
-            title: "26.4.1 (Demnaechst verfuegbar)",
-            desc: "Dieses Update behebt die fehlende Rotation fuer Textmarkierungen und verbessert weiter das Bediengefuehl.",
+            title: "26.4.2 (Demnaechst verfuegbar)",
+            desc: "Dieses Update fuegt eine Live-Farbauswahl auf dem Bildschirm sowie Scroll-Screenshots mit nahtloser Dokumentzusammenfuegung hinzu.",
+            list: ["Live-Farbauswahl auf dem Bildschirm hinzugefuegt, mit H- und R-Tasten zum schnellen Kopieren von Farbwerten", "Scroll-Screenshots mit nahtloser Dokumentzusammenfuegung hinzugefuegt"]
+          },
+          {
+            kicker: "",
+            title: "26.4.1 (Verfuegbar)",
+            desc: "Dieses Update behebt die fehlende Rotation fuer Textmarkierungen und verbessert weiter das Bedienerfuehl.",
             list: ["Problem behoben, durch das Textmarkierungen nicht gedreht werden konnten", "Optimierte Bedienerfahrung"]
           },
           {
             kicker: "",
-            title: "26.4.0 (Verfuegbar)",
-            desc: "Die geplante Version erweitert Mosaikstile, benutzerdefinierte SVG-Stile sowie OCR-Erkennung und Textextraktion.",
+            title: "26.4.0",
+            desc: "Die Version erweitert Mosaikstile, benutzerdefinierte SVG-Stile sowie OCR-Erkennung und Textextraktion.",
             list: ["Mosaik-Eintrag in der Werkzeugleiste", "Mehrere Stufen von Gauescher Unschärfe", "OCR-Erkennung und Textextraktion", "Import, Speicherung und Loeschen benutzerdefinierter SVG-Stile"]
           },
           {
@@ -2107,14 +2208,20 @@
         it: [
           {
             kicker: currentReleaseKicker,
-            title: "26.4.1 (In arrivo)",
+            title: "26.4.2 (In arrivo)",
+            desc: "Questo aggiornamento aggiunge il prelievo colore in tempo reale sullo schermo e gli screenshot lunghi con unione continua dei documenti.",
+            list: ["Aggiunto il prelievo colore in tempo reale sullo schermo, con tasti H e R per copiare rapidamente il valore colore", "Aggiunti screenshot lunghi con unione continua dei documenti"]
+          },
+          {
+            kicker: "",
+            title: "26.4.1 (Disponibile)",
             desc: "Questo aggiornamento risolve la rotazione del testo e continua a migliorare l'esperienza d'uso.",
             list: ["Risolto il problema che impediva la rotazione delle annotazioni di testo", "Esperienza d'uso ottimizzata"]
           },
           {
             kicker: "",
-            title: "26.4.0 (Disponibile)",
-            desc: "La versione pianificata amplia stili mosaico, stili SVG personalizzati, OCR e capacita di estrazione testo.",
+            title: "26.4.0",
+            desc: "La versione amplia stili mosaico, stili SVG personalizzati, OCR e capacita di estrazione testo.",
             list: ["Aggiunta voce mosaico nella toolbar", "Supporto per diversi livelli di sfocatura gaussiana", "Aggiunta di OCR e estrazione testo", "Importazione, persistenza ed eliminazione di stili SVG personalizzati"]
           },
           {
@@ -2127,14 +2234,20 @@
         ja: [
           {
             kicker: currentReleaseKicker,
-            title: "26.4.1（近日公開）",
+            title: "26.4.2（近日公開）",
+            desc: "このアップデートでは、画面上のリアルタイム色取得と、書類を途切れなくつなげる長いスクリーンショットに対応しました。",
+            list: ["画面上のリアルタイム色取得を追加し、H キーと R キーで色値をすばやくコピー可能", "長いスクリーンショットを追加し、書類をシームレスにつなげて保存可能"]
+          },
+          {
+            kicker: "",
+            title: "26.4.1（配信中）",
             desc: "このアップデートでは、テキスト注釈を回転できない問題を修正し、操作体験も継続して改善しています。",
             list: ["テキスト注釈を回転できない問題を修正", "操作体験を改善中"]
           },
           {
             kicker: "",
-            title: "26.4.0（配信中）",
-            desc: "予定中のリリースでは、モザイク表現、カスタム SVG スタイルに加え、OCR 認識と文字抽出にも対応します。",
+            title: "26.4.0",
+            desc: "このバージョンでは、モザイク表現、カスタム SVG スタイルに加え、OCR 認識と文字抽出にも対応します。",
             list: ["ツールバーにモザイク項目を追加", "異なる強さのガウスぼかしに対応", "OCR 認識と文字抽出に対応", "カスタム SVG スタイルの取り込み、保持、削除に対応"]
           },
           {
@@ -2147,14 +2260,20 @@
         ko: [
           {
             kicker: currentReleaseKicker,
-            title: "26.4.1 (곧 출시)",
+            title: "26.4.2 (곧 출시)",
+            desc: "이번 업데이트는 화면 실시간 색상 추출과 문서를 끊김 없이 이어 붙이는 긴 스크린샷 기능을 추가합니다.",
+            list: ["화면 실시간 색상 추출을 추가하고 H, R 키로 색상 값을 빠르게 복사할 수 있습니다", "긴 스크린샷을 추가해 문서를 자연스럽게 이어 붙일 수 있습니다"]
+          },
+          {
+            kicker: "",
+            title: "26.4.1 (출시됨)",
             desc: "이번 업데이트는 텍스트 주석 회전 문제를 수정하고 전반적인 조작 경험을 계속 다듬습니다.",
             list: ["텍스트 주석이 회전되지 않던 문제 수정", "조작 경험 최적화"]
           },
           {
             kicker: "",
-            title: "26.4.0 (출시됨)",
-            desc: "예정된 버전에서는 모자이크 스타일, 커스텀 SVG 스타일과 함께 OCR 인식 및 텍스트 추출 능력도 확장합니다.",
+            title: "26.4.0",
+            desc: "이 버전은 모자이크 스타일, 커스텀 SVG 스타일과 함께 OCR 인식 및 텍스트 추출 능력도 확장합니다.",
             list: ["툴바에 모자이크 항목 추가", "여러 강도의 가우시안 블러 지원", "OCR 인식 및 텍스트 추출 지원", "커스텀 SVG 스타일의 가져오기, 유지, 삭제 지원"]
           },
           {
@@ -2177,7 +2296,7 @@
 
     function getFeatureAssetSrc(itemKey, lang) {
       const file = FEATURE_ASSET_FILES[itemKey];
-      const locale = I18N[lang] ? lang : FALLBACK;
+      const locale = FEATURE_ASSET_LOCALES[lang] || FEATURE_ASSET_LOCALES[FALLBACK];
       return `./assets/screenshots/${locale}/${file}_${locale}.png`;
     }
 
